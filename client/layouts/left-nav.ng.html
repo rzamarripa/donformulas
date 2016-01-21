@@ -1,0 +1,46 @@
+<!--
+EJEMPLO DE COMO AGREGAR ELEMENTOS
+A LA BARRA LATERAL
+
+<ul data-smart-menu>
+  <li data-ui-sref-active="active">
+    <a data-ui-sref="app.dashboard" title="Dashboard">
+      <i class="fa fa-lg fa-fw fa-home"></i>
+      <span class="menu-item-parent">Dashboard</span>
+    </a>
+  </li>
+  <li data-menu-collapse>
+    <a href="#">
+      <i class="fa fa-lg fa-fw fa-bar-chart-o"></i>
+      <span class="menu-item-parent">Graphs</span>
+    </a>
+    <ul>
+      <li data-ui-sref-active="active">
+         <a data-ui-sref="app.graphs.flot">Flot Chart</a>
+      </li>
+      <li data-ui-sref-active="active">
+          <a data-ui-sref="app.graphs.morris">Morris Charts</a>
+      </li>
+    </ul>
+  </li>
+</ul>
+-->
+
+<nav>
+	<ul data-smart-menu>
+	    <li data-menu-collapse>
+		    <a href="#">
+		      	<i class="fa fa-lg fa-fw fa-bar-chart-o"></i>
+		      	<span class="menu-item-parent">Formulas</span>
+		    </a>
+		    <ul>
+		      	<li>
+			      	<a ui-sref="root.formula1" tilte="Formula1">
+			        <i class="fa fa-lg fa-fw fa-home"></i>
+			        <span class="menu-item-parent">Formula1</span>
+			      	</a>
+			    </li>
+		    </ul>
+	    </li>
+	</ul>
+</nav>
