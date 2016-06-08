@@ -1,0 +1,2411 @@
+<!--
+<h1>ICEP</h1>
+<section id="widget-grid" data-widget-grid="data-widget-grid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Un Widget</h2>
+        </header>
+        <div>
+          <div class="widget-body">
+            Contenido
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Otro Widget</h2>
+        </header>
+        <div>
+          <div class="widget-body">
+            Contenido 2
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+-->
+<h1>Estadísticas de Gastos Indirectos</h1>
+<section id="widget-grid" data-widget-grid="data-widget-grid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Otro Widget</h2>
+        </header>
+        <div>
+          <div class="widget-body">
+	          Contenido 2
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Periodos de Ejecución</h2>
+        </header>
+<!--
+        <div>
+          <div class="widget-body">
+            <table border="1" style="text-align: center, justify">
+						    <tr>
+						      <td>Oficina</td>
+						      <td>Enero&nbsp;</td>
+						      <td>Febrero&nbsp;</td>
+						      <td>Marzo&nbsp;</td>
+						      <td>Abril&nbsp;</td>
+						      <td>Mayo&nbsp;</td>
+						      <td>Junio&nbsp;</td>
+						      <td>Julio&nbsp;</td>
+						      <td>Agosto&nbsp;</td>
+						      <td>Septiembre&nbsp;</td>
+						      <td>Octubre&nbsp;</td>
+						      <td>Noviembre&nbsp;</td>
+						      <td>Diciembre&nbsp;</td>
+						    </tr>
+						    <tr>
+						      <td>Gastos Fijos</td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gfenero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gffebrero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gfmarzo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gfabril"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gfmayo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gfjunio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gfjulio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gfagosto"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gfseptiembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gfoctubre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gfnoviembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gfdiciembre"></td>
+						    </tr>
+						    <tr>
+						      <td>Gastos Variables</td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gvenero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gvfebrero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gvmarzo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gvabril"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gvmayo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gvjunio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gvjulio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gvagosto"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gvseptiembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gvoctubre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gvnoviembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gvdiciembre"></td>
+						    </tr>
+						</table>
+          </div>
+        </div>
+-->
+        <div  style="overflow: scroll; overflow: auto;">
+          <div class="widget-body">
+						<body>
+					    <form id="form1" runat="server">
+						    <div class="Table">
+					        <div class="Heading" style="background-color: #989191">
+					            <div class="Cell">
+					                <label>
+					                    Oficina
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Enero
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Febrero
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Marzo
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Abril
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Mayo
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Junio
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Julio
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Agosto
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Septiembre
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Octubre
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Noviembre
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Diciembre
+					                </label>
+					            </div>
+					            <div class="Cell" ng-show="false" >
+					                <label>
+					                    Total Anual
+					                </label>
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Gastos Fijos<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gfenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gffebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gfmarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gfabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gfmayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gfjunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gfjulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gfagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gfseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gfoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gfnoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gfdiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.sumaAnualgf()">
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Gastos Variables<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gvenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gvfebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gvmarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gvabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gvmayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gvjunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gvjulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gvagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gvseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gvoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gvnoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gvdiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.sumaAnualgv()">
+					            </div>
+					        </div>
+					        <div class="Row" ng-show="false">
+					            <div class="Cell">
+						            <label>
+													Total por mes<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.sumaMensualEnero()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.sumaMensualFebrero()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.sumaMensualMarzo()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.sumaMensualAbril()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.sumaMensualMayo()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.sumaMensualJunio()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.sumaMensualJulio()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.sumaMensualAgosto()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.sumaMensualSeptiembre()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.sumaMensualOctubre()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.sumaMensualNoviembre()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.sumaMensualDiciembre()">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.sumaTotalgfgv()">
+					            </div>
+					        </div>
+						    </div>
+					    </form>
+						</body>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Ingresos</h2>
+        </header>
+<!--
+        <div>
+          <div class="widget-body" >
+            <div class="container-fluid" style="overflow-x: auto">
+						    <div class="row">
+						      <div style="width:300px">Obra</div>
+						      <div style="width:300px">Presupuesto</div>
+						      <div style="width:300px">Enero&nbsp;</div>
+						      <div style="width:300px">Febrero&nbsp;</div>
+						      <div style="width:300px">Marzo&nbsp;</div>
+						      <div style="width:300px">Abril&nbsp;</div>
+						      <div style="width:300px">Mayo&nbsp;</div>
+						      <div style="width:300px">Junio&nbsp;</div>
+						      <div style="width:300px">Julio&nbsp;</div>
+						      <div style="width:300px">Agosto&nbsp;</div>
+						      <div style="width:300px">Septiembre&nbsp;</div>
+						      <div style="width:300px">Octubre&nbsp;</div>
+						      <div style="width:300px">Noviembre&nbsp;</div>
+						      <div style="width:300px">Diciembre&nbsp;</div>
+						    </div>
+				    <div class="row">
+				    	<div class="col-sm-12">
+				    		<table class="table table-striped table-bordered table-condensed well">
+				    			<thead class="thead">
+				    				<tr>
+				    					<th class="col-sm-1">Obra</th>
+				    					<th class="text-center" ng-repeat="obra in est.obras">sem. {{sem}}</th>
+				    				</tr>
+				    			</thead>
+				    			<tbody>
+				    				<tr ng-repeat="concepto in conceptosGasto">
+				    					<td >{{concepto.nombre}}</td>
+				    					<td ng-repeat="sem in semanas">
+					    					<div class="text-center">
+													<input style="width:70px;" ng-model="presupuesto.items[sem][concepto.clave]" type="number"/>
+					    					</div>
+					    				</td>
+				    				</tr>
+				    			</tbody>
+				    		</table>
+				    	</div>
+				    </div>
+						    <div class="row" ng-repeat="obra in est.obras">
+						      <div style="width:300px"><label >{{obra.nombre}}</label></div>
+						      <div style="width:300px"><input type="number" class="form-control" ng-model="est.estadisticas.iap"></div>
+						      <div style="width:300px"><input type="number" class="form-control" ng-model="est.estadisticas.iaenero"></div>
+						      <div style="width:300px"><input type="number" class="form-control" ng-model="est.estadisticas.iafebrero"></div>
+						      <div style="width:300px"><input type="number" class="form-control" ng-model="est.estadisticas.iamarzo"></div>
+						      <div style="width:300px"><input type="number" class="form-control" ng-model="est.estadisticas.iaabril"></div>
+						      <div style="width:300px"><input type="number" class="form-control" ng-model="est.estadisticas.iamayo"></div>
+						      <div style="width:300px"><input type="number" class="form-control" ng-model="est.estadisticas.iajunio"></div>
+						      <div style="width:300px"><input type="number" class="form-control" ng-model="est.estadisticas.iajulio"></div>
+						      <div style="width:300px"><input type="number" class="form-control" ng-model="est.estadisticas.iaagosto"></div>
+						      <div style="width:300px"><input type="number" class="form-control" ng-model="est.estadisticas.iaseptiembre"></div>
+						      <div style="width:300px"><input type="number" class="form-control" ng-model="est.estadisticas.iaoctubre"></div>
+						      <div style="width:300px"><input type="number" class="form-control" ng-model="est.estadisticas.ianoviembre"></div>
+						      <div style="width:300px"><input type="number" class="form-control" ng-model="est.estadisticas.iadiciembre"></div>
+						    </div>						    
+						</div>
+          </div>
+        </div>
+-->
+        <div  style="overflow: scroll; overflow: auto;">
+          <div class="widget-body">
+						<body>
+					    <form id="form1" runat="server">
+						    <div class="Table">
+					        <div class="Heading" style="background-color: #989191">
+					            <div class="Cell">
+					                <label>
+					                    Obras
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Presupuesto
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Enero
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Febrero
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Marzo
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Abril
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Mayo
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Junio
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Julio
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Agosto
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Septiembre
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Octubre
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Noviembre
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Diciembre
+					                </label>
+					            </div>
+					            <div class="Cell" ng-show="false" >
+					                <label>
+					                    Total Anual
+					                </label>
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iapresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iaenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iafebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iamarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iaabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iamayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iajunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iajulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iaagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iaseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iaoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ianoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iadiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.ingresoAnualia()">
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ibpresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ibenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ibfebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ibmarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ibabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ibmayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ibjunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ibjulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ibagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ibseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iboctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ibnoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ibdiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.ingresoAnualib()">
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.icpresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.icenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.icfebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.icmarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.icabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.icmayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.icjunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.icjulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.icagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.icseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.icoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.icnoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.icdiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.ingresoAnualic()">
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.idpresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.idenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.idfebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.idmarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.idabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.idmayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.idjunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.idjulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.idagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.idseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.idoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.idnoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iddiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.ingresoAnualid()">
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iepresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ieenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iefebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iemarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ieabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iemayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iejunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iejulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ieagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ieseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ieoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ienoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iediciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.ingresoAnualie()">
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ifpresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ifenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.iffebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ifmarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ifabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ifmayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ifjunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ifjulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ifagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ifseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ifoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ifnoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ifdiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.ingresoAnualif()">
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.igpresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.igenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.igfebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.igmarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.igabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.igmayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.igjunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.igjulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.igagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.igseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.igoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ignoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.igdiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.ingresoAnualig()">
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ihpresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ihenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ihfebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ihmarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ihabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ihmayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ihjunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ihjulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ihagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ihseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ihoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ihnoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.ihdiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.ingresoAnualih()">
+					            </div>
+					        </div>
+					        <div class="Row" ng-show="false">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Total por mes<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.itpresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.ingresoMensualienero()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.ingresoMensualifebrero()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.ingresoMensualimarzo()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.ingresoMensualiabril()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.ingresoMensualimayo()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.ingresoMensualijunio()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.ingresoMensualijulio()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.ingresoMensualiagosto()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.ingresoMensualiseptiembre()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.ingresoMensualioctubre()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.ingresoMensualinoviembre()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.ingresoMensualidiciembre()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.sumaTotalingresos()">
+					            </div>
+					        </div>
+						    </div>
+					    </form>
+						</body>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Gastos de Campo</h2>
+        </header>
+<!--
+        <div>
+          <div class="widget-body">
+            <table border="1" style="text-align: center, justify">
+						    <tr>
+						      <td>Obra</td>
+						      <td>Presupuesto</td>
+						      <td>Enero&nbsp;</td>
+						      <td>Febrero&nbsp;</td>
+						      <td>Marzo&nbsp;</td>
+						      <td>Abril&nbsp;</td>
+						      <td>Mayo&nbsp;</td>
+						      <td>Junio&nbsp;</td>
+						      <td>Julio&nbsp;</td>
+						      <td>Agosto&nbsp;</td>
+						      <td>Septiembre&nbsp;</td>
+						      <td>Octubre&nbsp;</td>
+						      <td>Noviembre&nbsp;</td>
+						      <td>Diciembre&nbsp;</td>
+						    </tr>
+						    <tr>
+						      <td><input type="text" class="form-control" placeholder="" ng-model="est.estadisticas.gcao"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcap"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcaenero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcafebrero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcamarzo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcaabril"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcamayo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcajunio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcajulio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcaagosto"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcaseptiembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcaoctubre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcanoviembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcadiciembre"></td>
+						    </tr>
+						    <tr>
+						      <td><input type="text" class="form-control" placeholder="" ng-model="est.estadisticas.gcbo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcbp"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcbenero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcbfebrero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcbmarzo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcbabril"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcbmayo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcbjunio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcbjulio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcbagosto"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcbseptiembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcboctubre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcbnoviembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcbdiciembre"></td>
+						    </tr>
+						    <tr>
+						      <td><input type="text" class="form-control" placeholder="" ng-model="est.estadisticas.gcco"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gccp"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gccenero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gccfebrero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gccmarzo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gccabril"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gccmayo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gccjunio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gccjulio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gccagosto"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gccseptiembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gccoctubre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gccnoviembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gccdiciembre"></td>
+						    </tr>
+						    <tr>
+						      <td><input type="text" class="form-control" placeholder="" ng-model="est.estadisticas.gcdo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcdp"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcdenero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcdfebrero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcdmarzo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcdabril"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcdmayo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcdjunio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcdjulio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcdagosto"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcdseptiembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcdoctubre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcdnoviembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcddiciembre"></td>
+						    </tr>
+						    <tr>
+						      <td><input type="text" class="form-control" placeholder="" ng-model="est.estadisticas.gceo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcep"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gceenero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcefebrero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcemarzo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gceabril"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcemayo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcejunio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcejulio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gceagosto"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gceseptiembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gceoctubre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcenoviembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcediciembre"></td>
+						    </tr>
+						    <tr>
+						      <td><input type="text" class="form-control" placeholder="" ng-model="est.estadisticas.gcfo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcfp"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcfenero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcffebrero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcfmarzo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcfabril"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcfmayo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcfjunio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcfjulio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcfagosto"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcfseptiembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcfoctubre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcfnoviembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcfdiciembre"></td>
+						    </tr>
+						    <tr>
+						      <td><input type="text" class="form-control" placeholder="" ng-model="est.estadisticas.gcgo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcgp"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcgenero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcgfebrero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcgmarzo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcgabril"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcgmayo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcgjunio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcgjulio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcgagosto"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcgseptiembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcgoctubre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcgnoviembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gcgdiciembre"></td>
+						    </tr>
+						    <tr>
+						      <td><input type="text" class="form-control" placeholder="" ng-model="est.estadisticas.gcho"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gchp"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gchenero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gchfebrero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gchmarzo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gchabril"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gchmayo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gchjunio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gchjulio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gchagosto"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gchseptiembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gchoctubre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gchnoviembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.gchdiciembre"></td>
+						    </tr>
+						</table>
+          </div>
+        </div>
+-->
+        <div  style="overflow: scroll; overflow: auto;">
+          <div class="widget-body">
+						<body>
+					    <form id="form1" runat="server">
+						    <div class="Table">
+					        <div class="Heading" style="background-color: #989191">
+					            <div class="Cell">
+					                <label>
+					                    Obras
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Presupuesto
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Enero
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Febrero
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Marzo
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Abril
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Mayo
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Junio
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Julio
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Agosto
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Septiembre
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Octubre
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Noviembre
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Diciembre
+					                </label>
+					            </div>
+					            <div class="Cell" ng-show="false" >
+					                <label>
+					                    Total Anual
+					                </label>
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcapresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcaenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcafebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcamarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcaabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcamayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcajunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcajulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcaagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcaseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcaoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcanoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcadiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.gastoCampoAnualgca()">
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcbpresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcbenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcbfebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcbmarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcbabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcbmayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcbjunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcbjulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcbagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcbseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcboctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcbnoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcbdiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.gastoCampoAnualgcb()">
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gccpresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gccenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gccfebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gccmarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gccabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gccmayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gccjunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gccjulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gccagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gccseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gccoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gccnoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gccdiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.gastoCampoAnualgcc()">
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcdpresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcdenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcdfebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcdmarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcdabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcdmayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcdjunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcdjulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcdagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcdseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcdoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcdnoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcddiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.gastoCampoAnualgcd()">
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcepresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gceenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcefebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcemarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gceabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcemayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcejunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcejulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gceagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gceseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gceoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcenoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcediciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.gastoCampoAnualgce()">
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcfpresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcfenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcffebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcfmarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcfabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcfmayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcfjunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcfjulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcfagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcfseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcfoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcfnoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcfdiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.gastoCampoAnualgcf()">
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcgpresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcgenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcgfebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcgmarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcgabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcgmayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcgjunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcgjulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcgagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcgseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcgoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcgnoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcgdiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.gastoCampoAnualgcg()">
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gchpresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gchenero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gchfebrero">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gchmarzo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gchabril">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gchmayo">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gchjunio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gchjulio">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gchagosto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gchseptiembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gchoctubre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gchnoviembre">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gchdiciembre">
+					            </div>
+					            <div class="Cell" ng-show="false">
+												<input type="number" value="0" ng-model="est.gastoCampoAnualgch()">
+					            </div>
+					        </div>
+					        <div class="Row" ng-show="false" >
+					            <div class="Cell">
+						            <label>
+													Total por mes<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.estadisticas.gcpresupuesto">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.gastoCampogcenero()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.gastoCampogcfebrero()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.gastoCampogcmarzo()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.gastoCampogcabril()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.gastoCampogcmayo()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.gastoCampogcjunio()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.gastoCampogcjulio()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.gastoCampogcagosto()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.gastoCampogcseptiembre()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.gastoCampogcoctubre()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.gastoCampogcnoviembre()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" value="0" ng-model="est.gastoCampogcdiciembre()">
+					            </div>
+					            <div class="Cell">
+												<input type="number" ng-show="false" value="0" ng-model="est.gastoCampogct()">
+					            </div>
+					        </div>
+						    </div>
+					    </form>
+						</body>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Indirectos</h2>
+        </header>
+<!--
+        <div>
+          <div class="widget-body">
+            <table border="1" style="text-align: center, justify">
+						    <tr>
+						      <td></td>
+						      <td>Enero&nbsp;</td>
+						      <td>Febrero&nbsp;</td>
+						      <td>Marzo&nbsp;</td>
+						      <td>Abril&nbsp;</td>
+						      <td>Mayo&nbsp;</td>
+						      <td>Junio&nbsp;</td>
+						      <td>Julio&nbsp;</td>
+						      <td>Agosto&nbsp;</td>
+						      <td>Septiembre&nbsp;</td>
+						      <td>Octubre&nbsp;</td>
+						      <td>Noviembre&nbsp;</td>
+						      <td>Diciembre&nbsp;</td>
+						    </tr>
+						    <tr>
+						      <td>Gastos Indirectos por mes</td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.renero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.rfebrero"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.rmarzo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.rabril"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.rmayo"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.rjunio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.rjulio"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.ragosto"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.rseptiembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.roctubre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.rnoviembre"></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.rdiciembre"></td>
+						    </tr>
+						    <tr>
+						      <td>Indirectos Empresa Anual</td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.ranual"></td>
+						    </tr>
+						</table>
+          </div>
+        </div>
+        <div>
+	        <table border="1" style="text-align: center, justify">
+					    <tr>
+					      <td>Obra</td>
+					      <td>% Indirectos</td>
+					    </tr>
+					    <tr>
+					      <td></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.oa"></td>
+					    </tr>
+					    <tr>
+					      <td></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.ob"></td>
+					    </tr>
+					    <tr>
+					      <td></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.oc"></td>
+					    </tr>
+					    <tr>
+					      <td></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.od"></td>
+					    </tr>
+					    <tr>
+					      <td></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.oe"></td>
+					    </tr>
+					    <tr>
+					      <td></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.of"></td>
+					    </tr>
+					    <tr>
+					      <td></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.og"></td>
+					    </tr>
+					    <tr>
+					      <td></td>
+						      <td><input type="number" class="form-control" placeholder="" ng-model="est.estadisticas.oh"></td>
+					    </tr>
+					</table>
+        </div>
+-->
+        <div  style="overflow: scroll; overflow: auto;">
+          <div class="widget-body">
+						<body>
+					    <form id="form1" runat="server">
+						    <div class="Table">
+					        <div class="Heading" style="background-color: #989191">
+					            <div style="background-color: #ffffff">
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Enero
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Febrero
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Marzo
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Abril
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Mayo
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Junio
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Julio
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Agosto
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Septiembre
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Octubre
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Noviembre
+					                </label>
+					            </div>
+					            <div class="Cell">
+					                <label>
+					                    Diciembre
+					                </label>
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Gastos Indirectos por Mes<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectogienero() | number : 2 }} %</label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectogifebrero() | number : 2 }} %</label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectogimarzo() | number : 2 }} %</label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectogiabril() | number : 2 }} %</label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectogimayo() | number : 2 }} %</label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectogijunio() | number : 2 }} %</label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectogijulio() | number : 2 }} %</label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectogiagosto() | number : 2 }} %</label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectogiseptiembre() | number : 2 }} %</label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectogioctubre() | number : 2 }} %</label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectoginoviembre() | number : 2 }} %</label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectogidiciembre() | number : 2 }} %</label>
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Indirectos Empresa Anual<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectoAnualgianuales() | number : 2 }} %</label>
+					            </div>
+					        </div>
+						    </div>
+					    </form>
+						</body>
+          </div>
+        </div>
+				<div>
+          <div class="widget-body">
+						<body>
+					    <form id="form1" runat="server">
+						    <div class="Table">
+					        <div class="Heading">
+					            <div class="Cell" style="background-color: #989191">
+					                <label>
+					                    Obras
+					                </label>
+					            </div>
+					            <div class="Cell" style="background-color: #989191">
+					                <label>
+					                    % Indirectos
+					                </label>
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectoAnualgia() | number : 2 }} %</label>
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectoAnualgib() | number : 2 }} %</label>
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectoAnualgic() | number : 2 }} %</label>
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectoAnualgid() | number : 2 }} %</label>
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectoAnualgie() | number : 2 }} %</label>
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectoAnualgif() | number : 2 }} %</label>
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectoAnualgig() | number : 2 }} %</label>
+					            </div>
+					        </div>
+					        <div class="Row">
+					            <div class="Cell" style="background-color: #989191">
+						            <label>
+													Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+						            </label>
+					            </div>
+					            <div class="Cell">
+												<label >{{est.gastoIndirectoAnualgih() | number : 2 }} %</label>
+					            </div>
+					        </div>
+						    </div>
+					    </form>
+						</body>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row"  ng-show="false">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Tabla Escondida</h2>
+        </header>
+        <div class="widget-body" style="overflow: scroll; overflow: auto;">
+					<body>
+				    <form id="form1" runat="server">
+					    <div class="Table">
+				        <div class="Heading">
+				            <div class="Cell">
+				                <label>
+				                    Obras
+				                </label>
+				            </div>
+				            <div class="Cell">
+				                <label>
+				                    Enero
+				                </label>
+				            </div>
+				            <div class="Cell">
+				                <label>
+				                    Febrero
+				                </label>
+				            </div>
+				            <div class="Cell">
+				                <label>
+				                    Marzo
+				                </label>
+				            </div>
+				            <div class="Cell">
+				                <label>
+				                    Abril
+				                </label>
+				            </div>
+				            <div class="Cell">
+				                <label>
+				                    Mayo
+				                </label>
+				            </div>
+				            <div class="Cell">
+				                <label>
+				                    Junio
+				                </label>
+				            </div>
+				            <div class="Cell">
+				                <label>
+				                    Julio
+				                </label>
+				            </div>
+				            <div class="Cell">
+				                <label>
+				                    Agosto
+				                </label>
+				            </div>
+				            <div class="Cell">
+				                <label>
+				                    Septiembre
+				                </label>
+				            </div>
+				            <div class="Cell">
+				                <label>
+				                    Octubre
+				                </label>
+				            </div>
+				            <div class="Cell">
+				                <label>
+				                    Noviembre
+				                </label>
+				            </div>
+				            <div class="Cell">
+				                <label>
+				                    Diciembre
+				                </label>
+				            </div>
+				            <div class="Cell">
+				                <label>
+				                    Total Anual
+				                </label>
+				            </div>
+				        </div>
+				        <div class="Row">
+				            <div class="Cell">
+					            <label>
+												Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+					            </label>
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaaenero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaafebrero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaamarzo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaaabril()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaamayo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaajunio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaajulio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaaagosto()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaaseptiembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaaoctubre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaanoviembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaadiciembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaatotal()">
+				            </div>
+				        </div>
+				        <div class="Row">
+				            <div class="Cell">
+					            <label>
+												Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+					            </label>
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidabenero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidabfebrero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidabmarzo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidababril()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidabmayo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidabjunio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidabjulio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidabagosto()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidabseptiembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaboctubre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidabnoviembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidabdiciembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidabtotal()">
+				            </div>
+				        </div>
+				        <div class="Row">
+				            <div class="Cell">
+					            <label>
+												Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+					            </label>
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidacenero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidacfebrero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidacmarzo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidacabril()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidacmayo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidacjunio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidacjulio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidacagosto()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidacseptiembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidacoctubre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidacnoviembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidacdiciembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidactotal()">
+				            </div>
+				        </div>
+				        <div class="Row">
+				            <div class="Cell">
+					            <label>
+												Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+					            </label>
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidadenero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidadfebrero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidadmarzo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidadabril()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidadmayo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidadjunio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidadjulio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidadagosto()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidadseptiembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidadoctubre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidadnoviembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaddiciembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidadtotal()">
+				            </div>
+				        </div>
+				        <div class="Row">
+				            <div class="Cell">
+					            <label>
+												Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+					            </label>
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaeenero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaefebrero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaemarzo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaeabril()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaemayo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaejunio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaejulio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaeagosto()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaeseptiembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaeoctubre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaenoviembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaediciembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaetotal()">
+				            </div>
+				        </div>
+				        <div class="Row">
+				            <div class="Cell">
+					            <label>
+												Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+					            </label>
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidafenero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaffebrero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidafmarzo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidafabril()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidafmayo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidafjunio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidafjulio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidafagosto()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidafseptiembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidafoctubre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidafnoviembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidafdiciembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidaftotal()">
+				            </div>
+				        </div>
+				        <div class="Row">
+				            <div class="Cell">
+					            <label>
+												Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+					            </label>
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidagenero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidagfebrero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidagmarzo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidagabril()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidagmayo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidagjunio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidagjulio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidagagosto()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidagseptiembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidagoctubre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidagnoviembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidagdiciembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidagtotal()">
+				            </div>
+				        </div>
+				        <div class="Row">
+				            <div class="Cell">
+					            <label>
+												Obra<!-- <input type="number" value="0" ng-model="est.estadisticas.nombredelacaja"> -->
+					            </label>
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidahenero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidahfebrero()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidahmarzo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidahabril()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidahmayo()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidahjunio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidahjulio()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidahagosto()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidahseptiembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidahoctubre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidahnoviembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidahdiciembre()">
+				            </div>
+				            <div class="Cell">
+											<input type="number" value="0" ng-model="est.escondidahtotal()">
+				            </div>
+				        </div>
+					    </div>
+				    </form>
+          </body>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Otro Widget</h2>
+        </header>
+        <div>
+          <div class="widget-body">
+	          Contenido 2
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
