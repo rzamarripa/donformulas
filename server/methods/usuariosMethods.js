@@ -19,5 +19,14 @@ Meteor.methods({
 		if (!Roles.userIsInRole(usuario, rol, grupo)) {
 	    throw new Meteor.Error(403, "Usted no tiene permiso para entrar a " + vista);
 	  }
+	},
+	cambiarEstatusUsuario : function(usuario_id){
+		var usuario = Meteor.users.findOne({_id:usuario_id});
+		var estatus = false;
+		if(usuario.profile.estatus == true)
+			estatus = false;
+		else
+			estatus = true;
+		Meteor.users.update({_id:usuario_id}, {$set : {'profile.estatus' : estatus}});
 	}
 });

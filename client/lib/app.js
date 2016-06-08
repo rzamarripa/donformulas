@@ -11,6 +11,7 @@ angular.module('formulas',
     'smartadmin',
     'datePicker',
     'ui.calendar',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ngFileUpload'
   ]
 );

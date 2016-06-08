@@ -82,6 +82,47 @@ angular.module('formulas').config(['$injector', function ($injector) {
 	        return $meteor.requireUser();
 	      }]
 	    }
+    })
+    .state('root.estadisticas', {
+      url: '/',
+      templateUrl: 'client/estadisticas/estadisticas.ng.html',
+      controller: 'EstadisticasCtrl as est',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+/*
+    .state('root.estadisticas', {
+      url: '/estadisticas',
+      templateUrl: 'client/estadisticas/estadisticas.ng.html',
+      controller: 'EstadisticasCtrl as est',
+    })
+*/
+    .state('root.empresas', {
+      url: '/empresas',
+      templateUrl: 'client/empresas/empresas.ng.html',
+      controller: 'EmpresasCtrl as empr',
+    })
+    .state('root.obras', {
+      url: '/obras',
+      templateUrl: 'client/obras/obras.ng.html',
+      controller: 'ObrasCtrl as obr',
+    })
+    .state('root.tipoProyecto', {
+      url: '/tipoProyecto',
+      templateUrl: 'client/tipoProyecto/tipoProyecto.ng.html',
+      controller: 'TipoProyectoCtrl as tipopro',
+    })
+    .state('root.empleados', {
+      url: '/empleados',
+      templateUrl: 'client/empleados/empleados.ng.html',
+      controller: 'EmpleadosCtrl as empl',
+    })
+    .state('root.usuarios', {
+      url: '/usuarios',
+      templateUrl: 'client/usuarios/usuarios.ng.html',
+      controller: 'UsuariosCtrl as usu',
     }); 
-}]);
- 
+}]);     

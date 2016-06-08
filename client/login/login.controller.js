@@ -2,12 +2,10 @@ angular.module('formulas').controller('LoginCtrl', ['$injector', function ($inje
   var $meteor = $injector.get('$meteor');
   var $state 	= $injector.get('$state');
   var toastr 	= $injector.get('toastr');
-
   this.credentials = {
     username: '',
     password: ''
   };
-
   this.login = function () {
     $meteor.loginWithPassword(this.credentials.username, this.credentials.password).then(
       function () {
