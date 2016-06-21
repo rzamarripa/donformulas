@@ -1,9 +1,9 @@
 angular.module("formulas")
-.controller("ObrasCtrl", ObrasCtrl);  
-function ObrasCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
+.controller("CostosCtrl", CostosCtrl);  
+function CostosCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
 $reactive(this).attach($scope);
 
-	this.subscribe('obras',()=>{
+	this.subscribe('costos',()=>{
 	return [{estatus:true}] 
     });
 
@@ -14,8 +14,8 @@ $reactive(this).attach($scope);
   this.action = true;
   
 	this.helpers({
-	  obras : () => {
-		  return Obras.find();
+	  costos : () => {
+		  return Costos.find();
 	  },
 	  empresas : () => {
 		  return Empresas.find();
@@ -23,28 +23,27 @@ $reactive(this).attach($scope);
   });
   
 	this.nuevo = true;  	  
-  this.nuevoObra = function()
+  this.nuevoCosto = function()
   {
     this.action = true;
     this.nuevo = !this.nuevo;
-    this.obra = {};		
+    this.costo = {};		
   };
   
   this.guardar = function(obra)
 	{
-		this.obra.estatus = true;
-		console.log(this.obra);
-		Obras.insert(this.obra);
-		toastr.success('Obra guardada.');
-		this.obra = {}; 
+		this.costo.estatus = true;
+		console.log(this.costo);
+		Costos.insert(this.costo);
+		toastr.success('Costo guardado.');
+		this.costo = {}; 
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
-		$state.go('root.obras')
 	};
 	
 	this.editar = function(id)
 	{
-    this.obra = Obras.findOne({_id:id});
+    this.costo = Costos.findOne({_id:id});
     this.action = false;
     $('.collapse').collapse('show');
     this.nuevo = false;
@@ -54,20 +53,20 @@ $reactive(this).attach($scope);
 	{
 		var idTemp = obra._id;
 		delete obra._id;		
-		Obras.update({_id:idTemp},{$set:obra});
+		Costos.update({_id:idTemp},{$set:obra});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 	};
 
 	this.cambiarEstatus = function(id)
 	{
-		var obra = Obras.findOne({_id:id});
+		var obra = Costos.findOne({_id:id});
 		if(obra.estatus == true)
 			obra.estatus = false;
 		else
 			obra.estatus = true;
 		
-		Obras.update({_id: id},{$set :  {estatus : obra.estatus}});
+		Costos.update({_id: id},{$set :  {estatus : obra.estatus}});
     };
 		
 };

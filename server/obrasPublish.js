@@ -1,3 +1,7 @@
-Meteor.publish("obras",function(){
-  	return Obras.find({estatus:true});
+Meteor.publish("obras",function(params){
+  	return Obras.find(params);
+});
+
+Meteor.publish("obra",function(params){
+  	return Obras.find(params);
 });

@@ -124,5 +124,30 @@ angular.module('formulas').config(['$injector', function ($injector) {
       url: '/usuarios',
       templateUrl: 'client/usuarios/usuarios.ng.html',
       controller: 'UsuariosCtrl as usu',
-    }); 
+    })
+       .state('root.partidas', {
+      url: '/partidas',
+      templateUrl: 'client/partidas/partidas.ng.html',
+      controller: 'PartidasCtrl as par',
+    })
+    .state('root.meses', {
+      url: '/meses/:id',
+      templateUrl: 'client/obras/meses.ng.html',
+      controller: 'MesesCtrl as mes',
+    })
+     .state('root.costos', {
+      url: '/costos/:id',
+      templateUrl: 'client/costos/costos.ng.html',
+      controller: 'CostosCtrl as cos',
+    })
+     .state('root.presupuestos', {
+      url: '/presupuestos/:id',
+      templateUrl: 'client/presupuestos/presupuestos.ng.html',
+      controller: 'PresupuestosCtrl as pres',
+    })
+     .state('root.conceptos', {
+      url: '/conceptos/:id',
+      templateUrl: 'client/partidas/conceptos.ng.html',
+      controller: 'ConceptosCtrl as con',
+    });
 }]);     
