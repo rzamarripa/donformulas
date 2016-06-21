@@ -53,11 +53,12 @@
  
 
 <br/>
-
+{{mes.costos}}
 <div class="well "  ng-if="mes.mes_id != ''">
 <div class="row">				
 	<div class="col-sm-4">
 		<h3 class="dark-grey">lista de Partidas</h3>
+		
 	<div class="row">
 			<div class="col-lg-12">
 				<ul class="list-group no-margin">
@@ -72,7 +73,7 @@
 <div class="col-sm-8" >
 		<div class="col-sm-3">
 		<label>Lista de Conceptos</label>
-
+		
 		<select  id="concepto" class="form-control" placeholder="Seleccione" ng-model="mes.presupuesto.concepto_id">
 						  <option ng-click="selectDepa" ng-repeat="concepto in mes.conceptos" value="{{concepto._id}}">
 						  	{{concepto.nombre}}
@@ -81,10 +82,10 @@
 	   	</div>
 	   <div ng-repeat="(key, costo) in mes.costos" class="col-sm-3">
 	   		<label for="{{key}}">{{costo.nombre}}</label>
-	   		<input id="{{key}}" class="form-control" ng-model="presupuesto.costos.key">
+	   		<input id="{{key}}" class="form-control" ng-model="costo.value">
 	   </div>
 
-	   <input type="submit" ng-click="mes.guardarPresupuesto()" value="Guardar" class="btn btn-primary">
+	   <input type="submit" ng-click="mes.guardarPresupuesto(mes.costos)" value="Guardar" class="btn btn-primary">
 	   </div>
 		  
 	<div class="col-sm-8" >
