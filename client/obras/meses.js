@@ -4,6 +4,9 @@ function MesesCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
 $reactive(this).attach($scope);
 	this.mes_id = '';
 	this.partida_id = '';
+	this.action = true;
+	this.presupuesto = {};
+	this.presupuesto.gastos = [];
 
 	this.subscribe('obra', () => {
 		return [{
@@ -16,22 +19,22 @@ $reactive(this).attach($scope);
 	});
 
 	this.subscribe('partidas',()=>{
-		return [{estatus:true}] 
-    });
+	return [{estatus:true}] 
+  });
 
-    this.subscribe('conceptos',()=>{
-		return [{partida_id: this.getReactively('partida_id'), estatus:true}] 
-    });
+  this.subscribe('conceptos',()=>{
+	return [{partida_id: this.getReactively('partida_id'), estatus:true}] 
+  });
 
-    this.subscribe('costos',()=>{
-		return [{estatus:true}] 
-    });
+  this.subscribe('costos',()=>{
+	return [{estatus:true}] 
+  });
 
-    this.subscribe('presupuestos',()=>{
-		return [{partida_id: this.getReactively('partida_id'),mes_id: this.getReactively('mes_id'),estatus:true}] 
-    });
+  this.subscribe('presupuestos',()=>{
+	return [{partida_id: this.getReactively('partida_id'),mes_id: this.getReactively('mes_id'),estatus:true}] 
+  });
 
-  this.action = true;
+  
   
 	this.helpers({
 	  obra : () => {
@@ -54,11 +57,12 @@ $reactive(this).attach($scope);
 	  },
   });
 
+		
+	this.mostrarMes = true;
+	this.accionMes = false;
+	
 
-   this.mostrarMes = true;
-   this.accionMes = false;
-
-     this.nuevoMes = function()
+  this.nuevoMes = function()
   {
     this.accionMes = true;
     this.mostrarMes = !this.mostrarMes;
@@ -68,6 +72,7 @@ $reactive(this).attach($scope);
 
   this.guardar = function(mes)
 	{
+		
 		this.mes.estatus = true;
 		mes.obra_id = $stateParams.id;
 		this.mes.mes_id = this.mes_id;
@@ -79,13 +84,18 @@ $reactive(this).attach($scope);
 		
 	};
 
-	this.guardarPresupuesto = function()
+	this.guardarPresupuesto = function(costos)
 	{
+		console.log(costos);
 		this.presupuesto.estatus = true;
 		this.presupuesto.partida_id = this.partida_id;
 		this.presupuesto.mes_id = this.mes_id;
 		//mes.obra_id = $stateParams.id;
 		//mes.partida_id = this.partida_id;
+		_.each(costos, function(costo){
+			delete costo.$$hashKey;
+		});
+		this.presupuesto.costos = costos;
 		console.log(this.presupuesto);
 		Presupuestos.insert(this.presupuesto);
 		toastr.success('presupuesto Agregado.');
@@ -139,6 +149,7 @@ $reactive(this).attach($scope);
 	 this.mostrarPresupuestos = function(id)
 	{
 		this.partida_id = id;
+		
 		console.log(id);
 	};
 
