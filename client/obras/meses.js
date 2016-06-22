@@ -82,8 +82,8 @@ $reactive(this).attach($scope);
 	this.guardarPresupuesto = function()
 	{
 		this.presupuesto.estatus = true;
-		this.presupuesto.partida = this.partida_id;
-		this.presupuesto.mes = this.mes_id;
+		this.presupuesto.partida_id = this.partida_id;
+		this.presupuesto.mes_id = this.mes_id;
 		//mes.obra_id = $stateParams.id;
 		//mes.partida_id = this.partida_id;
 		console.log(this.presupuesto);
