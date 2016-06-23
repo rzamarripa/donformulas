@@ -5,10 +5,21 @@
 			<a class="btn btn-primary btn-lg" 
 			ng-click="mes.nuevoMes()"><i class="fa fa-plus"></i></a><br/><br>
 			  </div>
-			<div class="col-sm-4">
+
+			   	<div class="col-sm-4">
+					    <input placeholder="Asignar fecha" ng-show="mes.accionMes" lang="spanish" date-time class="form-control" view="year" max-view="year" min-view="month" ng-model="mes.mes.fecha"/>
+			    	</div>
+
+
+
+			<!--<div class="col-sm-4">
 			 <input placeholder="Asignar fecha" language='es' class="form-control" type="month" 
 				 ng-show="mes.accionMes" ng-model="mes.mes.fecha"/> 
-		    </div>
+		    </div>-->
+
+
+
+
 		    <div class="col-sm-4">
 		       <a class="btn btn-primary" ng-click="mes.guardar(mes.mes)" ng-show="mes.accionMes">
 		      Asignar Fecha</a>
@@ -53,42 +64,62 @@
  
 
 <br/>
-{{mes.costos}}
+
 <div class="well "  ng-if="mes.mes_id != ''">
 <div class="row">				
-	<div class="col-sm-4">
+	<div class="col-sm-12">
+
 		<h3 class="dark-grey">lista de Partidas</h3>
-		
 	<div class="row">
-			<div class="col-lg-12">
+			<div class="col-sm-4">
 				<ul class="list-group no-margin">
 					<li ng-repeat="partida in mes.partidas" class="list-group-item">
 						<a href="" ng-click="mes.mostrarPresupuestos(partida._id)" >{{partida.nombre}}</a>
 					</li>
 				</ul>
 			</div>
-		</div>		
-	</div>
-<br/>
-<div class="col-sm-8" >
-		<div class="col-sm-3">
+			
+
+
+		
+		<div class="row">
+		<div class="col-sm-6 ">
 		<label>Lista de Conceptos</label>
 		
 		<select  id="concepto" class="form-control" placeholder="Seleccione" ng-model="mes.presupuesto.concepto_id">
 						  <option ng-click="selectDepa" ng-repeat="concepto in mes.conceptos" value="{{concepto._id}}">
 						  	{{concepto.nombre}}
 						  </option>
-						</select><br/>
-	   	</div>
-	   <div ng-repeat="(key, costo) in mes.costos" class="col-sm-3">
+						</select>
+		   </div>
+	   
+
+	  
+	   <div ng-repeat="(key, costo) in mes.costos" class="col-sm-2 ">
 	   		<label for="{{key}}">{{costo.nombre}}</label>
 	   		<input id="{{key}}" class="form-control" ng-model="costo.value">
-	   </div>
 
-	   <input type="submit" ng-click="mes.guardarPresupuesto(mes.costos)" value="Guardar" class="btn btn-primary">
+	   </div>	
+
 	   </div>
+	 
+	  
+        
+          <div class="col-sm-12 col-sm-offset-9">
+	         <input type="submit" ng-click="mes.guardarPresupuesto(mes.costos)" value="Guardar" class="btn btn-primary"><br/>
+	       </div>   
+
+	   </div>
+	   </div>	
+	     
+	   
+	   
+	 
+	  
+	  
 		  
-	<div class="col-sm-8" >
+	<div class="col-sm-8 col-sm-offset-4" >
+	<br/>
 		<div class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-id-2" data-widget-editbutton="false" role="widget">						
 		<header role="heading"><div class="jarviswidget-ctrls" role="menu"><a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> </div>
 			<span class="widget-icon"> <i class="fa fa-table"></i> </span>
@@ -96,12 +127,13 @@
 		<span class="jarviswidget-loader" style="display: none;"><i class="fa fa-refresh fa-spin"></i></span></header>
 		<div role="content" style="display: block;">
 			<div class="widget-body no-padding">
-				<div class="table-responsive">					
+				<div class="table-responsive">			
+						
 					<table class="table table-hover">
 					<thead>
 							<tr>
-					
-								<th ng-repeat="presupuesto in mes.presupuestos">{{mes.getCosto(presupuesto.costo_id)}}</th>
+								<th>CONCEPTO</th>
+								<th ng-repeat="costo in mes.costos">{{costo.nombre}}</th>
 								
 							
 								
@@ -110,6 +142,7 @@
 						<tbody>
 							<tr ng-repeat="presupuesto in mes.presupuestos">
 								<td>{{mes.getConcepto(presupuesto.concepto_id)}}</td>
+								<td ng-repeat="costo in presupuesto.costos">{{costo.value | currency}}</td>
 								<!--<td ng-repeat="presupuesto in mes.presupuestos"><input type="text"  class="form-control" placeholder="Correo" ng-model="mes.presupuesto.total" ></td>-->
 							</tr>
 							
@@ -119,7 +152,7 @@
 			</div>
 		</div>
 	</div>
-	</div>
+   </div> 
 </div>
 </div>
 

@@ -74,6 +74,8 @@ $reactive(this).attach($scope);
 	{
 		
 		this.mes.estatus = true;
+		moment.locale("es")
+		this.mes.fecha = moment().format('L');
 		mes.obra_id = $stateParams.id;
 		this.mes.mes_id = this.mes_id;
 		console.log(this.mes);
@@ -163,6 +165,6 @@ $reactive(this).attach($scope);
 	{
 		var costo = Costos.findOne(costo_id);
 		if(costo)
-		return costo.nombre;
+		return costo.value;
 	};		
 };
