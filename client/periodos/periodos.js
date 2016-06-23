@@ -1,19 +1,21 @@
 angular.module("formulas")
-.controller("MesesCtrl", MesesCtrl);  
-function MesesCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
+.controller("PeriodosCtrl", PeriodosCtrl);  
+function PeriodosCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
 $reactive(this).attach($scope);
-
 	this.mes_id = '';
 	this.partida_id = '';
 	this.action = true;
 	this.presupuesto = {};
 	this.presupuesto.gastos = [];
 
-	this.subscribe('obra', () => {
-		return [{ _id : $stateParams.id, estatus : true}]});
+	this.subscribe('mes', () => {
+		return [{
+			_id : $stateParams.id, estatus : true
+		}]
+	});
 
-	this.subscribe('meses',()=>{
-		return [{ obra_id : $stateParams.id, estatus:true}]
+	this.subscribe('periodos',()=>{
+		return [{ mes_id : $stateParams.id, estatus:true}]
 	});
 
 	this.subscribe('partidas',()=>{
@@ -28,21 +30,29 @@ $reactive(this).attach($scope);
 	return [{estatus:true}] 
   });
 
+  this.subscribe('meses',()=>{
+	return [{estatus:true}] 
+  });
+
+  this.subscribe('Periodos',()=>{
+	return [{estatus:true}] 
+  });
+
   this.subscribe('presupuestos',()=>{
-	return [{partida_id: this.getReactively('partida_id'),mes_id: this.getReactively('mes_id'),estatus:true}] 
+	return [{partida_id: this.getReactively('partida_id'),periodo_id: this.getReactively('periodo_id'),estatus:true}] 
   });
 
   
   
 	this.helpers({
-	  obra : () => {
-		  return Obras.findOne($stateParams.id);
+	  meses : () => {
+		  return Meses.find();
 	  },
 	  partidas : () => {
-		  return Partidas.find();
+		  return Partidas.find($stateParams.id);
 	  },
-	  meses : () => {
-	  return Meses.find();
+	  obras : () => {
+	  return Obras.findOne();
 	  },
 	   costos : () => {
 	  return Costos.find();
@@ -53,43 +63,46 @@ $reactive(this).attach($scope);
 	  presupuestos : () => {
 	  return Presupuestos.find();
 	  },
+	  Periodos : () => {
+	  return Periodos.find();
+	  },
   });
 
 		
-	this.mostrarMes = true;
-	this.accionMes = false;
+	this.mostrarPeriodo = true;
+	this.accionPeriodo = false;
 	
 
-  this.nuevoMes = function()
+  this.nuevoPeriodo = function()
   {
-    this.accionMes = true;
-    this.mostrarMes = !this.mostrarMes;
-    this.mes = {}; 
+    this.accionPeriodo = true;
+    this.mostrarPeriodo = !this.mostrarPeriodo;
+    this.periodo = {}; 
   	
   };
 
-  this.guardar = function(mes)
+  this.guardar = function(periodo)
 	{
 		
-		this.mes.estatus = true;
-		mes.obra_id = $stateParams.id;
+		this.periodo.estatus = true;
+		periodo.periodo_id = $stateParams.id;
 		this.mes.mes_id = this.mes_id;
-		console.log(this.mes);
-		Meses.insert(this.mes);
-		toastr.success('mes Agregado.');
-		this.accionMes = false;
-		this.mes = {}; 
+		console.log(this.periodo);
+		periodoes.insert(this.periodo);
+		toastr.success('periodo Agregado.');
+		this.accionperiodo = false;
+		this.periodo = {}; 
 		
 	};
 
-	this.guardarPresupuesto = function(costos)
+	/*this.guardarPresupuesto = function(costos)
 	{
 		console.log(costos);
 		this.presupuesto.estatus = true;
 		this.presupuesto.partida_id = this.partida_id;
-		this.presupuesto.mes_id = this.mes_id;
-		//mes.obra_id = $stateParams.id;
-		//mes.partida_id = this.partida_id;
+		this.presupuesto.periodo_id = this.periodo_id;
+		//periodo.periodo_id = $stateParams.id;
+		//periodo.partida_id = this.partida_id;
 		_.each(costos, function(costo){
 			delete costo.$$hashKey;
 		});
@@ -99,40 +112,40 @@ $reactive(this).attach($scope);
 		toastr.success('presupuesto Agregado.');
 		this.presupuesto = {}; 
 		
-	};
+	};*/
 	
 	this.editar = function(id)
 	{
-    this.obra = Meses.findOne({_id:id});
+    this.periodo = Periodos.findOne({_id:id});
     this.action = false;
     $('.collapse').collapse('show');
     this.nuevo = false;
 	};
 	
-	this.actualizar = function(obra)
+	this.actualizar = function(periodo)
 	{
-		var idTemp = obra._id;
-		delete obra._id;		
-		Meses.update({_id:idTemp},{$set:obra});
+		var idTemp = periodo._id;
+		delete periodo._id;		
+		periodoes.update({_id:idTemp},{$set:periodo});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 	};
 
 	this.cambiarEstatus = function(id)
 	{
-	    var mes;
+	    var periodo;
 	    var r = confirm("Esta seguro de borrar esta fecha");
 	    if (r == true) {
-	        txt = mes = Meses.findOne({_id:id});
-		if(mes.estatus == true)
-			mes.estatus = false;
+	        txt = periodo = periodoes.findOne({_id:id});
+		if(periodo.estatus == true)
+			periodo.estatus = false;
 		else
-			mes.estatus = true;
+			periodo.estatus = true;
 		
-		Meses.update({_id: id},{$set :  {estatus : mes.estatus}});
+		periodoes.update({_id: id},{$set :  {estatus : periodo.estatus}});
 
 	    } else {
-	        mes.estatus = true;
+	        periodo.estatus = true;
 	    }
     };
 
@@ -141,7 +154,7 @@ $reactive(this).attach($scope);
 		this.presupuesto = {}; 
 		console.log(id);
 		//rc.nada = nombre;
-		this.mes_id = id;
+		this.periodo_id = id;
 	};
 
 	 this.mostrarPresupuestos = function(id)
@@ -162,11 +175,5 @@ $reactive(this).attach($scope);
 		var costo = Costos.findOne(costo_id);
 		if(costo)
 		return costo.value;
-	};
-
-	this.periodo= function(mes)
-	{
-		//mes.mes_id = $stateParams.id;
-		mes.mes_id = $stateParams.id;	
-	};	
+	};		
 };

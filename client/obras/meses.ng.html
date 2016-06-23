@@ -28,6 +28,7 @@
     </div>
   </div>
 
+
   <div class="well">	  
 	<div class="row"> 
 		<div class="col-sm-12">	
@@ -68,6 +69,7 @@
 <div class="well "  ng-if="mes.mes_id != ''">
 <div class="row">				
 	<div class="col-sm-12">
+	<a href="/periodos/{{mes._id}}" ng-click="mes.periodo(mes.mes)" class="pull-right" > lista de Periodos</a>
 
 		<h3 class="dark-grey">lista de Partidas</h3>
 	<div class="row">
@@ -112,11 +114,6 @@
 	   </div>
 	   </div>	
 	     
-	   
-	   
-	 
-	  
-	  
 		  
 	<div class="col-sm-8 col-sm-offset-4" >
 	<br/>
@@ -155,30 +152,3 @@
    </div> 
 </div>
 </div>
-
-<!--/////////////////////////////////////////////////CAGADERO PARTE DE LOS WIDGETS//////////////////////////////////////////
-	<div class="col-sm-12">
-	<div class="row">
-	<div class="jarviswidget jarviswidget-sortable" id="wid-id-0" role="widget" style=""   ng-repeat="Mes in mes.meses">
-	<header role="heading"><div class="jarviswidget-ctrls" role="menu">
- 
-	 <a href="javascript:void(0);" class="button-icon jarviswidget-delete-btn" data-placement="bottom"  
-	 ng-click="mes.cambiarEstatus(Mes._id)"   ><i class="fa fa-times" ></i></a></div>
-		<h2><strong>{{Mes.fecha | date:"MMMM-yyyy"}}</strong></h2>	<br/>			
-	<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
-	<div role="content">
-		<div class="jarviswidget-editbox">
-			<input class="form-control" type="text">
-			<span class="note"><i class="fa fa-check text-success"></i> Change title to update and save instantly!</span>
-			
-		</div>
-		<div class="widget-body">
-		<br/>
-			
-			<p ng-repeat="partidas in mes.partidas"> <a href="/presupuestos/{{obra._id}}">{{partidas.nombre}}</a></p>
-		</div>	
-	</div>
-	</div>
-</div>
-</div>-->
-	

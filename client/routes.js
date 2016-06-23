@@ -149,5 +149,10 @@ angular.module('formulas').config(['$injector', function ($injector) {
       url: '/conceptos/:id',
       templateUrl: 'client/partidas/conceptos.ng.html',
       controller: 'ConceptosCtrl as con',
+    })
+     .state('root.periodos', {
+      url: '/periodos/:id',
+      templateUrl: 'client/periodos/periodos.ng.html',
+      controller: 'PeriodosCtrl as per',
     });
 }]);     
