@@ -131,7 +131,7 @@ angular.module('formulas').config(['$injector', function ($injector) {
       controller: 'PartidasCtrl as par',
     })
     .state('root.meses', {
-      url: '/meses/:id',
+      url: '/obra/:id',
       templateUrl: 'client/obras/meses.ng.html',
       controller: 'MesesCtrl as mes',
     })
@@ -149,6 +149,11 @@ angular.module('formulas').config(['$injector', function ($injector) {
       url: '/conceptos/:id',
       templateUrl: 'client/partidas/conceptos.ng.html',
       controller: 'ConceptosCtrl as con',
+    })
+      .state('root.gastos', {
+      url: '/gastos/:id',
+      templateUrl: 'client/gastos/gastos.ng.html',
+      controller: 'GastosCtrl as gas',
     })
      .state('root.periodos', {
       url: '/periodos/:id',

@@ -7,6 +7,7 @@ $reactive(this).attach($scope);
 	this.partida_id = '';
 	this.action = true;
 	this.presupuesto = {};
+	this.periodo = {};
 	this.presupuesto.gastos = [];
 
 	this.subscribe('obra', () => {
@@ -28,7 +29,14 @@ $reactive(this).attach($scope);
 	return [{estatus:true}] 
   });
 
+  this.subscribe('gastos',()=>{
+	return [{estatus:true}] 
+  });
+
   this.subscribe('presupuestos',()=>{
+	return [{partida_id: this.getReactively('partida_id'),mes_id: this.getReactively('mes_id'),estatus:true}] 
+  });
+  this.subscribe('periodos',()=>{
 	return [{partida_id: this.getReactively('partida_id'),mes_id: this.getReactively('mes_id'),estatus:true}] 
   });
 
@@ -53,11 +61,19 @@ $reactive(this).attach($scope);
 	  presupuestos : () => {
 	  return Presupuestos.find();
 	  },
+	  periodos : () => {
+	  return Periodos.find();
+	  },
+	  gastos : () => {
+	  return Gastos.find();
+	  },
   });
 
 		
 	this.mostrarMes = true;
 	this.accionMes = false;
+	this.accionPresupuesto = false;
+	this.accionPeriodo = false;
 	
 
   this.nuevoMes = function()
@@ -72,6 +88,8 @@ $reactive(this).attach($scope);
 	{
 		
 		this.mes.estatus = true;
+		this.mes = moment.locale('es');
+		this.mes.fecha = moment().format('MMMM-YYYY')
 		mes.obra_id = $stateParams.id;
 		this.mes.mes_id = this.mes_id;
 		console.log(this.mes);
@@ -98,6 +116,17 @@ $reactive(this).attach($scope);
 		Presupuestos.insert(this.presupuesto);
 		toastr.success('presupuesto Agregado.');
 		this.presupuesto = {}; 
+		
+	};
+	this.guardarPeriodo = function(periodo)
+	{
+		this.periodo.estatus = true;
+		this.periodo.partida_id = this.partida_id;
+		this.periodo.mes_id = this.mes_id;
+		console.log(periodo);
+		Periodos.insert(periodo);
+		toastr.success('Periodo Agregado.');
+		this.periodo = {}; 
 		
 	};
 	
@@ -136,12 +165,36 @@ $reactive(this).attach($scope);
 	    }
     };
 
+    this.mostrarListas= function(id)
+	{
+
+		this.action = false;
+		this.mes_id = id;
+		this.accionPresupuesto = true;
+		this.accionPeriodo = true;
+
+	
+	};
+
     this.mostrarArchivos= function(id)
 	{
 		this.presupuesto = {}; 
 		console.log(id);
 		//rc.nada = nombre;
 		this.mes_id = id;
+		this.accionPresupuesto = false;
+		this.accionPeriodo = true;
+	
+	};
+	 this.mostrarPeriodo= function(id)
+	{
+		this.periodo = {}; 
+		console.log(id);
+		//rc.nada = nombre;
+		this.mes_id = id;
+		this.accionPeriodo = false;
+		this.accionPresupuesto = true;
+	
 	};
 
 	 this.mostrarPresupuestos = function(id)
@@ -157,11 +210,18 @@ $reactive(this).attach($scope);
 		if(concepto)
 		return concepto.nombre;
 	};
+
 	this.getCosto= function(costo_id)
 	{
 		var costo = Costos.findOne(costo_id);
 		if(costo)
-		return costo.value;
+		return costo.nombre;
+	};
+	this.getGasto= function(gasto_id)
+	{
+		var gasto = Gastos.findOne(gasto_id);
+		if(gasto)
+		return gasto.nombre;
 	};
 
 	this.periodo= function(mes)
