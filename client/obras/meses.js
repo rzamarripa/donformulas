@@ -91,6 +91,7 @@ $reactive(this).attach($scope);
 		this.mes.mes = moment(mes.fecha).format('MMMM-YYYY')
 		mes.obra_id = $stateParams.id;
 		this.mes.mes_id = this.mes_id;
+		var suma  += costos[0] + costos[1] + costos[2] + costos[3]
 		console.log(this.mes);
 		Meses.insert(this.mes);
 		toastr.success('Mes Agregado.');
