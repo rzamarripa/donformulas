@@ -88,7 +88,7 @@ $reactive(this).attach($scope);
 	{
 		
 		this.mes.estatus = true;
-		this.mes = moment.locale('es');
+		
 		this.mes.fecha = moment().format('MMMM-YYYY')
 		mes.obra_id = $stateParams.id;
 		this.mes.mes_id = this.mes_id;
