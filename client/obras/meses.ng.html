@@ -138,6 +138,7 @@
 							<tr ng-repeat="presupuesto in mes.presupuestos">
 								<td>{{mes.getConcepto(presupuesto.concepto_id)}}</td>
 								<td ng-repeat="costo in presupuesto.costos">{{costo.value | currency}}</td>
+								<td>{{mes.totalPre(presupuesto.costos) | currency}}</td>
 								<!--<td ng-repeat="presupuesto in mes.presupuestos"><input type="text"  class="form-control" placeholder="Correo" ng-model="mes.presupuesto.total" ></td>-->
 							</tr>
 							

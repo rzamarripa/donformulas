@@ -50,22 +50,22 @@ $reactive(this).attach($scope);
 		  return Partidas.find();
 	  },
 	  meses : () => {
-	  return Meses.find();
+	  	return Meses.find();
 	  },
-	   costos : () => {
-	  return Costos.find();
+	  costos : () => {
+			return Costos.find();
 	  },
 	  conceptos : () => {
-	  return Conceptos.find();
+	  	return Conceptos.find();
 	  },
 	  presupuestos : () => {
-	  return Presupuestos.find();
+	  	return Presupuestos.find();
 	  },
 	  periodos : () => {
-	  return Periodos.find();
+	  	return Periodos.find();
 	  },
 	  gastos : () => {
-	  return Gastos.find();
+	  	return Gastos.find();
 	  },
   });
 
@@ -95,8 +95,7 @@ $reactive(this).attach($scope);
 		Meses.insert(this.mes);
 		toastr.success('Mes Agregado.');
 		this.accionMes = false;
-		this.mes = {}; 
-		
+		this.mes = {};		
 	};
 
 	this.guardarPresupuesto = function(costos)
@@ -228,4 +227,13 @@ $reactive(this).attach($scope);
 		//mes.mes_id = $stateParams.id;
 		mes.mes_id = $stateParams.id;	
 	};	
+	
+	this.totalPre = function(costos){
+		console.log(costos);
+		var suma = 0.00;
+		_.each(costos, function(costo){
+			suma += parseFloat(costo.value);
+		});
+		return suma;
+	}
 };
