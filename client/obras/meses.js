@@ -86,15 +86,14 @@ $reactive(this).attach($scope);
 
   this.guardar = function(mes)
 	{
-		
+		moment.locale("es"); 
 		this.mes.estatus = true;
-		
-		this.mes.fecha = moment().format('MMMM-YYYY')
+		this.mes.mes = moment(mes.fecha).format('MMMM-YYYY')
 		mes.obra_id = $stateParams.id;
 		this.mes.mes_id = this.mes_id;
 		console.log(this.mes);
 		Meses.insert(this.mes);
-		toastr.success('mes Agregado.');
+		toastr.success('Mes Agregado.');
 		this.accionMes = false;
 		this.mes = {}; 
 		
