@@ -130,6 +130,11 @@ angular.module('formulas').config(['$injector', function ($injector) {
       templateUrl: 'client/partidas/partidas.ng.html',
       controller: 'PartidasCtrl as par',
     })
+    .state('root.planes', {
+      url: '/planes',
+      templateUrl: 'client/planes/planes.ng.html',
+      controller: 'PlanesCtrl as pl',
+    })
     .state('root.meses', {
       url: '/obra/:id',
       templateUrl: 'client/obras/meses.ng.html',
