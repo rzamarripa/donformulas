@@ -9,7 +9,8 @@ $reactive(this).attach($scope);
 	this.presupuesto = {};
 	this.periodo = {};
 	this.presupuesto.gastos = [];
-
+	this.panelId = "";
+	this.tipoPeriodo = 'gasto';
 	this.subscribe('obra', () => {
 		return [{ _id : $stateParams.id, estatus : true}]});
 
@@ -37,7 +38,7 @@ $reactive(this).attach($scope);
 	return [{partida_id: this.getReactively('partida_id'),mes_id: this.getReactively('mes_id'),estatus:true}] 
   });
   this.subscribe('periodos',()=>{
-	return [{partida_id: this.getReactively('partida_id'),mes_id: this.getReactively('mes_id'),estatus:true}] 
+	return [{partida_id: this.getReactively('partida_id'),tipo: this.getReactively('tipoPeriodo'),mes_id: this.getReactively('mes_id'),estatus:true}] 
   });
 
   
@@ -50,26 +51,26 @@ $reactive(this).attach($scope);
 		  return Partidas.find();
 	  },
 	  meses : () => {
-	  return Meses.find();
+	  	return Meses.find();
 	  },
-	   costos : () => {
-	  return Costos.find();
+	  costos : () => {
+			return Costos.find();
 	  },
 	  conceptos : () => {
-	  return Conceptos.find();
+	  	return Conceptos.find();
 	  },
 	  presupuestos : () => {
-	  return Presupuestos.find();
+	  	return Presupuestos.find();
 	  },
 	  periodos : () => {
-	  return Periodos.find();
+	  	return Periodos.find();
 	  },
 	  gastos : () => {
-	  return Gastos.find();
+	  	return Gastos.find();
 	  },
   });
 
-		
+	this.panelColor = false;	
 	this.mostrarMes = true;
 	this.accionMes = false;
 	this.accionPresupuesto = false;
@@ -95,8 +96,7 @@ $reactive(this).attach($scope);
 		Meses.insert(this.mes);
 		toastr.success('Mes Agregado.');
 		this.accionMes = false;
-		this.mes = {}; 
-		
+		this.mes = {};		
 	};
 
 	this.guardarPresupuesto = function(costos)
@@ -122,6 +122,10 @@ $reactive(this).attach($scope);
 		this.periodo.estatus = true;
 		this.periodo.partida_id = this.partida_id;
 		this.periodo.mes_id = this.mes_id;
+		if(periodo.costo_id != undefined)
+			periodo.tipo = 'costo';
+		if(periodo.gasto_id != undefined)
+			periodo.tipo = 'gasto';
 		console.log(periodo);
 		Periodos.insert(periodo);
 		toastr.success('Periodo Agregado.');
@@ -166,11 +170,12 @@ $reactive(this).attach($scope);
 
     this.mostrarListas= function(id)
 	{
-
+		this.panelId = id;
 		this.action = false;
 		this.mes_id = id;
 		this.accionPresupuesto = true;
 		this.accionPeriodo = true;
+		this.panelColor = true;
 
 	
 	};
@@ -183,6 +188,7 @@ $reactive(this).attach($scope);
 		this.mes_id = id;
 		this.accionPresupuesto = false;
 		this.accionPeriodo = true;
+		this.mostrarFormPre = true;
 	
 	};
 	 this.mostrarPeriodo= function(id)
@@ -193,13 +199,15 @@ $reactive(this).attach($scope);
 		this.mes_id = id;
 		this.accionPeriodo = false;
 		this.accionPresupuesto = true;
+		this.mostrarFormPre = true;
 	
 	};
 
 	 this.mostrarPresupuestos = function(id)
 	{
 		this.partida_id = id;
-		
+		this.mostrarFormPre = false;
+		this.gastoCosto = false;
 		console.log(id);
 	};
 
@@ -228,4 +236,56 @@ $reactive(this).attach($scope);
 		//mes.mes_id = $stateParams.id;
 		mes.mes_id = $stateParams.id;	
 	};	
+	
+	this.totalPre = function(costos){
+		console.log(costos);
+		var suma = 0.00;
+		_.each(costos, function(costo){
+			suma += parseFloat(costo.value);
+		});
+		return suma;
+	}
+
+	this.totalPer = function(periodo){
+		console.log(periodo);
+		var suma = periodo.comprasIva + periodo.comprasSinIva + periodo.contadoIva + periodo.contadoSinIva;
+		return suma;
+	}
+
+     
+    this.mostrarFormPre = true;
+    this.clickPartida = function()
+   	{
+	   this.mostrarFormPre = false;
+	}
+
+
+    this.gastoCosto = false;
+	this.gastoCostos = function()
+   	{
+   		this.gastoCosto = true;
+	    console.log(this.gastoCosto);
+	    if (this.tipoPeriodo == 'gasto') 
+	    {
+	    	this.tipoPeriodo = 'costo';
+
+	    };
+	}
+
+	this.gastoCostosito = function()
+   	{
+   		this.gastoCosto = false;
+   		this.mostrarFormPre = false;
+	    console.log(this.gastoCosto);
+	}
+
+
+
+    this.cambio = true;
+	this.cambioTabla = function()
+	{
+		this.cambio = !this.cambio;
+		console.log(this.cambio);
+
+	}
 };
