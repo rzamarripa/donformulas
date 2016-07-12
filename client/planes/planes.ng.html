@@ -28,7 +28,7 @@
 				    </div>
 			    	<div class="col-sm-6">
 					    <label for="domicilio">Factor de Recuperación</label>
-					    <input type="number" class="form-control" placeholder="" ng-model="pl.plan.factorRecuperacion" required>
+							<label><span class="form-control">{{pl.plan.factorRecuperacion}}</span></label>
 			    	</div>
 				    <div class="col-sm-6">
 					    <label>Total de Egresos</label>
@@ -58,7 +58,7 @@
 									<label>Gastos Fijos de Oficina</label>
 						    </div>
 						    <div class="col-sm-2">
-					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.gastosFijosOficina" required>
+					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.gastosFijosOficina" required>
 						    </div>
 						    <div class="col-sm-2">
 					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.gastosFijosOficina1" required>
@@ -80,7 +80,7 @@
 									<label>Gastos Variables de Oficina</label>
 						    </div>
 						    <div class="col-sm-2">
-					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.gastosVariablesOficina" required>
+					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.gastosVariablesOficina" required>
 						    </div>
 						    <div class="col-sm-2">
 					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.gastosVariablesOficina1" required>
@@ -102,7 +102,7 @@
 									<label>Gastos Indirectos de Campo</label>
 						    </div>
 						    <div class="col-sm-2">
-					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.gastosIndirectosCampo" required>
+					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.gastosIndirectosCampo" required>
 						    </div>
 						    <div class="col-sm-2">
 					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.gastosIndirectosCampo1" required>
@@ -158,7 +158,7 @@
 					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.costosDirectosMateriales1" required>
 						    </div>
 						    <div class="col-sm-2">
-					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.costosDirectosMateriales2" required>
+					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.costosDirectosMateriales2" required>
 						    </div>
 						    <div class="col-sm-2">
 					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.costosDirectosMateriales3" required>
@@ -180,7 +180,7 @@
 					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.costosDirectosMaquinarias1" required>
 						    </div>
 						    <div class="col-sm-2">
-					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.costosDirectosMaquinarias2" required>
+					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.costosDirectosMaquinarias2" required>
 						    </div>
 						    <div class="col-sm-2">
 					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.costosDirectosMaquinarias3" required>
@@ -202,7 +202,7 @@
 					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.costosDirectosManoObra1" required>
 						    </div>
 						    <div class="col-sm-2">
-					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.costosDirectosManoObra2" required>
+					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.costosDirectosManoObra2" required>
 						    </div>
 						    <div class="col-sm-2">
 					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.costosDirectosManoObra3" required>
@@ -224,7 +224,7 @@
 					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.costosDirectosCombustibleFleteTransporte1" required>
 						    </div>
 						    <div class="col-sm-2">
-					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.costosDirectosCombustibleFleteTransporte2" required>
+					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.costosDirectosCombustibleFleteTransporte2" required>
 						    </div>
 						    <div class="col-sm-2">
 					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.costosDirectosCombustibleFleteTransporte3" required>
@@ -246,7 +246,7 @@
 					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.costosDirectosRentas1" required>
 						    </div>
 						    <div class="col-sm-2">
-					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.costosDirectosRentas2" required>
+					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.costosDirectosRentas2" required>
 						    </div>
 						    <div class="col-sm-2">
 					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.costosDirectosRentas3" required>
@@ -268,7 +268,7 @@
 					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.costosDirectosSubcontratos1" required>
 						    </div>
 						    <div class="col-sm-2">
-					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.costosDirectosSubcontratos2" required>
+					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.costosDirectosSubcontratos2" required>
 						    </div>
 						    <div class="col-sm-2">
 					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.costosDirectosSubcontratos3" required>
@@ -290,7 +290,7 @@
 					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.costosDirectosGastosVarios1" required>
 						    </div>
 						    <div class="col-sm-2">
-					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.costosDirectosGastosVarios2" required>
+					    		<input type="number" class="form-control" placeholder="" ng-change="pl.costosDirectosTotal1Calc()" ng-model="pl.plan.costosDirectosGastosVarios2" required>
 						    </div>
 						    <div class="col-sm-2">
 					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.costosDirectosGastosVarios3" required>

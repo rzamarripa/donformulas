@@ -12,7 +12,7 @@ $reactive(this).attach($scope);
 		  return Planes.find();
 	  }
   });
-    this.plan = {};
+  this.plan = {};
  
   this.nuevoPlan = function()
   {
@@ -42,7 +42,7 @@ $reactive(this).attach($scope);
     this.nuevo = false;
 	};	
 	
-	this.actualizar = function(empresa)
+	this.actualizar = function(plan)
 	{
 		var idTemp = plan._id;
 		delete plan._id;		
@@ -65,23 +65,21 @@ $reactive(this).attach($scope);
 // Funciones de precio proyecto
 		this.factorRecuperacionCalc = function() {
 			this.plan.factorRecuperacion = ((1/(1-((this.plan.isr * this.plan.trema)/100)))/100)*100
+			this.plan.factorRecuperacion= this.plan.factorRecuperacion.toFixed(2);
 			// 		this.totalEgresosCalc = function() {
 			this.plan.totalEgresos = ((this.plan.ingresos / this.plan.factorRecuperacion) * 1)
+			this.plan.totalEgresos= this.plan.totalEgresos.toFixed(2);
 		};
 		
+		var self = this;
+		self.factorRecuperacionCalc = function() {
+			self.plan.factorRecuperacion = ((1/(1-((self.plan.isr * self.plan.trema)/100)))/100)*100
+			self.plan.factorRecuperacion= self.plan.factorRecuperacion.toFixed(2);
+			// 		self.totalEgresosCalc = function() {
+			self.plan.totalEgresos = ((self.plan.ingresos / self.plan.factorRecuperacion) * 1)
+			self.plan.totalEgresos= self.plan.totalEgresos.toFixed(2);
+		};
 // Funciones Distribucion de Gastos
-		this.gastosFijosCalc = function(){
-			this.plan.gastosFijosOficina1 = (gastosFijosOficina / 100) * gastosIndirectos
-		};
-		
-		this.gastosVariablesOficinaCalc = function(){
-			this.plan.gastosVariablesOficina1 = (gastosVariablesOficina / 100) * gastosIndirectos
-		};
-		
-		this.gastosIndirectosCampoCalc = function(){
-			this.plan.gastosIndirectosCampo1 = (gastosIndirectosCampo / 100) * gastosIndirectos
-		};
-		
 		this.gastosFijosPresupuestoCalc = function(){
 			this.plan.gastosFijosOficina3 = gastosFijosOficina1 - ((gastosFijosOficina1 * gastosFijosOficina2) / 100)
 		};
@@ -106,52 +104,33 @@ $reactive(this).attach($scope);
 			this.plan.dgtotal= this.plan.gastosFijosOficina1 + this.plan.gastosVariablesOficina1 + this.plan.gastosIndirectosCampo1
 		};
 
-// Funciones Costo Directo
-		this.costosDirectosMaterialesPresupuestoCalc = function(){
-			this.plan.costosDirectosMateriales3 = this.plan.costosDirectosMateriales1 - ((this.plan.costosDirectosMateriales1 * this.plan.costosDirectosMateriales2) / 100)
-		};
-		
-		this.costosDirectosMaquinariasPresupuestoCalc = function(){
-			this.plan.costosDirectosMaquinarias3 = this.plan.costosDirectosMaquinarias1 - ((this.plan.costosDirectosMaquinarias1 * this.plan.costosDirectosMaquinarias2) / 100)
-		};
-		
-		this.costosDirectosManoObraPresupuestoCalc = function(){
-			this.plan.costosDirectosManoObra3 = this.plan.costosDirectosManoObra1 - ((this.plan.costosDirectosManoObra1 * this.plan.costosDirectosManoObra2) / 100)
-		};
-		
-		this.costosDirectosCombustibleFleteTransportePresupuestoCalc = function(){
-			this.plan.costosDirectosCombustibleFleteTransporte3 = this.plan.costosDirectosCombustibleFleteTransporte1 - ((this.plan.costosDirectosCombustibleFleteTransporte1 * this.plan.costosDirectosCombustibleFleteTransporte2) / 100)
-		};
-		
-		this.costosDirectosRentasPresupuestoCalc = function(){
-			this.plan.costosDirectosRentas3 = this.plan.costosDirectosRentas1 - ((this.plan.costosDirectosRentas1 * this.plan.costosDirectosRentas2) / 100)
-		};
-		
-		this.costosDirectosSubcontratosPresupuestoCalc = function(){
-			this.plan.costosDirectosSubcontratos3 = this.plan.costosDirectosSubcontratos1 - ((this.plan.costosDirectosSubcontratos1 * this.plan.costosDirectosSubcontratos2) / 100)
-		};
-		
-		this.costosDirectosGastosVariosPresupuestoCalc = function(){
-			this.plan.costosDirectosGastosVarios3 = this.plan.costosDirectosGastosVarios1 - ((this.plan.costosDirectosGastosVarios1 * this.plan.costosDirectosGastosVarios2) / 100)
-		};
-		
+// Funciones Costo Directo		
 		this.costosDirectosTotalPorcentajeCalc = function(){
 			this.plan.costosDirectosTotal = this.plan.costosDirectosMateriales + this.plan.costosDirectosMaquinarias + this.plan.costosDirectosManoObra + this.plan.costosDirectosCombustibleFleteTransporte + this.plan.costosDirectosRentas + this.plan.costosDirectosSubcontratos + this.plan.costosDirectosGastosVarios
 		};
 			
 		this.costosDirectosTotal1Calc = function(){
 			this.plan.costosDirectosTotal1 = this.plan.costosDirectosMateriales1 + this.plan.costosDirectosMaquinarias1 + this.plan.costosDirectosManoObra1 + this.plan.costosDirectosCombustibleFleteTransporte1 + this.plan.costosDirectosRentas1 + this.plan.costosDirectosSubcontratos1 + this.plan.costosDirectosGastosVarios1
-
 			//Costos Directos 			this.costodirectoCalc = function() {
 			this.plan.costosDirecto = this.plan.costosDirectosTotal1
 			//Relacion % Cd/Ingresos
 			this.plan.relacionCdIngresos = (this.plan.costosDirectosTotal1 / this.plan.ingresos) * 100
 			//gastosIndirectos 				this.gastosDirectosCalc = function() {
 			this.plan.gastosIndirectos = this.plan.totalEgresos - this.plan.costosDirectosTotal1
-		};
-		
-		this.totalcostosDirectosPresupuestoCalc = function(){
-			this.plan.costosDirectostotal3 = this.plan.costosDirectosMateriales3 + this.plan.costosDirectosMaquinarias3 + this.plan.costosDirectosManoObra3 + this.plan.costosDirectosCombustibleFleteTransporte3 + this.plan.costosDirectosRentas3 + this.plan.costosDirectosSubcontratos3 + this.plan.costosDirectosGastosVarios3
+			// Funciones Distribucion de Gastos
+			this.plan.gastosFijosOficina1 =  this.plan.gastosIndirectos * (this.plan.gastosFijosOficina / 100)
+			this.plan.gastosVariablesOficina1 =  this.plan.gastosIndirectos * (this.plan.gastosVariablesOficina / 100)
+			this.plan.gastosIndirectosCampo1 =  this.plan.gastosIndirectos * (this.plan.gastosIndirectosCampo / 100)
+			// Funciones Costo Directo
+			this.plan.costosDirectosMateriales3 = this.plan.costosDirectosMateriales1 - ((this.plan.costosDirectosMateriales1 * this.plan.costosDirectosMateriales2) / 100)
+			this.plan.costosDirectosMaquinarias3 = this.plan.costosDirectosMaquinarias1 - ((this.plan.costosDirectosMaquinarias1 * this.plan.costosDirectosMaquinarias2) / 100)
+			this.plan.costosDirectosManoObra3 = this.plan.costosDirectosManoObra1 - ((this.plan.costosDirectosManoObra1 * this.plan.costosDirectosManoObra2) / 100)
+			this.plan.costosDirectosCombustibleFleteTransporte3 = this.plan.costosDirectosCombustibleFleteTransporte1 - ((this.plan.costosDirectosCombustibleFleteTransporte1 * this.plan.costosDirectosCombustibleFleteTransporte2) / 100)
+			this.plan.costosDirectosRentas3 = this.plan.costosDirectosRentas1 - ((this.plan.costosDirectosRentas1 * this.plan.costosDirectosRentas2) / 100)
+			this.plan.costosDirectosSubcontratos3 = this.plan.costosDirectosSubcontratos1 - ((this.plan.costosDirectosSubcontratos1 * this.plan.costosDirectosSubcontratos2) / 100)
+			this.plan.costosDirectosGastosVarios3 = this.plan.costosDirectosGastosVarios1 - ((this.plan.costosDirectosGastosVarios1 * this.plan.costosDirectosGastosVarios2) / 100)
+			//this.totalcostosDirectosPresupuestoCalc = function(){
+			this.plan.costosDirectosTotal3 = this.plan.costosDirectosMateriales3 + this.plan.costosDirectosMaquinarias3 + this.plan.costosDirectosManoObra3 + this.plan.costosDirectosCombustibleFleteTransporte3 + this.plan.costosDirectosRentas3 + this.plan.costosDirectosSubcontratos3 + this.plan.costosDirectosGastosVarios3
 		};
 		
 		
