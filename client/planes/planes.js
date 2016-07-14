@@ -168,4 +168,4 @@ $reactive(this).attach($scope);
        //     this.empresa.estatus = false;
        //     this.empresas.save(empresa);
        // };
-}
+} 
