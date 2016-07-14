@@ -84,6 +84,8 @@
             <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarCobro(mes.mes_id)" ng-show="!mes.accionCobro" style="font-size: 15px;">ESTIMACIONES</a></th>
 
             <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarResumen(mes.mes_id)" ng-show="!mes.accionResumen" style="font-size: 15px;">RESUMEN</a></th>
+
+            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarGI(mes.mes_id)" ng-show="!mes.accionGI" style="font-size: 15px;">GASTOS INDIRECTOS</a></th>
             </tr>
 
         </thead>
@@ -148,10 +150,6 @@
 								<th>CONCEPTO</th>
 								<th ng-repeat="costo in mes.costos">{{costo.nombre}}</th>
 								<th>TOTAL</th>
-
-								
-							
-								
 							</tr>
 						</thead>
 						<tbody>
@@ -203,7 +201,7 @@
 		<div class="row"  >
 			<div class="col-sm-3"  ng-show="mes.gastoCosto" >
 		<label>COSTOS <br/>	</label>
-		<select  id="costo" class="form-control" style="margin-top: 18px" placeholder="Seleccione" ng-model="mes.periodo.costo_id">
+		<select ng-click="mes.reiniciar()" id="costo" class="form-control" style="margin-top: 18px"  placeholder="Seleccione" ng-model="mes.periodo.costo_id">
 						  <option></option>
 						  <option   ng-repeat="costo in mes.costos" value="{{costo._id}}">
 						  	{{costo.nombre}}
@@ -212,7 +210,7 @@
 		   </div>
 		   	<div class="col-sm-3" ng-show="!mes.gastoCosto">
 		<label>GASTOS</label><br/>	
-		<select  id="gasto" class="form-control" style="margin-top: 18px" placeholder="Seleccione" ng-model="mes.periodo.gasto_id">
+		<select  id="gasto" ng-click="mes.reiniciar()"  class="form-control" style="margin-top: 18px"  placeholder="Seleccione" ng-model="mes.periodo.gasto_id">
 		                  <option></option>
 						  <option  ng-repeat="gasto in mes.gastos" value="{{gasto._id}}">
 						  	{{gasto.nombre}}
@@ -223,17 +221,17 @@
 		
 	   <div class="col-sm-2 ">
 	   		<label>COMPRAS DE CREDITO S/IVA</label>
-	   		<input type="number" class="form-control" ng-model="mes.periodo.comprasIva">
+	   		<input type="number" class="form-control"  ng-model="mes.periodo.comprasIva">
 	   </div>
 	   <div class="col-sm-2">
 	   		<label>COMPRAS DE CREDITO C/ IVA</label>
-	   		<input type="number" class="form-control" ng-model="mes.periodo.comprasSinIva">
+	   		<input type="number" class="form-control"  ng-model="mes.periodo.comprasSinIva">
 	   </div><br/>
 	  
 	    
 	   <div class="col-sm-2">
 	   		<label>CONTADO S/IVA</label>
-	   		<input type="number" class="form-control" ng-model="mes.periodo.contadoIva">
+	   		<input type="number" class="form-control"  ng-model="mes.periodo.contadoIva">
 	    </div>
 	    <div class="col-sm-2 ">
 	   		<label>CONTADO C/IVA</label>

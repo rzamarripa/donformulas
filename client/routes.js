@@ -130,6 +130,11 @@ angular.module('formulas').config(['$injector', function ($injector) {
       templateUrl: 'client/planes/planes.ng.html',
       controller: 'PlanesCtrl as pl',
     })
+    .state('root.planes2', {
+      url: '/planes2/:id',
+      templateUrl: 'client/planes2/planes2.ng.html',
+      controller: 'Planes2Ctrl as pl',
+    })
     .state('root.meses', {
       url: '/obra/:id',
       templateUrl: 'client/obras/meses.ng.html',
@@ -159,5 +164,10 @@ angular.module('formulas').config(['$injector', function ($injector) {
       url: '/periodos/:id',
       templateUrl: 'client/periodos/periodos.ng.html',
       controller: 'PeriodosCtrl as per',
+    })
+      .state('root.GI', {
+      url: '/GI/',
+      templateUrl: 'client/GI/GI.ng.html',
+      controller: 'GICTRL as GI',
     })
 }]);     

@@ -1,3 +1,3 @@
 Meteor.publish("gastosIndirectos",function(){
-  	return GastosIndirectos.find({estatus:true});
+  	return Gastos.find({estatus:true});
 });

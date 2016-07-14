@@ -12,6 +12,8 @@ $reactive(this).attach($scope);
 	this.pagoProveedor = {};
 	this.panelId = "";
 	this.tipoPeriodo = 'costo';
+	////////////PERIODO///////////////////////////////////////////////
+	
 	//this.tipoPeriod = 'gasto';
 
 
@@ -143,6 +145,7 @@ $reactive(this).attach($scope);
 	};
 	this.guardarPeriodo = function(periodo)
 	{
+
 		this.periodo.estatus = true;
 		this.periodo.mes_id = this.mes_id;
 		if(periodo.costo_id != undefined)
@@ -153,6 +156,7 @@ $reactive(this).attach($scope);
 		Periodos.insert(periodo);
 		toastr.success('Periodo Agregado.');
 		this.periodo = {}; 
+
 		
 	};
 
@@ -227,6 +231,7 @@ $reactive(this).attach($scope);
 		this.panelColor = true;
 		this.accionCobro = false;
 		this.accionResumen = false;
+		this.accionGI = false;
         this.Resumen = true;
 
 		
@@ -251,6 +256,10 @@ $reactive(this).attach($scope);
 	 this.mostrarPeriodo= function(id)
 	{
 		this.periodo = {}; 
+		this.periodo.comprasIva = 0.00;
+		this.periodo.comprasSinIva = 0.00;  
+		this.periodo.contadoIva = 0.00;
+		this.periodo.contadoSinIva = 0.00;
 		console.log(id);
 		//rc.nada = nombre;
 		this.mes_id = id;
@@ -314,9 +323,20 @@ $reactive(this).attach($scope);
 		this.Pagos = true;
 		this.gastoCosto = false;
 		this.Resumen = false;
+	};
+	this.accionGI = true;
 
-
-		console.log(id);
+	this.mostrarGI = function(id)
+	{
+		
+		this.mes_id = id;
+		this.obra_id = id;
+		this.accionPresupuesto = true;
+		this.accionPeriodo = true;
+		this.Cobro = true;
+		this.Pagos = true;
+		this.gastoCosto = false;
+		this.Resumen = true;
 	};
 
 	this.getConcepto= function(concepto_id)
@@ -355,7 +375,6 @@ $reactive(this).attach($scope);
 	}
 
 	this.totalPer = function(periodo){
-		
 		var suma = periodo.comprasIva + periodo.comprasSinIva + periodo.contadoIva + periodo.contadoSinIva;
 		return suma;
 	}
@@ -417,6 +436,15 @@ $reactive(this).attach($scope);
 	{
 		this.cambio = !this.cambio;
 		console.log(this.cambio);
+	}
+
+	this.reiniciar = function()
+	{
+		this.periodo = {}; 
+		this.periodo.comprasIva = 0.00;
+		this.periodo.comprasSinIva = 0.00;  
+		this.periodo.contadoIva = 0.00;
+		this.periodo.contadoSinIva = 0.00;
 
 	}
 };
