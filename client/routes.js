@@ -115,11 +115,6 @@ angular.module('formulas').config(['$injector', function ($injector) {
       templateUrl: 'client/tipoProyecto/tipoProyecto.ng.html',
       controller: 'TipoProyectoCtrl as tipopro',
     })
-    .state('root.empleados', {
-      url: '/empleados',
-      templateUrl: 'client/empleados/empleados.ng.html',
-      controller: 'EmpleadosCtrl as empl',
-    })
     .state('root.usuarios', {
       url: '/usuarios',
       templateUrl: 'client/usuarios/usuarios.ng.html',
@@ -164,5 +159,5 @@ angular.module('formulas').config(['$injector', function ($injector) {
       url: '/periodos/:id',
       templateUrl: 'client/periodos/periodos.ng.html',
       controller: 'PeriodosCtrl as per',
-    });
+    })
 }]);     

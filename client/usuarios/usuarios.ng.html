@@ -9,24 +9,73 @@
 			<form class="form-horizontal" role="form" data-parsley-validate>
 		  	<div class="well">	    
 			    <div class="row">
+			    
+			    	<div class="col-sm-4">					    
+				    	<label>Usuario</label>
+				    	<input type="text" class="form-control" placeholder="Usuario" ng-model="usu.usurio.usuario" required>
+			    	</div>
+			    	<div class="col-sm-4">					    
+				    	<label>Contraseña</label>
+				    	<input type="password" class="form-control" placeholder="Contraseña" ng-model="usu.usurio.contrasena" required>
+			    	</div>	
+			    	<div class="col-sm-4">					    
+				    	<label>Confirmar Contraseña</label>
+				    	<input type="password" class="form-control" placeholder="Confirmar Contraseña" ng-model="usu.usurio.confirmarContrasena" required>
+						</div>
+					<div class="col-sm-4">
+			    		<label>Nombre </label>
+				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="usu.usurio.nombre" required>
+			    	</div>	
 			    	<div class="col-sm-4">
-			    		<label>Nombre Completo </label>
-				    	<input type="text" class="form-control" placeholder="Nombre Completo" ng-model="usu.usuario.nombre" required>
+			    		<label>Apellido Paterno </label>
+				    	<input type="text" class="form-control" placeholder="Apellido Paterno" ng-model="usu.usurio.apPaterno" required>
 			    	</div>
 			    	<div class="col-sm-4">
-			    		<label>Usuario </label>
-				    	<input type="text" class="form-control" placeholder="Usuario" ng-model="usu.usuario.usuario" required>
+			    		<label>Apellido Materno</label>
+				    	<input type="text" class="form-control" placeholder="Apellido Materno" ng-model="usu.usurio.apMaterno" required>
 			    	</div>
 			    	<div class="col-sm-4">
-			    		<label>Contraseña </label>
-				    	<input type="password" class="form-control" placeholder="Contraseña" ng-model="usu.usuario.contrasena" required>
+			    		<label>Dirección</label>
+				    	<input type="text" class="form-control" placeholder="Dirección" ng-model="usu.usurio.direccion" required>
 			    	</div>
+			    	<div class="col-sm-4">
+			    		<label>Teléfono</label>
+				    	<input type="text" class="form-control" placeholder="Teléfono" ng-model="usu.usurio.telefono" required>
+			    	</div>
+			    	<div class="col-sm-4">
+			    		<label>E-mail</label>
+				    	<input type="email" class="form-control" placeholder="Correo" ng-model="usu.usurio.correo" required>
+			    	</div>
+
+			    	<div class="col-sm-4">					    
+				    	<label>Puesto</label>
+				    	<input type="text" class="form-control" placeholder="Puesto" ng-model="usu.usurio.puesto" required>
+			    	</div>
+			    	<div class="col-sm-4">
+							<label >Rol</label>
+							<select class="form-control select2" placeholder="Seleccione" ng-model="usu.usurio.empresa_id">
+								<option ng-repeat="empresa in usu.empresas" value="{{empresa._id}}">{{empresa.nombre}}</option>
+							</select>
+						</div>
+			    	<div class="col-sm-4">
+							<label >Empresa</label>
+							<select class="form-control select2" placeholder="Seleccione" ng-model="usu.usurio.empresa_id">
+								<option ng-repeat="empresa in usu.empresas" value="{{empresa._id}}">{{empresa.nombre}}</option>
+							</select>
+						</div>
+			    	
+						<div class="col-sm-4">
+				    	<br>
+							<label for="talla">Fotografía</label>
+							<button class="btn btn-primary" ng-click="usu.tomarFoto()"><i class="fa fa-camera"></i></button>
+							<img width="100px" ng-src="{{usurio.fotografia}}" ng-class="{'img-thumbnail': !!usurio.fotografia}" />
+						</div>
 			    </div>
 					<div class="row">
 						<br>
 						<div class="col-sm-12">
-							<input type="submit" ng-click="usu.guardar(usu.usuario)" value="Guardar" class="btn btn-primary" ng-show="usu.action">
-							<input type="submit" ng-click="usu.actualizar(usu.usuario)" value="Actualizar" class="btn btn-primary" ng-show="!usu.action">				
+							<input type="submit" ng-click="usu.guardar(usu.empleado)" value="Guardar" class="btn btn-primary" ng-show="usu.action">
+							<input type="submit" ng-click="usu.actualizar(usu.empleado)" value="Actualizar" class="btn btn-primary" ng-show="!usu.action">				
 						</div>
 					</div>
 				</div>
@@ -41,14 +90,17 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th width="20%"><div class="text-center">Nombre</div></th>
-					<th width="20%"><div class="text-center">Usuario</div></th>
-					<th width="20%">
+					<th width="10%"><div class="text-center">Foto</div></th>
+					<th width="10%"><div class="text-center">Nombre</div></th>
+					<th width="15%"><div class="text-center">Dirección </div></th>
+					<th width="10%"><div class="text-center">Teléfono</div></th>
+					<th width="10%"><div class="text-center">correo</div></th>
+					<th width="10%">
 						<div class="text-center">
 							Estatus
 						</div>
 					</th>
-					<th width="15%">
+					<th width="7%">
 						<div class="text-center">
 							Acciones
 						</div>
@@ -56,16 +108,18 @@
 				</tr>
 			</thead>
 			<tbody>
-		    <tr ng-repeat="usuario in usu.usuarios">
-<!-- 		    	<td><img width="100px" ng-src="{{usuario.fotografia}}" ng-class="{'img-thumbnail': !!usuario.fotografia}"/> </td> -->
-			    <td>{{usuario.profile.nombre}}</td>
-			    <td>{{usuario.username}}</td>
+		    <tr ng-repeat="empleado in usu.empleados">
+		    	<td><img width="100px" ng-src="{{usurio.fotografia}}" ng-class="{'img-thumbnail': !!usurio.fotografia}"/> </td>
+			    <td>{{usurio.nombre}} {{usurio.apPaterno}} {{usurio.apMaterno}}</td>
+			    <td>{{usurio.direccion}} </td>
+			    <td>{{usurio.telefono}} </td>
+			    <td>{{usurio.correo}} </td>
 			    <td>
 				    <div class="text-center">
-				    	<span ng-if="usuario.profile.estatus" class="label label-success">
+				    	<span ng-if="usurio.estatus" class="label label-success">
 							  Activo
 							</span>
-							<span ng-if="!usuario.profile.estatus" class="label label-danger">
+							<span ng-if="!usurio.estatus" class="label label-danger">
 							  Inactivo
 							</span>
 				    </div>
@@ -78,8 +132,8 @@
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
 							  <ul class="dropdown-menu text-left">
-							    <li><a href="#" ng-click="usu.editar(usuario._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							   <li><a href="#" ng-click="usu.cambiarEstatus(usuario._id)"><i class="fa fa-trash"></i>Desactivar</a></li>
+							    <li><a href="#" ng-click="usu.editar(usurio._id)"><i class="fa fa-pencil"></i> Editar</a></li>
+							   <li><a href="#" ng-click="usu.cambiarEstatus(usurio._id)"><i class="fa fa-trash"></i>Desactivar</a></li>
 							  </ul>
 							</div>
 				    </div>				    

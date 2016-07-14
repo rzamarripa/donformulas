@@ -1,14 +1,24 @@
-angular.module("formulas")
+angular
+.module("formulas")
 .controller("UsuariosCtrl", UsuariosCtrl);
- function UsuariosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
-	$reactive(this).attach($scope);
-  this.action = true;
+function UsuariosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
+$reactive(this).attach($scope);
+
 	this.subscribe('usuarios');
+	this.subscribe('empresas');
+	
+  this.action = true;
  
   this.helpers({
 	  usuarios : () => {
-		  return Meteor.users.find();
+		  return Usuarios.find();
 	  },
+	  empresas : () => {
+		  return Empresas.find();
+	  },
+		usuarios : () => {
+		  return Meteor.users.find();
+	  }
   });
   
   this.nuevo = true;  
@@ -22,48 +32,60 @@ angular.module("formulas")
 	this.guardar = function(usuario)
 	{
 		Accounts.createUser({
-			username: this.usuario.usuario,
+			username: this.usuario.nombreUsuario,
 			password: this.usuario.contrasena,
 			profile: {
 				 nombre: this.usuario.nombre,
 				 apellidos: this.usuario.apPaterno + " " + this.usuario.apMaterno,
-				 estatus:true,
+				 nombreCompleto: this.usuario.nombre + " " + this.usuario.apPaterno + " " + this.usuario.apMaterno,
+				 estatus: true,
+				 tipoUsuario: "usuario"
 			},function(err) {
 				if (err)
 				   console.log(err);
 				  else
-				    toastr.success('Usuario guardado.');
+				    console.log('success!');
 				}
 		});
-		
-		toastr.success('Ya se registró el usuario.');
+		this.usuario.estatus = true;
+		usuario.nombreCompleto = this.usuario.nombre + " " + this.usuario.apPaterno + " " + this.usuario.apMaterno;
+		console.log(this.usuario);
+		Usuarios.insert(this.usuario);
+		toastr.success('usuario guardado.');
 		this.usuario = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
-		$state.go('root.usuarios');
+		$state.go('root.Usuarios');
 		
 	};
 	
 	this.editar = function(id)
 	{
-    this.usuario = Meteor.users.findOne({_id:id});
+    this.usuario = Usuarios.findOne({_id:id});
     this.action = false;
     $('.collapse').collapse('show');
     this.nuevo = false;
 	};
 	
+	
 	this.actualizar = function(usuario)
 	{
 		var idTemp = usuario._id;
 		delete usuario._id;		
-		usuarios.update({_id:idTemp},{$set:usuario});
+		Usuarios.update({_id:idTemp},{$set:usuario});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 	};
 		
 	this.cambiarEstatus = function(id)
 	{
-		Meteor.call("cambiarEstatusUsuario", id);
+		var usuario = Usuarios.findOne({_id:id});
+		if(usuario.estatus == true)
+			usuario.estatus = false;
+		else
+			usuario.estatus = true;
+		
+		Usuarios.update({_id:id}, {$set : {estatus : usuario.estatus}});
 	};
 
 	 this.tomarFoto = function(){
@@ -71,4 +93,6 @@ angular.module("formulas")
 			this.usuario.fotografia = data;
 		});
 	};
+
+
 };
