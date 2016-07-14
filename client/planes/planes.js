@@ -120,20 +120,21 @@ $reactive(this).attach($scope);
 			this.plan.materialesPeriodo2 = (this.plan.costosDirectosMateriales3 * 40) / 100
 			this.plan.materialesPeriodo3 = (this.plan.costosDirectosMateriales3 * 45) / 100
 			this.plan.materialesPeriodo4 = (this.plan.costosDirectosMateriales3 * 15) / 100
-			// Ultima Tabla
-			this.plan.nuevoPresupuestoGastosIndirectos = this.plan.dgtotal4 / this.plan.meses
-			this.plan.ajustePresupuestalIndirectos = this.plan.estadisticaGastosIndirectosObraPresupuestoGastosIndirectosMes - this.plan.nuevoPresupuestoGastosIndirectos
-			this.plan.porcentajeObras = (this.plan.ingresos * this.plan.anticipoObras) / 100
-			
+			// Tabla Arriba Actual Proyectado
 			this.plan.utilidadFisica = (this.plan.ingresos - this.plan.costosDirecto) - this.plan.gastosIndirectos
 			this.plan.isr1 = (this.plan.utilidadFisica * 3) / 10
 			this.plan.ptu1 = (this.plan.utilidadFisica * 1) / 10
 			this.plan.utilidadNeta = (this.plan.utilidadFisica - this.plan.isr1) - this.plan.ptu1
 			this.plan.rentabilidad = (this.plan.utilidadNeta / this.plan.ingresos) * 100
+			// Ultima Actual Proyectado
+			this.plan.gastosProyectado = this.plan.dgtotal3 + (this.plan.ajustePresupuestalIndirectos * this.plan.meses)
+			// Ultima Tabla
+			this.plan.nuevoPresupuestoGastosIndirectos = this.plan.dgtotal4 / this.plan.meses
+			this.plan.ajustePresupuestalIndirectos = this.plan.estadisticaGastosIndirectosObraPresupuestoGastosIndirectosMes - this.plan.nuevoPresupuestoGastosIndirectos
+			this.plan.porcentajeObras = (this.plan.ingresos * this.plan.anticipoObras) / 100
 			
 			this.plan.nuevoPresupuestoGastosIndirectos = this.plan.dgtotal3 / this.plan.meses
 			this.plan.anticipoObras = this.plan.ingresos * this.plan.porcentajeObras
-			this.plan.gastosProyectado = dgtotal3 + (this.plan.ajustePresupuestalIndirectos * this.plan.meses)
 		};
 		
 		
