@@ -1,4 +1,5 @@
-	<h2>Agregar Tiempo</h2>
+
+	<!--<h2>Agregar Tiempo</h2>
   <div class="row">
    <div class="col-sm-12">
 		  <div class="col-sm-1">
@@ -17,7 +18,7 @@
 		   </div>
    
     </div>
-  </div>
+  </div>-->
 
 
   <div class="well">	  
@@ -52,6 +53,7 @@
 			</div> 
 		</div>
 	</div> 
+
 </div>
  
 
@@ -76,16 +78,16 @@
             <th class="details-control sorting_disabled" rowspan="1" colspan="1"  style="width: 1px;"></th>
 
             <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"  style="width: 88px;">
-            <a href="" ng-show="!mes.action"  ng-click="mes.mostrarArchivos(mes.mes_id)" style="font-size: 15px;">PRESUPUESTOS</a></th>
-            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"  style="width: 73px;"><a href=""  ng-click="mes.mostrarPeriodo(mes.mes_id)" ng-show="!mes.action" style="font-size: 15px;">PERIODOS</a></th>
+            <a href="" ng-show="!mes.action"  ng-click="mes.mostrarArchivos(mes.mes_id,mes.obra_id)" style="font-size: 15px;">PRESUPUESTOS</a></th>
+            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"  style="width: 73px;"><a href=""  ng-click="mes.mostrarPeriodo(mes.obra_id,mes.mes_id)" ng-show="!mes.action" style="font-size: 15px;">PERIODOS</a></th>
 
-            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarPagos(mes.mes_id)" ng-show="!mes.accionPago" style="font-size: 15px;">PAGOS A PROVEEDORES</a></th>
+            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarPagos(mes.obra_id,mes.mes_id)" ng-show="!mes.accionPago" style="font-size: 15px;">PAGOS A PROVEEDORES</a></th>
 
-            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarCobro(mes.mes_id)" ng-show="!mes.accionCobro" style="font-size: 15px;">ESTIMACIONES</a></th>
+            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarCobro(mes.obra_id,mes.mes_id)" ng-show="!mes.accionCobro" style="font-size: 15px;">ESTIMACIONES</a></th>
 
-            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarResumen(mes.mes_id)" ng-show="!mes.accionResumen" style="font-size: 15px;">RESUMEN</a></th>
+            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarResumen(mes.obra_id,mes.mes_id)" ng-show="!mes.accionResumen" style="font-size: 15px;">RESUMEN</a></th>
 
-            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarGI(mes.mes_id)" ng-show="!mes.accionGI" style="font-size: 15px;">GASTOS INDIRECTOS</a></th>
+            <!--<th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarGI(mes.obra_id,mes.mes_id)" ng-show="!mes.accionGI" style="font-size: 15px;">GASTOS INDIRECTOS</a></th>-->
             </tr>
 
         </thead>
@@ -95,17 +97,25 @@
 </div>
 
 <div class="row" ng-if="!mes.accionPresupuesto">				
-	<div class="col-sm-12">
 	
-       
+
+    <div class="col-sm-3">
+    <a class="btn btn-{{mes.nuevo == true ? 'success' : 'danger'}}" role="button" data-toggle="collapse" 
+			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevopresupuesto" ng-click="mes.nuevoPresupuesto(mes.obra_id,mes.mes_id)">
+		 {{mes.nuevo == true ? 'Mostrar Partidas' : 'Cancelar'}}
+	</a></div><br/><br/>
+		
+		<div class="col-sm-12">
+		<div class="collapse" id="collapseExample">
 		<h3 class="dark-grey"  ng-show="!mes.accionPresupuesto">Lista de Partidas</h3>
 	<div class="row" ng-show="!mes.accionPresupuesto">
 			<div class="col-sm-4">
 				<ul class="list-group no-margin">
 					<li ng-repeat="partida in mes.partidas" class="list-group-item">
-						<a href="" ng-click="mes.mostrarPresupuestos(partida._id)" >{{partida.nombre}}</a>
+						<a href="" ng-click="mes.mostrarPresupuestos(mes.mes_id,mes.partida_id)" >{{partida.nombre}}</a>
 					</li>
 				</ul>
+			</div>
 			</div>
 			</div>
 	
@@ -113,18 +123,19 @@
 		<div class="col-sm-4 ">
 		<label>Lista de Conceptos</label>	
 		<select  id="concepto" class="form-control"  placeholder="Seleccione" ng-model="mes.presupuesto.concepto_id">
-						  <option ng-click="selectDepa" ng-repeat="concepto in mes.conceptos" value="{{concepto._id}}">
+						  <option ng-repeat="concepto in mes.conceptos" value="{{concepto._id}}">
 						  	{{concepto.nombre}}
 						  </option>
 						</select>
 		   </div>
-	   <div ng-repeat="(key, costo) in mes.costos" style="margin-top: 2px" class="col-sm-2 ">
+	   <div ng-repeat="(key, costo) in mes.costos"  style="margin-top: 2px" class="col-sm-2 ">
 	   		<label for="{{key}}">{{costo.nombre}}</label>
 	   		<input type="number" id="{{key}}" class="form-control" ng-model="costo.value">
 	   </div>	
 	 
           <div class="col-sm-4" ng-show="!mes.mostrarFormPre" style="margin-top: 28px">
-	         <input type="submit" ng-click="mes.guardarPresupuesto(mes.costos)" value="Guardar" class="btn btn-primary"><br/>
+	         <input type="submit" ng-click="mes.guardarPresupuesto(mes.costos)" ng-show="mes.pollo" value="Guardar" class="btn btn-primary">
+	         <input type="submit" ng-click="mes.actualizarPresupuesto(mes.costos)" ng-show="!mes.pollo" value="Actualizar" class="btn btn-primary"><br/>
 	       </div>
 	      </div>   
 	   
@@ -150,6 +161,7 @@
 								<th>CONCEPTO</th>
 								<th ng-repeat="costo in mes.costos">{{costo.nombre}}</th>
 								<th>TOTAL</th>
+								<th>ACCIONES</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -157,7 +169,15 @@
 								<td>{{mes.getConcepto(presupuesto.concepto_id)}}</td>
 								<td ng-repeat="costo in presupuesto.costos">{{costo.value | currency}}</td>
 								<td>{{mes.totalPre(presupuesto.costos) | currency}}</td>
-								<!--<td ng-repeat="presupuesto in mes.presupuestos"><input type="text"  class="form-control" placeholder="Correo" ng-model="mes.presupuesto.total" ></td>-->
+								
+							    <td>
+								    <div class="text-center">
+											 
+										    <a ng-click="mes.editarPresupuesto(presupuesto._id)" style="font-size: 13px;" class="label label-warning" ><i class="fa fa-pencil"></i></a>
+										  <a  ng-click="mes.cambiarEstatusPresupuesto(presupuesto._id)" style="font-size: 13px;" class="label label-primary">Desactivar</a>
+											 
+								    </div>				    
+							    </td>
 							</tr>
 							
 						</tbody>
@@ -188,8 +208,8 @@
             <tr role="row">
 
             <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"  style="width: 88px;">
-            <a href=""  ng-click="mes.gastoCostosito(mes.mes_id)" style="font-size: 15px;">GASTOS</a></th>
-            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"  style="width: 73px;"><a href=""  ng-click="mes.gastoCostos(mes.mes_id)"  style="font-size: 15px;">COSTOS</a></th>
+            <a href=""  ng-click="mes.gastoCostosito(mes.obra_id,mes.mes_id); mes.input();" style="font-size: 15px;">GASTOS</a></th>
+            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"  style="width: 73px;"><a href=""  ng-click="mes.gastoCostos(mes.obra_id,mes.mes_id)"  style="font-size: 15px;">COSTOS</a></th>
             </tr>
 
         </thead>
@@ -198,24 +218,19 @@
 </div>						
 </div>
 
-		<div class="row"  >
+		<div class="row col-sm-12">
 			<div class="col-sm-3"  ng-show="mes.gastoCosto" >
 		<label>COSTOS <br/>	</label>
 		<select ng-click="mes.reiniciar()" id="costo" class="form-control" style="margin-top: 18px"  placeholder="Seleccione" ng-model="mes.periodo.costo_id">
-						  <option></option>
-						  <option   ng-repeat="costo in mes.costos" value="{{costo._id}}">
+						  <option ng-repeat="costo in mes.costos" value="{{costo._id}}">
 						  	{{costo.nombre}}
 						  </option>
-						</select>
+						  </select>
 		   </div>
 		   	<div class="col-sm-3" ng-show="!mes.gastoCosto">
 		<label>GASTOS</label><br/>	
-		<select  id="gasto" ng-click="mes.reiniciar()"  class="form-control" style="margin-top: 18px"  placeholder="Seleccione" ng-model="mes.periodo.gasto_id">
-		                  <option></option>
-						  <option  ng-repeat="gasto in mes.gastos" value="{{gasto._id}}">
-						  	{{gasto.nombre}}
-						  </option>
-						</select>
+		<input id="gasto" ng-click="mes.reiniciar(); mes.input();"  class="form-control" style="margin-top: 18px"  ng-model="mes.periodo.gasto" readonly>
+		     
 		   </div>
 		 
 		
@@ -239,7 +254,8 @@
 	   </div><br/>
 	   <br/>
           <div class="col-sm-2" >
-	         <input type="submit" style="margin-top: 22px" ng-click="mes.guardarPeriodo(mes.periodo)" value="Guardar" class="btn btn-primary">
+	         <input type="submit" style="margin-top: 22px" ng-click="mes.guardarPeriodo(mes.periodo); mes.input();" value="Guardar" class="btn btn-primary" ng-show="mes.period">
+	         <input type="submit" ng-click="mes.actualizarPeriodo(mes.periodo);mes.input();" ng-show="!mes.period" value="Actualizar" class="btn btn-primary"><br/>
 	       </div> 
 
 	    </div>
@@ -272,6 +288,7 @@
 								<th>CONTADO S/IVA</th>
 								<th>CONTADO C/IVA</th>
 								<th>TOTAL</th>
+								<th>ACCIONES</th>
 								</tr>
 							<tr ng-repeat="periodo in mes.periodos" ng-show="mes.gastoCosto">
 						         
@@ -280,28 +297,51 @@
 								<th>{{periodo.comprasSinIva | currency}}</th>
 								<th>{{periodo.contadoIva | currency}}</th>
 								<th>{{periodo.contadoSinIva | currency}}</th>
-								<td>{{mes.totalPer(periodo) | currency}}</td>
+								<td>{{periodo.comprasIva + periodo.comprasSinIva + periodo.contadoIva + periodo.contadoSinIva  | currency}}</td>
+								<td>
+								    <div class="text-center">
+											 
+										    <a ng-click="mes.editarPeriodo(periodo._id)" style="font-size: 13px;" class="label label-warning" ><i class="fa fa-pencil"></i></a>
+										  <a  ng-click="mes.cambiarEstatusPeriodo(periodo._id)" style="font-size: 13px;" class="label label-primary">Desactivar</a>
+											 
+								    </div>				    
+							    </td>
 
+							</tr>
+							<tr>
+								<th colspan="3">TOTAL FINAL: {{mes.cobroTotalFinalPeriodo() | currency}}</th>
+								<th colspan="2"></th>
 							</tr>	
 						</tbody>
 						<tbody ng-show="!mes.gastoCosto">
 						    <tr>
-						        <th>GASTOS</th>
 						        <th>COMPRAS DE CREDITO S/IVA</th>
 								<th>COMPRAS DE CREDITO C/IVA</th>
 								<th>CONTADO S/IVA</th>
 								<th>CONTADO C/IVA</th>
 								<th>TOTAL</th>
+								<th>ACCIONES</th>
 							</tr>
 							<tr ng-repeat="periodo in mes.periodos" >
 						         
-								<th> {{mes.getGasto(periodo.gasto_id )}}</th>
+
 								<th>{{periodo.comprasIva | currency}}</th>
 								<th>{{periodo.comprasSinIva | currency}}</th>
 								<th>{{periodo.contadoIva | currency}}</th>
 								<th>{{periodo.contadoSinIva | currency}}</th>
-								<th>{{mes.totalPer(periodo) | currency}}</th>
-								<!--<td ng-repeat="presupuesto in mes.presupuestos"><input type="text"  class="form-control" placeholder="Correo" ng-model="mes.presupuesto.total" ></td>-->
+								<th>{{periodo.comprasIva + periodo.comprasSinIva + periodo.contadoIva + periodo.contadoSinIva  | currency}}</th>
+								<td>
+								    <div class="text-center">
+											 
+										    <a ng-click="mes.editarPeriodo(periodo._id)" style="font-size: 13px;" class="label label-warning" ><i class="fa fa-pencil"></i></a>
+										  <a  ng-click="mes.cambiarEstatusPeriodo(periodo._id)" style="font-size: 13px;" class="label label-primary">Desactivar</a>
+											 
+								    </div>				    
+							    </td>
+							</tr>
+
+							<tr>
+								<th colspan="4">TOTAL FINAL: {{mes.cobroTotalFinalPeriodo() | currency}}</th>
 							</tr>
 						</tbody>
 					</table>
@@ -319,7 +359,7 @@
       <br/><br/>
 
 		
-		<div class="row">		
+		<div class="row col-sm-12">		
 	   <div class="col-sm-2 ">
 	   		<label>Pagos con Iva</label>
 	   		<input type="number" class="form-control" ng-model="mes.pagoProveedor.pIva">
@@ -330,7 +370,9 @@
 	   </div><br/>
 	   <br/>
           <div class="col-sm-2" >
-	         <input type="submit" ng-click="mes.guardarPago(mes.pagoProveedor)" value="Guardar" class="btn btn-primary">
+	         <input type="submit" style="margin-top: 22px" ng-click="mes.guardarPago(mes.pagoProveedor);" value="Guardar" class="btn btn-primary" ng-show="mes.pag">
+	         <input type="submit" ng-click="mes.actualizarPago(mes.pagoProveedor)" ng-show="!mes.pag" value="Actualizar" class="btn btn-primary"><br/>
+
 	       </div> 
 
 	    </div>
@@ -359,8 +401,8 @@
 						   
 						    <th>Pagos con Iva</th>
 						    <th>Pagos con Sin Iva</th>
-						    
 						    <th>TOTAL</th>
+						    <th>ACCIONES</th>
 						    	
 						    </tr>
 						    </thead>
@@ -372,9 +414,18 @@
 						        <th>{{pagoProveedor.pIva | currency}}</th>
 						        <th>{{pagoProveedor.pSinIva | currency}}</th>
 						        <th>{{mes.totalPag(pagoProveedor) | currency}}</th>
+						        <td>
+								    <div>
+											 
+										    <a ng-click="mes.editarPago(pagoProveedor._id)" style="font-size: 13px;" class="label label-warning" ><i class="fa fa-pencil"></i></a>
+										  <a  ng-click="mes.cambiarEstatusPago(pagoProveedor._id)" style="font-size: 13px;" class="label label-primary">Desactivar</a>
+											 
+								    </div>				    
+							    </td>
 
 														
 							</tr>	
+
 						</tbody>
 
 					</table>
@@ -403,7 +454,8 @@
 	   </div><br/>
 	   <br/>
           <div class="col-sm-2" >
-	         <input type="submit" style="margin-top: -16px;" ng-click="mes.guardarCobro(mes.cobro)" value="Guardar" class="btn btn-primary">
+	         <input type="submit" style="margin-top: -16px;" ng-click="mes.guardarCobro(mes.cobro)" value="Guardar" class="btn btn-primary" ng-show="mes.cob">
+	         <input type="submit" ng-click="mes.actualizarCobro(mes.cobro)" ng-show="!mes.cob" value="Actualizar" class="btn btn-primary"><br/>
 	       </div> 
 
 	    </div>
@@ -441,7 +493,7 @@
 							<tr ng-repeat="cobro in mes.cobros">
 						        <th><div class="text-center">{{cobro.cIva | currency}}</div></th>
 						        <th><div class="text-center">{{cobro.cSinIva | currency}}</div></th>
-						        <th><div class="text-center">{{mes.totalCobro(cobro) | currency}}</div></th>
+						        <th><div class="text-center">{{cobro.cIva + cobro.cSinIva | currency}}</div></th>
 						        <td>
 								    <div class="text-center">
 								    	<span ng-if="cobro.modo" style="font-size: 13px;" class="label label-success">
@@ -453,14 +505,17 @@
 								    </div>
 							    </td>
 						        <td>
-				    <div class="text-center">
-							   <a ng-click="obr.editar(obra._id)" style="font-size: 13px;" class="label label-warning"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-							  <a  ng-click="mes.cambiarEstatusCobro(cobro._id)" style="font-size: 13px;" class="label label-primary">Cambiar Estatus</a>
-				    </div>				    
-			    </td>
-
-														
+				                    <div class="text-center">
+									  <a ng-click="obr.editar(obra._id)" style="font-size: 13px;" class="label label-warning"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
+									  <a  ng-click="mes.cambiarEstatusCobro(cobro._id)" style="font-size: 13px;" class="label label-primary">Cambiar Estatus</a>
+									  <a  ng-click="mes.cambiarEstatusCobros(cobro._id)" style="font-size: 13px;" class="label label-danger"><i class="fa fa-trash"></i></a>
+				                    </div>				    
+			                    </td>					
 							</tr>	
+							<tr>
+								<th colspan="3">TOTAL FINAL: {{mes.cobroTotalFinal() | currency}}</th>
+								<th colspan="2"></th>
+							</tr>
 						</tbody>
 
 					</table>
@@ -517,6 +572,7 @@
 				    <div class="text-center">
 							   <a ng-click="obr.editar(obra._id)" style="font-size: 13px;" class="label label-warning"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
 							  <a  ng-click="mes.cambiarEstatusCobro(cobro._id)" style="font-size: 13px;" class="label label-primary">Cambiar Estatus</a>
+
 				    </div>				    
 			    </td>
 

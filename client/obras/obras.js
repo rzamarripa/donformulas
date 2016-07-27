@@ -57,6 +57,7 @@ $reactive(this).attach($scope);
 		Obras.update({_id:idTemp},{$set:obra});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		console.log(obra);
 	};
 
 	this.cambiarEstatus = function(id)
