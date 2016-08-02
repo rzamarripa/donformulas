@@ -27,8 +27,8 @@ this.gasto.importeVar = 0.00;
 	  },
 	  gastos : () => {
 		  return GastosOficina.find();
-	  }
-  });
+	  },
+	    });
     
     this.action = true;
 	this.nuevo = true; 
@@ -76,13 +76,13 @@ this.gasto.importeVar = 0.00;
 	    var mes;
 	    var r = confirm("Esta seguro de borrar esta fecha");
 	    if (r == true) {
-	        txt = mes = Meses.findOne({_id:id});
+	        txt = mes = GastosOficina.findOne({_id:id});
 		if(mes.estatus == true)
 			mes.estatus = false;
 		else
 			mes.estatus = true;
 		
-		Meses.update({_id: id},{$set :  {estatus : mes.estatus}});
+		GastosOficina.update({_id: id},{$set :  {estatus : mes.estatus}});
 
 	    } else {
 	        mes.estatus = true;
@@ -135,6 +135,7 @@ this.gasto.importeVar = 0.00;
 		_.each(this.gastos,function(gasto){total += gasto.importeFijo + gasto.importeVar});
 		return total
 	}
+
 
 
 	

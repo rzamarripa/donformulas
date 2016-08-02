@@ -103,11 +103,20 @@
 								{{concepto.nombre}}
 							</option>
 						</select>
+<<<<<<< HEAD
+		   </div>
+	   <div ng-repeat="(key, costo) in mes.costos"  style="margin-top: 2px" class="col-sm-2 ">
+	   		<label for="{{key}}">{{costo.nombre}}</label>
+	   		<input type="number" id="{{key}}" class="form-control" ng-model="costo.value" min="0">
+	   </div>	
+	 
+=======
 					</div>
 					<div ng-repeat="(key, costo) in mes.costos" style="margin-top: 2px" class="col-sm-2 ">
 						<label for="{{key}}">{{costo.nombre}}</label>
 						<input type="number" id="{{key}}" class="form-control" ng-model="costo.value">
 					</div>	
+>>>>>>> acb6a49bff0e043f4490c9659282d26c1fdb6331
           <div class="col-sm-4" ng-show="!mes.mostrarFormPre" style="margin-top: 28px">
 	        	<input type="submit" ng-click="mes.guardarPresupuesto(mes.costos)" value="Guardar" class="btn btn-primary"><br/>
 	       	</div>
@@ -131,6 +140,7 @@
 								<th>CONCEPTO</th>
 								<th ng-repeat="costo in mes.costos">{{costo.nombre}}</th>
 								<th>TOTAL</th>
+
 								<th>ACCIONES</th>
 							</tr>
 						</thead>
@@ -176,10 +186,17 @@
 	<div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"><div class="dt-toolbar" style="padding: 0px; "></div><table id="example" class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" cellspacing="0" width="10%" role="grid" aria-describedby="example_info" style="width: 100%;">
         <thead>
             <tr role="row">
-
             <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"  style="width: 88px;">
-            <a href=""  ng-click="mes.gastoCostosito(mes.obra_id,mes.mes_id); mes.input();" style="font-size: 15px;">GASTOS</a></th>
-            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"  style="width: 73px;"><a href=""  ng-click="mes.gastoCostos(mes.obra_id,mes.mes_id)"  style="font-size: 15px;">COSTOS</a></th>
+            <a href=""  ng-click="mes.gastoCostosito(mes.obra_id,mes.mes_id); mes.input();" style="font-size: 15px;">GASTOS DE CAMPOS</a></th>
+            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"  style="width: 73px;"><a href=""  ng-click="mes.gastoCostos(mes.obra_id,mes.mes_id)"  style="font-size: 15px;">COSTOS DIRECTOS</a></th>
+            </tr>
+
+            <tr role="row">
+               <th>
+               	<a href="javascript:void(0);" ng-click="mes.agregarIvaPre()" class="btn btn-xs btn-default">IVA</a>
+                <a href="javascript:void(0);" ng-click="mes.quitarIvaPre()"  class="btn btn-xs btn-default">SIN IVA</a>
+               </th>
+               <th></th>
             </tr>
 
         </thead>
@@ -190,7 +207,7 @@
 
 		<div class="row col-sm-12">
 			<div class="col-sm-3"  ng-show="mes.gastoCosto" >
-		<label>COSTOS <br/>	</label>
+		<label>COSTOS DIRECTOS <br/>	</label>
 		<select ng-click="mes.reiniciar()" id="costo" class="form-control" style="margin-top: 18px"  placeholder="Seleccione" ng-model="mes.periodo.costo_id">
 						  <option ng-repeat="costo in mes.costos" value="{{costo._id}}">
 						  	{{costo.nombre}}
@@ -198,33 +215,33 @@
 						  </select>
 		   </div>
 		   	<div class="col-sm-3" ng-show="!mes.gastoCosto">
-		<label>GASTOS</label><br/>	
+		<label>GASTOS DE CAMPOS</label><br/>	
 		<input id="gasto" ng-click="mes.reiniciar(); mes.input();"  class="form-control" style="margin-top: 18px"  ng-model="mes.periodo.gasto" readonly>
 		     
 		   </div>
 		 
 		
-	   <div class="col-sm-2 ">
+	   <div class="col-sm-2 " ng-show="!mes.preIva" >
 	   		<label>COMPRAS DE CREDITO S/IVA</label>
-	   		<input type="number" class="form-control"  ng-model="mes.periodo.comprasIva">
+	   		<input type="number" class="form-control"   ng-model="mes.periodo.comprasSinIva">
 	   </div>
-	   <div class="col-sm-2">
+	   <div class="col-sm-2" ng-show="mes.preIva">
 	   		<label>COMPRAS DE CREDITO C/ IVA</label>
-	   		<input type="number" class="form-control"  ng-model="mes.periodo.comprasSinIva">
+	   		<input type="number" class="form-control"    ng-model="mes.periodo.comprasIva">
 	   </div><br/>
 	  
 	    
-	   <div class="col-sm-2">
-	   		<label>CONTADO S/IVA</label>
-	   		<input type="number" class="form-control"  ng-model="mes.periodo.contadoIva">
-	    </div>
-	    <div class="col-sm-2 ">
+	   <div class="col-sm-2" ng-show="mes.preIva">
 	   		<label>CONTADO C/IVA</label>
-	   		<input type="number" class="form-control" ng-model="mes.periodo.contadoSinIva">
+	   		<input type="number" class="form-control"   ng-model="mes.periodo.contadoIva">
+	    </div>
+	    <div class="col-sm-2 " ng-show="!mes.preIva">
+	   		<label>CONTADO S/IVA</label>
+	   		<input type="number" class="form-control"  ng-model="mes.periodo.contadoSinIva">
 	   </div><br/>
 	   <br/>
           <div class="col-sm-2" >
-	         <input type="submit" style="margin-top: 22px" ng-click="mes.guardarPeriodo(mes.periodo); mes.input();" value="Guardar" class="btn btn-primary" ng-show="mes.period">
+	         <input type="submit" style="margin-top: -15px" ng-click="mes.guardarPeriodo(mes.periodo); mes.input();" value="Guardar" class="btn btn-primary" ng-show="mes.period">
 	         <input type="submit" ng-click="mes.actualizarPeriodo(mes.periodo);mes.input();" ng-show="!mes.period" value="Actualizar" class="btn btn-primary"><br/>
 	       </div> 
 
@@ -252,11 +269,11 @@
 						</thead>
 						<tbody ng-show="mes.gastoCosto">
 						    <tr>
-						        <th>COSTOS</th>
-						        <th>COMPRAS DE CREDITO S/IVA</th>
-								<th>COMPRAS DE CREDITO C/IVA</th>
-								<th>CONTADO S/IVA</th>
+						        <th>COSTOS DIRECTOS</th>
+						        <th>COMPRAS DE CREDITO C/IVA</th>
+								<th>COMPRAS DE CREDITO S/IVA</th>
 								<th>CONTADO C/IVA</th>
+								<th>CONTADO S/IVA</th>
 								<th>TOTAL</th>
 								<th>ACCIONES</th>
 								</tr>
@@ -279,16 +296,19 @@
 
 							</tr>
 							<tr>
-								<th colspan="3">TOTAL FINAL: {{mes.cobroTotalFinalPeriodo() | currency}}</th>
-								<th colspan="2"></th>
+								<th colspan="6">TOTAL FINAL: {{mes.cobroTotalFinalPeriodo() | currency}}</th>
+								<th colspan="6"></th>
 							</tr>	
+							<tr>
+							    <th colspan="6">IMPORTE DESGLOSADO: {{(mes.cobroTotalFinalPeriodo()) / 1.16 | currency}} </th>
+							</tr>
 						</tbody>
 						<tbody ng-show="!mes.gastoCosto">
 						    <tr>
-						        <th>COMPRAS DE CREDITO S/IVA</th>
-								<th>COMPRAS DE CREDITO C/IVA</th>
-								<th>CONTADO S/IVA</th>
+						        <th>COMPRAS DE CREDITO C/IVA</th>
+								<th>COMPRAS DE CREDITO S/IVA</th>
 								<th>CONTADO C/IVA</th>
+								<th>CONTADO S/IVA</th>
 								<th>TOTAL</th>
 								<th>ACCIONES</th>
 							</tr>
@@ -328,19 +348,48 @@
       <div class="row"   ng-if="mes.mes_id != ''">
       <br/><br/>
 
+
+
+          <div class="jarviswidget well jarviswidget-sortable" id="wid-id-0" role="widget">
+<header role="heading">			
+<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
+<div role="content">
+<div class="jarviswidget-editbox">
+	<input class="form-control" type="text">	
+</div>
+<div class="widget-body no-padding">
+	<div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"><div class="dt-toolbar" style="padding: 0px; "></div><table id="example" class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" cellspacing="0" width="10%" role="grid" aria-describedby="example_info" style="width: 100%;">
+        <thead>
+            <tr role="row">
+               <th>
+               	<a href="javascript:void(0);" ng-click="mes.agregarIvaPag()" class="btn btn-xs btn-default">IVA</a>
+                <a href="javascript:void(0);" ng-click="mes.quitarIvaPag()"  class="btn btn-xs btn-default">SIN IVA</a>
+               </th>
+               <th></th>
+            </tr>
+
+        </thead>
+    </table></div>
+</div>
+</div>						
+</div>
+
+
+
+
 		
 		<div class="row col-sm-12">		
-	   <div class="col-sm-2 ">
+	   <div class="col-sm-2" ng-show="mes.pagIva">
 	   		<label>Pagos con Iva</label>
 	   		<input type="number" class="form-control" ng-model="mes.pagoProveedor.pIva">
 	   </div>
-	   <div class="col-sm-2">
+	   <div class="col-sm-2" ng-show="!mes.pagIva">
 	   		<label>Pagos sin Iva</label>
 	   		<input type="number" class="form-control" ng-model="mes.pagoProveedor.pSinIva">
 	   </div><br/>
 	   <br/>
           <div class="col-sm-2" >
-	         <input type="submit" style="margin-top: 22px" ng-click="mes.guardarPago(mes.pagoProveedor);" value="Guardar" class="btn btn-primary" ng-show="mes.pag">
+	         <input type="submit" style="margin-top: -15px" ng-click="mes.guardarPago(mes.pagoProveedor);" value="Guardar" class="btn btn-primary" ng-show="mes.pag">
 	         <input type="submit" ng-click="mes.actualizarPago(mes.pagoProveedor)" ng-show="!mes.pag" value="Actualizar" class="btn btn-primary"><br/>
 
 	       </div> 
@@ -351,6 +400,7 @@
 	    
 	<div class="col-sm-12 " ng-if="mes.mes_id != ''"  >
     <br/><br/>
+
 	<h3>Pagos a Proveedores</h3>	
 	
 
@@ -367,31 +417,26 @@
 				   
 						    <thead>
 						    <tr>
-
-						   
 						    <th>Pagos con Iva</th>
 						    <th>Pagos con Sin Iva</th>
 						    <th>TOTAL</th>
 						    <th>ACCIONES</th>
-						    	
 						    </tr>
 						    </thead>
-
-
 							<tbody>
 							<tr ng-repeat="pagoProveedor in mes.pagosProveedores">
-						     
 						        <th>{{pagoProveedor.pIva | currency}}</th>
 						        <th>{{pagoProveedor.pSinIva | currency}}</th>
 						        <th>{{mes.totalPag(pagoProveedor) | currency}}</th>
+						        <th>IMPORTE DESGLOSADO: {{(mes.totalPag()) / 1.16 | currency}} </th>
 						        <td>
 								    <div>
-											 
 										    <a ng-click="mes.editarPago(pagoProveedor._id)" style="font-size: 13px;" class="label label-warning" ><i class="fa fa-pencil"></i></a>
 										  <a  ng-click="mes.cambiarEstatusPago(pagoProveedor._id)" style="font-size: 13px;" class="label label-primary">Desactivar</a>
 											 
 								    </div>				    
 							    </td>
+							 
 
 														
 							</tr>	
@@ -412,13 +457,40 @@
       <div class="row"   ng-if="mes.mes_id != ''">
       <br/><br/>
 
+
+
+
+      <div class="jarviswidget well jarviswidget-sortable" id="wid-id-0" role="widget">
+<header role="heading">			
+<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
+<div role="content">
+<div class="jarviswidget-editbox">
+	<input class="form-control" type="text">	
+</div>
+<div class="widget-body no-padding">
+	<div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"><div class="dt-toolbar" style="padding: 0px; "></div><table id="example" class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" cellspacing="0" width="10%" role="grid" aria-describedby="example_info" style="width: 100%;">
+        <thead>
+            <tr role="row">
+               <th>
+               	<a href="javascript:void(0);" ng-click="mes.agregarIvaCobro()" class="btn btn-xs btn-default">IVA</a>
+                <a href="javascript:void(0);" ng-click="mes.quitarIvaPreCobro()"  class="btn btn-xs btn-default">SIN IVA</a>
+               </th>
+               <th></th>
+            </tr>
+
+        </thead>
+    </table></div>
+</div>
+</div>						
+</div>
+
 		
 		<div class="row col-sm-12">		
-	   <div class="col-sm-2 ">
+	   <div class="col-sm-2 " ng-show="mes.cobIva">
 	   		<label>Cobros con Iva</label>
 	   		<input type="number" class="form-control" ng-model="mes.cobro.cIva">
 	   </div>
-	   <div class="col-sm-2">
+	   <div class="col-sm-2" ng-show="!mes.cobIva">
 	   		<label>Cobros sin Iva</label>
 	   		<input type="number" class="form-control" ng-model="mes.cobro.cSinIva">
 	   </div><br/>
@@ -470,7 +542,7 @@
 											  Por cobrar
 											</span>
 											<span ng-if="!cobro.modo" style="font-size: 13px;" class="label label-danger">
-											  Pagar
+											  Pagado
 											</span>
 								    </div>
 							    </td>

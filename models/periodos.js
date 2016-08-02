@@ -4,3 +4,12 @@ Periodos.allow({
   update: function () { return true; },
   remove: function () { return true; }
 });
+
+
+
+PresupuestosCampo 						= new Mongo.Collection("presupuestosCampo");
+PresupuestosCampo.allow({
+  insert: function () { return true; },
+  update: function () { return true; },
+  remove: function () { return true; }
+});

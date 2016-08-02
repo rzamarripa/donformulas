@@ -67,7 +67,12 @@ $reactive(this).attach($scope);
 	  	return Meses.find();
 	  },
 	  costos : () => {
-			return Costos.find();
+			var cost = Costos.find().fetch();
+			for (var i = 0; i < cost.length; i++) {
+				if(!cost[i].value)
+					cost[i].value=0;
+			}
+			return cost;
 	  },
 	  conceptos : () => {
 	  	return Conceptos.find();
@@ -294,6 +299,7 @@ $reactive(this).attach($scope);
 		
 		console.log(this.mes_id);
 		console.log(this.partida_id);
+
 	};
 
      this.Pagos = true;
@@ -398,7 +404,7 @@ $reactive(this).attach($scope);
 
 	this.totalPag = function(pagoProveedor){
 		
-		var suma = pagoProveedor.pIva + pagoProveedor.pSinIva;
+		var suma = this.pagoProveedor.pIva + this.pagoProveedor.pSinIva;
 
 		return suma;
 	}
@@ -592,7 +598,7 @@ $reactive(this).attach($scope);
 		this.pagoProveedor.pSinIva = 0.00;  
 	};
 
-	this.cambiarEstatusPeriodo= function(id)
+	this.cambiarEstatusPago= function(id)
 	{
 	    var mes;
 	    var r = confirm("Esta seguro de borrar esta fecha");
@@ -650,4 +656,32 @@ $reactive(this).attach($scope);
 	        mes.estatus = true;
 	    }
     };
+      
+      this.preIva = true;
+     this.agregarIvaPre = function()
+     {
+     	this.preIva = true;
+     }
+      this.quitarIvaPre = function()
+     {
+     	this.preIva = false;
+     }
+      this.pagIva = true;
+     this.agregarIvaPag = function()
+     {
+     	this.pagIva = true;
+     }
+      this.quitarIvaPag = function()
+     {
+     	this.pagIva = false;
+     }
+      this.preIva = true;
+     this.agregarIvaCobro = function()
+     {
+     	this.cobIva = true;
+     }
+      this.quitarIvaCobro = function()
+     {
+     	this.cobIva = false;
+     }
 };
