@@ -1,18 +1,21 @@
 angular.module('formulas')
 .controller('PlanesCtrl', PlanesCtrl);
-function PlanesCtrl($scope, $meteor, $reactive, $state, toastr) {
+function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 $reactive(this).attach($scope);
 
-  this.subscribe('planes',()=>{
-	return [{estatus:true}] 
-    });
-  
+  this.subscribe('planes');
+  this.subscribe('obras');
   this.action = true;  
   this.nuevo = true;
+  
+  console.log($stateParams)
   
   this.helpers({
 	  planes : () => {
 		  return Planes.find();
+	  },
+	  obras : () => {
+		  return Obras.find();
 	  }
   });
   this.plan = {};
@@ -26,9 +29,10 @@ $reactive(this).attach($scope);
   
  this.guardar = function(empresa)
 	{
-	  this.plan.estatus = true;
-		console.log(this.plan);
-		Planes.insert(this.plan);
+	  plan.estatus = true;
+	  plan.obra_id = $stateParams
+		console.log(plan);
+		Planes.insert(plan);
 		toastr.success('Plan guardado.');
 		this.plan = {};
 		$('.collapse').collapse('hide');
@@ -67,7 +71,8 @@ $reactive(this).attach($scope);
 		
 // Funciones de precio proyecto
 		this.factorRecuperacionCalc = function() {
-			this.plan.factorRecuperacion = (1/(1-(this.plan.isr*(this.plan.trema/100))));
+			this.plan.isrCalculado = 100 / (100 - this.plan.isr - this.plan.ptu)
+			this.plan.factorRecuperacion = (1/(1-(this.plan.isrCalculado*(this.plan.trema/100))));
 			this.plan.totalEgresos = ((this.plan.ingresos / this.plan.factorRecuperacion) * 1)
 			// Funciones Costo Directo
 			this.plan.costosDirectosTotal1 = this.plan.costosDirectosMateriales1 + this.plan.costosDirectosMaquinarias1 + this.plan.costosDirectosManoObra1 + this.plan.costosDirectosCombustibleFleteTransporte1 + this.plan.costosDirectosRentas1 + this.plan.costosDirectosSubcontratos1 + this.plan.costosDirectosGastosVarios1

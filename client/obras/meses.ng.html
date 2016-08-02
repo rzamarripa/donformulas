@@ -1,27 +1,25 @@
-
-	<!--<h2>Agregar Tiempo</h2>
-  <div class="row">
-   <div class="col-sm-12">
-		  <div class="col-sm-1">
-			<a class="btn btn-primary btn-lg"
-			ng-click="mes.nuevoMes()"><i class="fa fa-plus"></i></a><br/><br>
-			  </div>
-
-			   	<div class="col-sm-4">
-					    <input placeholder="Asignar fecha" ng-show="mes.accionMes" lang="spanish" date-time class="form-control" view="year" max-view="year" min-view="month" ng-model="mes.mes.fecha"/>
-			    	</div>
-
-
-		    <div class="col-sm-4">
-		       <a class="btn btn-primary" ng-click="mes.guardar(mes.mes)" ng-show="mes.accionMes">
-		      Asignar Fecha</a>
-		   </div>
-   
-    </div>
-  </div>-->
-
-
-  <div class="well">	  
+<h2>Agregar Tiempo</h2>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="col-sm-1">
+		 		<a class="btn btn-primary btn-lg"
+				ng-click="mes.nuevoMes()"><i class="fa fa-plus"></i></a><br/><br>
+			</div>
+			<div class="col-sm-4">
+				<input placeholder="Asignar fecha" ng-show="mes.accionMes" lang="spanish" date-time class="form-control" view="year" max-view="year" min-view="month" ng-model="mes.mes.fecha"/>
+			</div>
+			<div class="col-sm-4">
+		  	<a class="btn btn-primary" ng-click="mes.guardar(mes.mes)" ng-show="mes.accionMes">
+				Asignar Fecha</a>
+			</div>
+			<div class="col-sm-offset-2 col-sm-1">
+				<a ui-sref = 'root.planes({obra_id:mes.obra_id})' class="btn btn-primary" role="button">
+					Planes
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="well">	  
 	<div class="row"> 
 		<div class="col-sm-12">	
 			<div class="col-lg-3" ng-repeat="Mes in mes.meses">
@@ -53,96 +51,78 @@
 			</div> 
 		</div>
 	</div> 
-
 </div>
- 
-
 <br/>
-
 <!--////////////////////////////////////////PRESUPUESTOS//////////////////////////////////////////////////////////////-->
-
-
 <div class="well">
-
-<div class="jarviswidget well jarviswidget-sortable" id="wid-id-0" role="widget">
-<header role="heading">			
-<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
-<div role="content">
-<div class="jarviswidget-editbox">
-	<input class="form-control" type="text">	
-</div>
-<div class="widget-body no-padding">
-	<div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"><div class="dt-toolbar" style="padding: 0px; "></div><table id="example" class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" cellspacing="0" width="10%" role="grid" aria-describedby="example_info" style="width: 100%;">
-        <thead>
-            <tr role="row">
-            <th class="details-control sorting_disabled" rowspan="1" colspan="1"  style="width: 1px;"></th>
-
-            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"  style="width: 88px;">
-            <a href="" ng-show="!mes.action"  ng-click="mes.mostrarArchivos(mes.mes_id,mes.obra_id)" style="font-size: 15px;">PRESUPUESTOS</a></th>
-            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"  style="width: 73px;"><a href=""  ng-click="mes.mostrarPeriodo(mes.obra_id,mes.mes_id)" ng-show="!mes.action" style="font-size: 15px;">PERIODOS</a></th>
-
-            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarPagos(mes.obra_id,mes.mes_id)" ng-show="!mes.accionPago" style="font-size: 15px;">PAGOS A PROVEEDORES</a></th>
-
-            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarCobro(mes.obra_id,mes.mes_id)" ng-show="!mes.accionCobro" style="font-size: 15px;">ESTIMACIONES</a></th>
-
-            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarResumen(mes.obra_id,mes.mes_id)" ng-show="!mes.accionResumen" style="font-size: 15px;">RESUMEN</a></th>
-
-            <!--<th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarGI(mes.obra_id,mes.mes_id)" ng-show="!mes.accionGI" style="font-size: 15px;">GASTOS INDIRECTOS</a></th>-->
-            </tr>
-
-        </thead>
-    </table></div>
-</div>
-</div>						
-</div>
-
-<div class="row" ng-if="!mes.accionPresupuesto">				
-	
-
-    <div class="col-sm-3">
-    <a class="btn btn-{{mes.nuevo == true ? 'success' : 'danger'}}" role="button" data-toggle="collapse" 
-			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevopresupuesto" ng-click="mes.nuevoPresupuesto(mes.obra_id,mes.mes_id)">
-		 {{mes.nuevo == true ? 'Mostrar Partidas' : 'Cancelar'}}
-	</a></div><br/><br/>
-		
+<<<<<<< HEAD
+	<div class="jarviswidget well jarviswidget-sortable" id="wid-id-0" role="widget">
+		<header role="heading">			
+			<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
+			<div role="content">
+				<div class="jarviswidget-editbox">
+					<input class="form-control" type="text">	
+				</div>
+				<div class="widget-body no-padding">
+					<div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"><div class="dt-toolbar" style="padding: 0px; ">
+					</div>
+					<table id="example" class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" cellspacing="0" width="10%" role="grid" aria-describedby="example_info" style="width: 100%;">
+						<thead>
+	            <tr role="row">
+	            <th class="details-control sorting_disabled" rowspan="1" colspan="1"  style="width: 1px;"></th>
+	            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"  style="width: 88px;">
+	            <a href="" ng-show="!mes.action"  ng-click="mes.mostrarArchivos(mes.mes_id)" style="font-size: 15px;">PRESUPUESTOS</a></th>
+	            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"  style="width: 73px;"><a href=""  ng-click="mes.mostrarPeriodo(mes.mes_id)" ng-show="!mes.action" style="font-size: 15px;">PERIODOS</a></th>
+	            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarPagos(mes.mes_id)" ng-show="!mes.accionPago" style="font-size: 15px;">PAGOS A PROVEEDORES</a></th>
+	            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarCobro(mes.mes_id)" ng-show="!mes.accionCobro" style="font-size: 15px;">ESTIMACIONES</a></th>
+	            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarResumen(mes.mes_id)" ng-show="!mes.accionResumen" style="font-size: 15px;">RESUMEN</a></th>
+	            <th tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 95px;"><a href=""  ng-click="mes.mostrarGI(mes.mes_id)" ng-show="!mes.accionGI" style="font-size: 15px;">GASTOS INDIRECTOS</a></th>
+	            </tr>
+	        	</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row" ng-if="!mes.accionPresupuesto">				
 		<div class="col-sm-12">
-		<div class="collapse" id="collapseExample">
-		<h3 class="dark-grey"  ng-show="!mes.accionPresupuesto">Lista de Partidas</h3>
-	<div class="row" ng-show="!mes.accionPresupuesto">
-			<div class="col-sm-4">
-				<ul class="list-group no-margin">
-					<li ng-repeat="partida in mes.partidas" class="list-group-item">
-						<a href="" ng-click="mes.mostrarPresupuestos(mes.mes_id,mes.partida_id)" >{{partida.nombre}}</a>
-					</li>
-				</ul>
-			</div>
-			</div>
-			</div>
-	
-			<div class="row">
-		<div class="col-sm-4 ">
-		<label>Lista de Conceptos</label>	
-		<select  id="concepto" class="form-control"  placeholder="Seleccione" ng-model="mes.presupuesto.concepto_id">
-						  <option ng-repeat="concepto in mes.conceptos" value="{{concepto._id}}">
-						  	{{concepto.nombre}}
-						  </option>
+			<h3 class="dark-grey"  ng-show="!mes.accionPresupuesto">Lista de Partidas</h3>
+				<div class="row" ng-show="!mes.accionPresupuesto">
+					<div class="col-sm-4">
+						<ul class="list-group no-margin">
+							<li ng-repeat="partida in mes.partidas" class="list-group-item">
+								<a href="" ng-click="mes.mostrarPresupuestos(partida._id)" >{{partida.nombre}}</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4 ">
+						<label>Lista de Conceptos</label>	
+						<select  id="concepto" class="form-control"  placeholder="Seleccione" ng-model="mes.presupuesto.concepto_id">
+							<option ng-click="selectDepa" ng-repeat="concepto in mes.conceptos" value="{{concepto._id}}">
+								{{concepto.nombre}}
+							</option>
 						</select>
+<<<<<<< HEAD
 		   </div>
 	   <div ng-repeat="(key, costo) in mes.costos"  style="margin-top: 2px" class="col-sm-2 ">
 	   		<label for="{{key}}">{{costo.nombre}}</label>
 	   		<input type="number" id="{{key}}" class="form-control" ng-model="costo.value" min="0">
 	   </div>	
 	 
+=======
+					</div>
+					<div ng-repeat="(key, costo) in mes.costos" style="margin-top: 2px" class="col-sm-2 ">
+						<label for="{{key}}">{{costo.nombre}}</label>
+						<input type="number" id="{{key}}" class="form-control" ng-model="costo.value">
+					</div>	
+>>>>>>> acb6a49bff0e043f4490c9659282d26c1fdb6331
           <div class="col-sm-4" ng-show="!mes.mostrarFormPre" style="margin-top: 28px">
-	         <input type="submit" ng-click="mes.guardarPresupuesto(mes.costos)" ng-show="mes.pollo" value="Guardar" class="btn btn-primary">
-	         <input type="submit" ng-click="mes.actualizarPresupuesto(mes.costos)" ng-show="!mes.pollo" value="Actualizar" class="btn btn-primary"><br/>
-	       </div>
-	      </div>   
-	   
-	   </div>
-
-	     
-	  
+	        	<input type="submit" ng-click="mes.guardarPresupuesto(mes.costos)" value="Guardar" class="btn btn-primary"><br/>
+	       	</div>
+	      </div>
+			</div>
 	<div class="col-sm-12"  ng-if="mes.mes_id != ''"  ng-show="!mes.mostrarFormPre">
 	<h3>Presupuestos</h3>	
 	<br/>

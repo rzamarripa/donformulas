@@ -23,6 +23,10 @@
 				    	<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.isr" required>
 				    </div>
 			    	<div class="col-sm-6">
+					    <label>PTU</label>
+				    	<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.ptu" required>
+				    </div>
+			    	<div class="col-sm-6">
 					    <label for="domicilio">Factor de Recuperación</label>
 				    	<div class="form-control">{{pl.plan.factorRecuperacion | number : 2}}</div>
 			    	</div>
@@ -723,9 +727,7 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-			    <th width="50%"><div class="text-center">Empresa</div></th>
 			    <th width="10%"><div class="text-center">Obra</div></th>
-			    <th width="10%"><div class="text-center">Plan</div></th>
 					<th width="10%">
 						<div class="text-center">
 							Estatus
@@ -740,9 +742,13 @@
 			</thead>
 			<tbody>
 		    <tr ng-repeat="plan in pl.planes">
+<<<<<<< HEAD
 			    <td>{{plan.empresa}} </td> 
 			    <td>{{pl.plan.porcentajeObras | number : 2}} </td>
 			    <td>{{plan.plan}} </td>
+=======
+			    <td>{{plan.obra}} </td>
+>>>>>>> acb6a49bff0e043f4490c9659282d26c1fdb6331
 			    <td>
 				    <div class="text-center">
 				    	<span ng-if="plan.estatus" class="label label-success">

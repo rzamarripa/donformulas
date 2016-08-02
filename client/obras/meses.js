@@ -12,13 +12,10 @@ $reactive(this).attach($scope);
 	this.pagoProveedor = {};
 	this.panelId = "";
 	this.tipoPeriodo = 'costo';
+	this.obra_id = $stateParams.id;
 	this.totalDelCobro = 0.00;
 	////////////PERIODO///////////////////////////////////////////////
-	
 	//this.tipoPeriod = 'gasto';
-
-
-
 	this.subscribe('obra', () => {
 		return [{ _id : $stateParams.id, estatus : true}]});
 

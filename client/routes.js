@@ -126,7 +126,7 @@ angular.module('formulas').config(['$injector', function ($injector) {
       controller: 'PartidasCtrl as par',
     })
     .state('root.planes', {
-      url: '/planes',
+      url: '/planes/:obra_id',
       templateUrl: 'client/planes/planes.ng.html',
       controller: 'PlanesCtrl as pl',
     })
@@ -189,5 +189,5 @@ angular.module('formulas').config(['$injector', function ($injector) {
       url: '/control/',
       templateUrl: 'client/control/control.ng.html',
       controller: 'ControlCrtl as add',
-    })
+    });
 }]);     
