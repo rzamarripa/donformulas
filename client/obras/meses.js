@@ -3,7 +3,7 @@ angular.module("formulas")
 function MesesCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
 $reactive(this).attach($scope);
 	this.mes_id = '';
-	this.partida_id = '';
+	this.partida = "";
 	this.action = true;
 	this.presupuesto = {};
 	this.periodo = {};
@@ -12,7 +12,11 @@ $reactive(this).attach($scope);
 	this.pagoProveedor = {};
 	this.panelId = "";
 	this.tipoPeriodo = 'costo';
+<<<<<<< HEAD
 	this.obra_id = $stateParams.id;
+=======
+	this.totalDelCobro = 0.00;
+>>>>>>> ee99b9a04b055ae36600aafd8ea2987cbf3086fc
 	////////////PERIODO///////////////////////////////////////////////
 	
 	//this.tipoPeriod = 'gasto';
@@ -23,7 +27,7 @@ $reactive(this).attach($scope);
 		return [{ _id : $stateParams.id, estatus : true}]});
 
 	this.subscribe('meses',()=>{
-		return [{ obra_id : $stateParams.id, estatus:true}]
+		return [{estatus:true}]
 	});
 
 	this.subscribe('partidas',()=>{
@@ -31,31 +35,27 @@ $reactive(this).attach($scope);
   });
 
   this.subscribe('conceptos',()=>{
-	return [{partida_id: this.getReactively('partida_id'), estatus:true}] 
+	return [{partida_id: this.getReactively('partida_id'),estatus:true}] 
   });
 
   this.subscribe('costos',()=>{
 	return [{estatus:true}] 
   });
 
-  this.subscribe('gastos',()=>{
+  this.subscribe('gastosOficina',()=>{
 	return [{estatus:true}] 
   });
 
-  this.subscribe('cobros',()=>{
-	return [{estatus:true}] 
+   this.subscribe('cobros',()=>{
+	return [{obra_id : $stateParams.id,mes_id: this.getReactively('mes_id'),estatus:true}] 
   });
 
   this.subscribe('presupuestos',()=>{
 	return [{partida_id: this.getReactively('partida_id'),mes_id: this.getReactively('mes_id'),estatus:true}] 
   });
   this.subscribe('periodos',()=>{
-	return [{tipo: this.getReactively('tipoPeriodo'),mes_id: this.getReactively('mes_id'),estatus:true}] 
+	return [{obra_id : $stateParams.id, tipo: this.getReactively('tipoPeriodo'),mes_id: this.getReactively('mes_id'),estatus:true}] 
   });
-
-  /*this.subscribe('periodo',()=>{
-	return [{tipo: this.getReactively('tipoPeriod'),mes_id: this.getReactively('mes_id'),estatus:true}] 
-  });*/
 
   this.subscribe('pagosProveedores',()=>{
 	return [{mes_id: this.getReactively('mes_id'),estatus:true}] 
@@ -86,7 +86,7 @@ $reactive(this).attach($scope);
 	  	return Periodos.find();
 	  },
 	  gastos : () => {
-	  	return Gastos.find();
+	  	return GastosOficina.find();
 	  },
 	   pagosProveedores : () => {
 	  	return PagosProveedores.find();
@@ -101,13 +101,23 @@ $reactive(this).attach($scope);
 	this.accionMes = false;
 	this.accionPresupuesto = true;
 	this.accionPeriodo = false;
+	this.nuevo = true;
 	
 
   this.nuevoMes = function()
   {
+  
+    this.nuevo = !this.nuevo;
+  	
+  };
+
+   this.nuevoPresupuesto = function()
+  {
+
     this.accionMes = true;
     this.mostrarMes = !this.mostrarMes;
-    this.mes = {}; 
+    //this.presupuesto.costo.value = 0.00;
+    
   	
   };
 
@@ -128,12 +138,11 @@ $reactive(this).attach($scope);
 	this.guardarPresupuesto = function(costos)
 	{
 		console.log(costos);
+		//this.presupuesto.costo.value = 0.00;
 		this.presupuesto.estatus = true;
-		this.presupuesto.partida_id = this.partida_id;
-		this.presupuesto.mes_id = this.mes_id;
 		this.presupuesto.obra_id = this.obra_id;
-		//mes.obra_id = $stateParams.id;
-		//mes.partida_id = this.partida_id;
+		this.presupuesto.mes_id = this.mes_id;
+		this.presupuesto.partida_id = this.partida_id;
 		_.each(costos, function(costo){
 			delete costo.$$hashKey;
 		});
@@ -147,11 +156,12 @@ $reactive(this).attach($scope);
 	this.guardarPeriodo = function(periodo)
 	{
 
-		this.periodo.estatus = true;
-		this.periodo.mes_id = this.mes_id;
+		periodo.estatus = true;
+		periodo.obra_id = this.obra_id;
+		periodo.mes_id = this.mes_id;
 		if(periodo.costo_id != undefined)
 			periodo.tipo = 'costo';
-		if(periodo.gasto_id != undefined)
+		if(periodo.gasto != undefined)
 			periodo.tipo = 'gasto';
 		console.log(periodo);
 		Periodos.insert(periodo);
@@ -163,23 +173,29 @@ $reactive(this).attach($scope);
 
 	this.guardarPago = function(pagoProveedor)
 	{
-
-		console.log(pagoProveedor);
+		pagoProveedor.estatus = true;
+		pagoProveedor.obra_id = this.obra_id;
+		pagoProveedor.mes_id = this.mes_id;
 		PagosProveedores.insert(pagoProveedor);
 		toastr.success('Pago Agregado.');
+		console.log(pagoProveedor);
 		this.pagoProveedor = {}; 
+		this.pagoProveedor.pIva = 0.00;
+		this.pagoProveedor.pSinIva = 0.00;
 		
 	};
 
 	this.guardarCobro = function(cobro)
 	{
 		this.cobro.estatus = true;
-		this.cobro.mes_id = this.mes_id;
 		this.cobro.obra_id = this.obra_id;
+		this.cobro.mes_id = this.mes_id;
 		console.log(cobro);
 		Cobros.insert(cobro);
 		toastr.success('cobro Agregado.');
 		this.cobro = {}; 
+		this.cobro.cIva =0.00;
+		this.cobro.cSinIva =0.00;
 		
 	};
 
@@ -221,12 +237,13 @@ $reactive(this).attach($scope);
    
     this.accionCobro = true;
     this.accionResumen = true;
-    this.mostrarListas= function(id)
+    this.mostrarListas= function(mes_id,obra_id)
 	{
-		this.panelId = id;
+		
+		this.panelId = mes_id;
 		this.action = false;
-		this.mes_id = id;
-		this.obra_id = id;
+		this.mes_id = mes_id;
+		this.obra_id = $stateParams.id;
 		this.accionPeriodo = true;
 		this.accionPago = false;
 		this.panelColor = true;
@@ -234,86 +251,92 @@ $reactive(this).attach($scope);
 		this.accionResumen = false;
 		this.accionGI = false;
         this.Resumen = true;
-
-		
-
-	
+        
 	};
 
-    this.mostrarArchivos= function(id)
+    this.mostrarArchivos= function(mes_id,obra_id)
 	{
 		this.presupuesto = {}; 
-		console.log(id);
-		//rc.nada = nombre;
-		this.mes_id = id;
+		//this.presupuesto.costo = 0.00;
+		this.mes_id = mes_id;
+		this.obra_id = $stateParams.id;
 		this.accionPresupuesto = false;
 		this.accionPeriodo = true;
 		this.mostrarFormPre = true;
 		this.Pagos = true;
 		this.Cobro = true;
+		console.log(mes_id);
+		console.log(obra_id);
 
 	
 	};
-	 this.mostrarPeriodo= function(id)
+	 this.mostrarPeriodo= function(obra_id,mes_id)
 	{
 		this.periodo = {}; 
 		this.periodo.comprasIva = 0.00;
 		this.periodo.comprasSinIva = 0.00;  
 		this.periodo.contadoIva = 0.00;
 		this.periodo.contadoSinIva = 0.00;
-		console.log(id);
-		//rc.nada = nombre;
-		this.mes_id = id;
+		this.obra_id = obra_id;
+		this.mes_id = mes_id;
 		this.accionPeriodo = false;
 		this.accionPresupuesto = true;
 		this.Pagos = true;
 		this.mostrarFormPre = true;
+		console.log(obra_id);
+		console.log(mes_id);
 	
 	};
 
-	 this.mostrarPresupuestos = function(id)
+	 this.mostrarPresupuestos = function(mes_id,partida_id)
 	{
-		this.partida_id = id;
-		this.obra_id = id;
+		this.obra_id = $stateParams.id;
+		this.mes_id = mes_id;
+		this.partida_id = partida_id;
 		this.mostrarFormPre = false;
 		this.gastoCosto = false;
 		this.Resumen = true;
 		this.Cobro = true;
 		this.Pagos = true;
-		console.log(id);
+		
+		console.log(this.mes_id);
+		console.log(this.partida_id);
 	};
 
      this.Pagos = true;
      this.accionPago = true;
-	this.mostrarPagos = function(id)
+	this.mostrarPagos = function(obra_id,mes_id)
 	{
 		this.Pagos = false;
-		this.mes_id = id;
-		this.obra_id = id;
+		this.obra_id = obra_id;
+		this.mes_id = mes_id;
 		this.accionPresupuesto = true;
 		this.accionPeriodo = true;
 		this.Resumen = true;
 		this.Cobro = true;
 		this.gastoCosto = false;
-		console.log(id);
+		this.pagoProveedor.pIva = 0.00;
+		this.pagoProveedor.pSinIva = 0.00;
 	};
 
 	this.Cobro = true;
-	this.mostrarCobro = function(id)
+	this.mostrarCobro = function(obra_id,mes_id)
 	{
-	
-		this.mes_id = id;
-		this.obra_id = id;
+
+		this.cobro.cIva =0.00;
+		this.cobro.cSinIva =0.00;
+		this.obra_id = obra_id;
+		this.mes_id = mes_id;
 		this.accionPresupuesto = true;
 		this.accionPeriodo = true;
 		this.Pagos = true;
 		this.Resumen = true;
 		this.gastoCosto = false;
 		this.Cobro = false;
-		console.log(id);
+	
 	};
 
-	this.mostrarResumen = function(id)
+	this.mostrarResumen = function(id,obra_id)
 	{
 		
 		this.mes_id = id;
@@ -353,12 +376,12 @@ $reactive(this).attach($scope);
 		if(costo)
 		return costo.nombre;
 	};
-	this.getGasto= function(gasto_id)
+	/*this.getGasto= function(gasto_id)
 	{
 		var gasto = Gastos.findOne(gasto_id);
 		if(gasto)
 		return gasto.nombre;
-	};
+	};*/
 
 	this.periodo= function(mes)
 	{
@@ -375,22 +398,29 @@ $reactive(this).attach($scope);
 		return suma;
 	}
 
-	this.totalPer = function(periodo){
+	/*this.totalPer = function(periodo){
 		var suma = periodo.comprasIva + periodo.comprasSinIva + periodo.contadoIva + periodo.contadoSinIva;
 		return suma;
-	}
+	}*/
 
 	this.totalPag = function(pagoProveedor){
 		
 		var suma = pagoProveedor.pIva + pagoProveedor.pSinIva;
+
 		return suma;
 	}
-	this.totalCobro = function(cobro){
-		
-		var suma = cobro.cIva + cobro.cSinIva;
-		return suma;
+	
+	this.cobroTotalFinal = function(){
+		total = 0;
+		_.each(this.cobros,function(cobro){total += cobro.cIva + cobro.cSinIva});
+		return total
 	}
 
+	this.cobroTotalFinalPeriodo = function(){
+		total = 0;
+		_.each(this.periodos,function(periodo){total += periodo.comprasIva + periodo.comprasSinIva + periodo.contadoIva + periodo.contadoSinIva});
+		return total
+	}
 
     this.cobro.modo = true;
 	this.cambiarEstatusCobro = function(id)
@@ -424,10 +454,14 @@ $reactive(this).attach($scope);
 
 	this.gastoCostosito = function()
    	{
-   		this.tipoPeriodo = 'gasto';
+   		
+		this.tipoPeriodo = 'gasto'; 
+		this.periodo.comprasIva = 0.00;
+		this.periodo.comprasSinIva = 0.00;  
+		this.periodo.contadoIva = 0.00;
+		this.periodo.contadoSinIva = 0.00;
    		this.gastoCosto = false;
    		this.mostrarFormPre = false;
-	    console.log(this.gastoCosto);
 	}
 
 
@@ -441,11 +475,186 @@ $reactive(this).attach($scope);
 
 	this.reiniciar = function()
 	{
-		this.periodo = {}; 
+		this.periodo = {};
 		this.periodo.comprasIva = 0.00;
 		this.periodo.comprasSinIva = 0.00;  
 		this.periodo.contadoIva = 0.00;
 		this.periodo.contadoSinIva = 0.00;
 
 	}
+
+	this.reiniciarCobro = function()
+	{
+		this.cobro.cobro = {}; 
+		this.cobro.cIva =0.00;
+		this.cobro.cSinIva =0.00;
+
+	}
+
+	this.input = function()
+	{
+        this.periodo.gasto = 'Gastos de Campo';
+        this.periodo.comprasIva = 0.00;
+		this.periodo.comprasSinIva = 0.00;  
+		this.periodo.contadoIva = 0.00;
+		this.periodo.contadoSinIva = 0.00;
+    }
+
+    this.pollo = true;
+
+    this.editarPresupuesto = function(id)
+	{
+    this.presupuesto = Presupuestos.findOne({_id:id});
+    this.pollo = false;
+	};
+	
+	this.actualizarPresupuesto = function(presupuesto,costos)
+	{
+		var idTemp = costos._id;
+		delete costos._id;		
+		Presupuestos.update({_id:idTemp},{$set:costos});
+		console.log(presupuesto);
+	};
+
+	this.cambiarEstatusPresupuesto = function(id)
+	{
+	    var mes;
+	    var r = confirm("Esta seguro de borrar esta fecha");
+	    if (r == true) {
+	        txt = mes = Presupuestos.findOne({_id:id});
+		if(mes.estatus == true)
+			mes.estatus = false;
+		else
+			mes.estatus = true;
+		
+		Presupuestos.update({_id: id},{$set :  {estatus : mes.estatus}});
+
+	    } else {
+	        mes.estatus = true;
+	    }
+    };
+    this.period = true;
+
+    this.editarPeriodo = function(id)
+	{
+    this.periodo = Periodos.findOne({_id:id});
+    this.period = false;
+	};
+
+
+	
+	this.actualizarPeriodo = function(periodo)
+	{
+		var idTemp = periodo._id;
+		delete periodo._id;		
+		Periodos.update({_id:idTemp},{$set:periodo});
+		this.period = true;
+
+		console.log(periodo);
+		this.periodo = {};
+		this.periodo.comprasIva = 0.00;
+		this.periodo.comprasSinIva = 0.00;  
+		this.periodo.contadoIva = 0.00;
+		this.periodo.contadoSinIva = 0.00;
+	};
+
+	this.cambiarEstatusPeriodo= function(id)
+	{
+	    var mes;
+	    var r = confirm("Esta seguro de borrar esta fecha");
+	    if (r == true) {
+	        txt = mes = Periodos.findOne({_id:id});
+		if(mes.estatus == true)
+			mes.estatus = false;
+		else
+			mes.estatus = true;
+		
+		Periodos.update({_id: id},{$set :  {estatus : mes.estatus}});
+
+	    } else {
+	        mes.estatus = true;
+	    }
+    };
+
+     this.pag = true;
+
+    this.editarPago = function(id)
+	{
+    this.pagoProveedor = PagosProveedores.findOne({_id:id});
+    this.pag = false;
+	};
+
+
+	
+	this.actualizarPago = function(pagoProveedor)
+	{
+		var idTemp = pagoProveedor._id;
+		delete pagoProveedor._id;		
+		PagosProveedores.update({_id:idTemp},{$set:pagoProveedor});
+		this.pag = true;
+
+		console.log(pagoProveedor);
+		this.pagoProveedor = {};
+		this.pagoProveedor.pIva = 0.00;
+		this.pagoProveedor.pSinIva = 0.00;  
+	};
+
+	this.cambiarEstatusPeriodo= function(id)
+	{
+	    var mes;
+	    var r = confirm("Esta seguro de borrar esta fecha");
+	    if (r == true) {
+	        txt = mes = PagosProveedores.findOne({_id:id});
+		if(mes.estatus == true)
+			mes.estatus = false;
+		else
+			mes.estatus = true;
+		
+		PagosProveedores.update({_id: id},{$set :  {estatus : mes.estatus}});
+
+	    } else {
+	        mes.estatus = true;
+	    }
+    };
+
+    this.cob = true;
+
+    this.editarCobro = function(id)
+	{
+    this.cobro = Cobros.findOne({_id:id});
+    this.pag = false;
+	};
+
+
+	
+	this.actualizarCobro = function(cobro)
+	{
+		var idTemp = cobro._id;
+		delete cobro._id;		
+		Cobros.update({_id:idTemp},{$set:cobro});
+		this.pag = true;
+
+		console.log(cobro);
+		this.cobro = {};
+		this.cobro.cIva = 0.00;
+		this.cobro.cSinIva = 0.00;  
+	};
+
+	this.cambiarEstatusCobros= function(id)
+	{
+	    var mes;
+	    var r = confirm("Esta seguro de borrar esta fecha");
+	    if (r == true) {
+	        txt = mes = Cobros.findOne({_id:id});
+		if(mes.estatus == true)
+			mes.estatus = false;
+		else
+			mes.estatus = true;
+		
+		Cobros.update({_id: id},{$set :  {estatus : mes.estatus}});
+
+	    } else {
+	        mes.estatus = true;
+	    }
+    };
 };

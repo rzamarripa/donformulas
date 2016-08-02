@@ -1,3 +1,3 @@
-Meteor.publish("planes",function(){
-  	return Planes.find({estatus:true});
+Meteor.publish("planes",function(params){
+  	return Planes.find(params);
 });

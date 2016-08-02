@@ -5,10 +5,15 @@
 			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevoobra" ng-click="obr.nuevoObra()">
 		 {{obr.nuevo == true ? 'Nuevo' : 'Cancelar'}}
 		</a>
+		<a class="btn btn-success pull-right " ui-sref="root.addGasto">Agregar Gasto</a>
 		<div class="collapse" id="collapseExample">
 			<form class="form-horizontal" role="form" data-parsley-validate>
 		  	<div class="well">	    
 			    <div class="row">
+			    <div class="col-sm-4">
+					    <label>Precio de venta</label>
+				    	<input type="number" class="form-control" placeholder="Precio" ng-model="obr.obra.precio" required>
+				    </div>
 	          <div class="col-sm-4">
 					    <label>Nombre</label>
 				    	<input type="text" class="form-control" placeholder="Nombre" ng-model="obr.obra.nombre" required>

@@ -3,8 +3,15 @@ angular.module('formulas')
 function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 $reactive(this).attach($scope);
 
+<<<<<<< HEAD
   this.subscribe('planes');
   this.subscribe('obras');
+=======
+  this.subscribe('planes',()=>{
+	return [{estatus:true}] 
+    });
+  
+>>>>>>> ee99b9a04b055ae36600aafd8ea2987cbf3086fc
   this.action = true;  
   this.nuevo = true;
   
