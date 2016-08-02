@@ -184,5 +184,5 @@ angular.module('formulas').config(['$injector', function ($injector) {
       url: '/control/',
       templateUrl: 'client/control/control.ng.html',
       controller: 'ControlCrtl as add',
-    })
+    });
 }]);     
