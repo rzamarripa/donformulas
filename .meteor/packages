@@ -37,3 +37,4 @@ momentjs:moment
 angularui:angular-ui-bootstrap
 standard-minifier-css
 standard-minifier-js
+meteorhacks:aggregate

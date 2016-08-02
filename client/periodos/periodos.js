@@ -88,7 +88,7 @@ $reactive(this).attach($scope);
 		periodo.periodo_id = $stateParams.id;
 		this.mes.mes_id = this.mes_id;
 		console.log(this.periodo);
-		periodoes.insert(this.periodo);
+		periodos.insert(this.periodo);
 		toastr.success('periodo Agregado.');
 		this.accionperiodo = false;
 		this.periodo = {}; 

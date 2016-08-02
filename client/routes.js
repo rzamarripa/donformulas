@@ -180,6 +180,11 @@ angular.module('formulas').config(['$injector', function ($injector) {
       templateUrl: 'client/GI/addGasto.ng.html',
       controller: 'AddGasto as add',
     })
+        .state('root.verGastos', {
+      url: '/verGastos/',
+      templateUrl: 'client/GI/verGastos.ng.html',
+      controller: 'verGastosCtrl as gas',
+    })
       .state('root.control', {
       url: '/control/',
       templateUrl: 'client/control/control.ng.html',

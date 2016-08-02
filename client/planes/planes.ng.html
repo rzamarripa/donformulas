@@ -741,7 +741,7 @@
 			<tbody>
 		    <tr ng-repeat="plan in pl.planes">
 			    <td>{{plan.empresa}} </td> 
-			    <td>{{plan.obra}} </td>
+			    <td>{{pl.plan.porcentajeObras | number : 2}} </td>
 			    <td>{{plan.plan}} </td>
 			    <td>
 				    <div class="text-center">
@@ -769,6 +769,7 @@
 				    </div>				    
 			    </td>
 		    </tr>
+		    <tr><th>{{pl.plan.porcentajeObras | number : 2}}</th></tr>
 			</tbody>
 		</table>
 	</div>

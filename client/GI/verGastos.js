@@ -1,6 +1,6 @@
 angular.module("formulas")
-.controller("GICTRL", GICTRL);  
-function GICTRL($scope, $meteor, $reactive, $state, $stateParams, toastr){
+.controller("verGastosCtrl", verGastosCtrl);  
+function verGastosCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
 $reactive(this).attach($scope);
 
 
@@ -12,17 +12,12 @@ this.tipoPeriodo = 'gasto';
     });
 
      this.subscribe('gastosOficina',()=>{
-	 return [{mes_id: this.getReactively('mes_id'),estatus:true}] 
+	 return [{estatus:true}] 
      });
 
     this.subscribe('planes',()=>{
 	return [{estatus:true}] 
     });
-
-     this.subscribe('presupuestosCampo',()=>{
-	return [{estatus:true}] 
-    });
-
     this.subscribe('obras',()=>{
 	return [{estatus:true}] 
     });
@@ -35,10 +30,10 @@ this.tipoPeriodo = 'gasto';
 	return [{estatus:true}] 
   });
     this.subscribe('cobros',()=>{
-	return [{mes_id: this.getReactively('mes_id'),estatus:true,modo:false}] 
+	return [{estatus:true,modo:false}] 
   });
 	this.subscribe('periodos',()=>{
-	return [{tipo: this.getReactively('tipoPeriodo'),mes_id: this.getReactively('mes_id'),estatus:true}] 
+	return [{estatus:true}] 
   });
 
   this.action = true;
@@ -59,9 +54,6 @@ this.tipoPeriodo = 'gasto';
 	  pagos : () => {
 		  return PagosProveedores.find();
 	  },
-	  campos : () => {
-		  return PresupuestosCampo.find();
-	  },
 	  cobros : () => {
 		  return Cobros.find();
 	  },
@@ -72,7 +64,7 @@ this.tipoPeriodo = 'gasto';
 	  	var obrasCalculadas = [];
 	  	if(this.getReactively("obras") != undefined){
 	  		_.each(this.obras,function(obra){
-	  			console.log("entré");
+	  			//console.log("entré");
 				var totalA=0;
 				var cobros = Cobros.find({obra_id: obra._id, modo:false}).fetch();
 				_.each(cobros,function(cobro){
@@ -80,10 +72,30 @@ this.tipoPeriodo = 'gasto';
 				});
 				obrasCalculadas.push({nombre : obra.nombre, total : totalA});
 			});
-			console.log(obrasCalculadas)
+			//console.log(obrasCalculadas)
 	  	}		
 		return obrasCalculadas;
-	  }
+	  },
+	  totalGastosAnual : () => {
+	  	var obrasGastos = [];
+	  	if(this.getReactively("obras") != undefined){
+	  		_.each(this.obras,function(obra){
+	  			//console.log("ESTAAAAA");
+				var totalAn=0;
+				var gastosCampo = Periodos.find({obra_id: obra._id}).fetch();
+				_.each(gastosCampo,function(gasto){
+					totalAn += gasto.comprasIva + gasto.contadoIva 
+				});
+				obrasGastos.push({nombre : obra.nombre, total : totalAn});
+			});
+			//console.log(obrasGastos)
+	  	}		
+		return obrasGastos;
+	  },
+
+
+
+
   });
   
 	this.nuevo = true; 
@@ -95,20 +107,16 @@ this.tipoPeriodo = 'gasto';
     this.gastosIndirecto= {};		
   };
   
-  this.guardarPreGC = function(obra)
+  this.guardar = function(gastoIndirecto)
 	{
-		var idTemp = obra._id;
-		delete obra._id;		
-		Obras.update({_id:idTemp},{$set:obra});
-		this.campos = false;
-		console.log(obra);
-	};
-
-     this.campos = false;
-	this.editarObra = function(id)
-	{
-    this.obra = Obras.findOne({_id:id});
-    this.campos = true;
+		this.GI.estatus = true;
+		console.log(this.gastoIndirecto);
+		GI.insert(this.gastoIndirecto);
+		toastr.success('Obra guardada.');
+		this.gastoIndirecto = {}; 
+		$('.collapse').collapse('hide');
+		this.nuevo = true;
+		$state.go('root.gastoindirectos')
 	};
 	
 	this.editar = function(id)
@@ -154,25 +162,6 @@ this.tipoPeriodo = 'gasto';
 
 	    } else {
 	        mes.estatus = true;
-	    }
-    };
-
-
-     this.borrarGC = function(id)
-	{
-	    var gc;
-	    var r = confirm("Esta seguro de borrar esta fecha");
-	    if (r == true) {
-	        txt = gc = Obras.findOne({_id:id});
-		if(gc.estatus == true)
-			gc.estatus = false;
-		else
-			gc.estatus = true;
-		
-		Obras.update({_id: id},{$set :  {estatus : gc.estatus}});
-
-	    } else {
-	        gc.estatus = true;
 	    }
     };
 
@@ -257,5 +246,21 @@ this.tipoPeriodo = 'gasto';
 	};
 
 
+ 
+
+ 	this.totalCantidadApagar = function(){
+		total = 0;
+		_.each(this.gastosOficinas,function(gasto){total += gasto.importeFijo + gasto.importeVar});
+		return total
+	}
+
+	this.TotalFinalGastos = function()
+	{
+		total = 0;
+		_.each(this.periodos,function(periodo)
+		  {total += periodo.comprasIva + periodo.comprasSinIva
+		 + periodo.contadoIva + periodo.contadoSinIva});
+		return total
+	}
 
 };
