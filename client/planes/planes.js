@@ -5,6 +5,7 @@ $reactive(this).attach($scope);
 
   this.subscribe('planes');
   this.subscribe('obras');
+  this.subscribe('GI')
   this.action = true;  
   this.nuevo = true;
   
@@ -16,6 +17,9 @@ $reactive(this).attach($scope);
 	  },
 	  obras : () => {
 		  return Obras.find();
+	  },
+	  gi : => {
+		  return GI.find();
 	  }
   });
   this.plan = {};
