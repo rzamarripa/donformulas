@@ -12,6 +12,7 @@ $reactive(this).attach($scope);
 	this.pagoProveedor = {};
 	this.panelId = "";
 	this.tipoPeriodo = 'costo';
+	this.obra_id = $stateParams.id;
 	////////////PERIODO///////////////////////////////////////////////
 	
 	//this.tipoPeriod = 'gasto';

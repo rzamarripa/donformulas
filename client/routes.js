@@ -126,7 +126,7 @@ angular.module('formulas').config(['$injector', function ($injector) {
       controller: 'PartidasCtrl as par',
     })
     .state('root.planes', {
-      url: '/planes',
+      url: '/planes/:obra_id',
       templateUrl: 'client/planes/planes.ng.html',
       controller: 'PlanesCtrl as pl',
     })
