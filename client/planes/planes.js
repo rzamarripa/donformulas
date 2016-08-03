@@ -3,9 +3,15 @@ angular.module('formulas')
 function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 $reactive(this).attach($scope);
 
-  this.subscribe('planes');
-  this.subscribe('obras');
-  this.subscribe('GI')
+  this.subscribe('planes',()=>{
+	return [{estatus:true}] 
+    });
+  this.subscribe('obra', () => {
+   return [{ _id : $stateParams.id, estatus : true}]});
+
+  this.subscribe('GI',()=>{
+	return [{estatus:true}] 
+    });
   this.action = true;  
   this.nuevo = true;
   
@@ -15,12 +21,26 @@ $reactive(this).attach($scope);
 	  planes : () => {
 		  return Planes.find();
 	  },
-	  obras : () => {
-		  return Obras.find();
+	  obra : () => {
+		  return Obras.findOne($stateParams.id);
 	  },
-	  gi : => {
+	  gi : ()=> {
 		  return GI.find();
-	  }
+	  },
+	  totalAnual : () => {
+	  	var obrasCalcu = [];
+	  	if(this.getReactively("obras") != undefined){
+	  			console.log("entré");
+				var totalA=0;
+				var obras = Obras.find({obra_id: obra._id}).fetch();
+				_.each(obras,function(obra){
+					totalA += obra.gastosPCampo;
+				});
+				obrasCalcu.push({total : totalA});
+			//console.log(obrasCalculadas)
+	  	}		
+		return obrasCalculadas;
+	  },
   });
   this.plan = {};
  

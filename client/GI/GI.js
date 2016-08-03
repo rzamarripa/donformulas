@@ -257,5 +257,32 @@ this.tipoPeriodo = 'gasto';
 	};
 
 
+	this.TotalFinalGO = function(){
+		total = 0;
+		_.each(this.gastosOficinas,function(gasto){total += gasto.importeFijo + gasto.importeVar});
+		return total
+	}
+
+	//{{(GI.TotalFinalGO()) * (GI.cobroTotalFinal(obra._id) / GI.ingresosTotales(GI.obras)) | currency}
+	this.TotalFinalCalculo = function(){
+		totalFinalGO = this.TotalFinalGO();
+		cobroTotal = this.cobroTotalFinal();
+		ingresoTotal = this.ingresosTotales();
+		porcentaje = cobroTotal / ingresoTotal;
+
+		total = 0;
+		_.each(this.obras,function(obra){
+			var meses = Meses.find().fetch();
+			_.each(this.meses,function(mes){
+
+			})
+			if(mes == mesSeleccionado){
+				porcentaje = mesSeleccionado.porcentaje;
+			}
+		});
+		return totalFinalGO * porcentaje
+	}
+
+
 
 };

@@ -249,6 +249,7 @@ $reactive(this).attach($scope);
 		this.accionResumen = false;
 		this.accionGI = false;
         this.Resumen = true;
+        console.log(mes_id);
         
 	};
 

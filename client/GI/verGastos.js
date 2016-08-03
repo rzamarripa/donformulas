@@ -263,4 +263,18 @@ this.tipoPeriodo = 'gasto';
 		return total
 	}
 
+	this.cobrosTotalesOF =function(obras){
+		var totalOF=0;
+		_.each(obras, function(obra){
+			var gastosOficinas = GastosOficina.find().fetch();
+			_.each(gastosOficinas,function(gasto){
+				var obra_id=obra._id;
+				if(obra_id == gasto.obra_id)
+					totalOF += gasto.importeFijo + gasto.importeVar
+			})
+
+		});
+		return totalOF
+	};
+
 };
