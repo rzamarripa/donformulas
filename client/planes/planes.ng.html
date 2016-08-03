@@ -77,8 +77,7 @@
 									<label>Gastos Indirectos de Campo</label>
 						    </div>
 						    <div class="col-sm-2">
-<!-- 									<div class="form-control">{{pl.plan.gastosIndirectosCampo}}</div> -->
-					    		<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.gastosIndirectosCampo" required>
+									<div   class="form-control">{{obra.total}}</div>
 						    </div>
 						    <div class="col-sm-2">
 					    		<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.gastosIndirectosCampo1" required>
@@ -727,7 +726,10 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-			    <th width="10%"><div class="text-center">Obra</div></th>
+			    <th width="30%"><div class="text-center">Obra</div></th>
+			    <th width="30%"><div class="text-center">Plan</div></th>
+			    <th width="10%"><div class="text-center">Ingresos</div></th>
+			    <th width="10%"><div class="text-center">Porcentaje</div></th>
 					<th width="10%">
 						<div class="text-center">
 							Estatus
@@ -742,13 +744,10 @@
 			</thead>
 			<tbody>
 		    <tr ng-repeat="plan in pl.planes">
-<<<<<<< HEAD
-			    <td>{{plan.empresa}} </td> 
-			    <td>{{pl.plan.porcentajeObras | number : 2}} </td>
-			    <td>{{plan.plan}} </td>
-=======
 			    <td>{{plan.obra}} </td>
->>>>>>> acb6a49bff0e043f4490c9659282d26c1fdb6331
+			    <td>{{plan.plan}} </td>
+			    <td>{{plan.ingresos}} </td>
+			    <td>{{pl.plan.porcentajeObras | number : 2}} </td> 
 			    <td>
 				    <div class="text-center">
 				    	<span ng-if="plan.estatus" class="label label-success">

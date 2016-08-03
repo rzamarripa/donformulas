@@ -3,24 +3,46 @@ angular.module('formulas')
 function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 $reactive(this).attach($scope);
 
-  this.subscribe('planes');
-  this.subscribe('obras');
-  this.subscribe('GI')
+   this.subscribe('planes',()=>{
+	return [{obra_id: this.getReactively('obra_id'),estatus:true}] 
+    });
+   this.subscribe('GI',()=>{
+	return [{estatus:true}] 
+    });
+   this.subscribe('obras',()=>{
+	return [{_id : $stateParams.id, estatus : true }] 
+    });
   this.action = true;  
   this.nuevo = true;
   
-  console.log($stateParams)
+  console.log($stateParams);
   
   this.helpers({
 	  planes : () => {
 		  return Planes.find();
 	  },
 	  obras : () => {
-		  return Obras.find();
+		  return Obras.findOne($stateParams.id);
 	  },
-	  gi : => {
+	  gi : () => {
 		  return GI.find();
-	  }
+	  },
+totalAnual : () => {
+	  	var obrasCampos = [];
+	  	if(this.getReactively("obras") != undefined){
+	  		_.each(this.obras,function(obra){
+	  			//console.log("entré");
+				var totalA=0;
+				var obras = Obras.find({obra_id: obra._id}).fetch();
+				_.each(obras,function(obra){
+					totalA = obra.gastosPCampo;
+				});
+				obrasCampos.push( total : totalA});
+			});
+			//console.log(obrasCalculadas)
+	  	}		
+		return obrasCampos;
+	  },
   });
   this.plan = {};
  
@@ -72,7 +94,7 @@ $reactive(this).attach($scope);
 		
 		Planes.update({_id:id}, {$set : {estatus : plan.estatus}});
 		};
-		
+
 // Funciones de precio proyecto
 		this.factorRecuperacionCalc = function() {
 			this.plan.isrCalculado = 100 / (100 - this.plan.isr - this.plan.ptu)

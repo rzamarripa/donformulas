@@ -13,7 +13,7 @@
 				Asignar Fecha</a>
 			</div>
 			<div class="col-sm-offset-2 col-sm-1">
-				<a ui-sref = 'root.planes({obra_id:mes.obra_id})' class="btn btn-primary" role="button">
+				<a ui-sref = 'root.planes({id:mes.obra_id})' class="btn btn-primary" role="button">
 					Planes
 				</a>
 			</div>
@@ -103,20 +103,11 @@
 								{{concepto.nombre}}
 							</option>
 						</select>
-<<<<<<< HEAD
-		   </div>
-	   <div ng-repeat="(key, costo) in mes.costos"  style="margin-top: 2px" class="col-sm-2 ">
-	   		<label for="{{key}}">{{costo.nombre}}</label>
-	   		<input type="number" id="{{key}}" class="form-control" ng-model="costo.value" min="0">
-	   </div>	
-	 
-=======
 					</div>
 					<div ng-repeat="(key, costo) in mes.costos" style="margin-top: 2px" class="col-sm-2 ">
 						<label for="{{key}}">{{costo.nombre}}</label>
 						<input type="number" id="{{key}}" class="form-control" ng-model="costo.value">
 					</div>	
->>>>>>> acb6a49bff0e043f4490c9659282d26c1fdb6331
           <div class="col-sm-4" ng-show="!mes.mostrarFormPre" style="margin-top: 28px">
 	        	<input type="submit" ng-click="mes.guardarPresupuesto(mes.costos)" value="Guardar" class="btn btn-primary"><br/>
 	       	</div>
