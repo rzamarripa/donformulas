@@ -1,7 +1,7 @@
 angular.module("formulas")
 .controller("verGastosCtrl", verGastosCtrl);  
 function verGastosCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
-$reactive(this).attach($scope);
+let rc = $reactive(this).attach($scope);
 
 
 this.mes_id = '';
@@ -277,4 +277,28 @@ this.tipoPeriodo = 'gasto';
 		return totalOF
 	};
 
-};
+	this.totalFinalCalculo = function(){
+		
+		var arreglo = [];
+
+		total = 0;
+		var meses = Meses.find().fetch();
+		if(this.meses){
+			_.each(this.meses,function(mes){
+				//var gastosOficina = GastosOficina.find({ mes_id : mes._id});
+				var totalGastoOficina = 0.00;
+				_.each(rc.gastosOficinas, function(gastoOficina){
+					if(gastoOficina.mes_id == mes._id){
+						totalGastoOficina += gastoOficina.importeFijo + gastoOficina.importeVar;
+					}
+				});
+				arreglo.push({mes : mes.mes, totalGastosOficina : totalGastoOficina});
+
+			});
+			return arreglo;
+
+		}
+					
+
+	};
+}

@@ -269,17 +269,24 @@ this.tipoPeriodo = 'gasto';
 		cobroTotal = this.cobroTotalFinal();
 		ingresoTotal = this.ingresosTotales();
 		porcentaje = cobroTotal / ingresoTotal;
+		var arreglo = [];
 
 		total = 0;
-		_.each(this.obras,function(obra){
 			var meses = Meses.find().fetch();
 			_.each(this.meses,function(mes){
-
-			})
+				var gastosOficina = GastosOficina.find({ mes_id : mes._id});
+				var totalGastoOficina = 0.00;
+				_.each(gastosOficina, function(gastoOficina){
+					totalGastoOficina += gastoOficina.importeFijo + gastoOficina.importeVar;
+				})
+				console.log(totalGastoOficina);
+				arreglo.push({mes : mes.mes, totalGastosOficina : totalGastosOficina});
+			});
+			console.log("arreglo", arreglo);
 			if(mes == mesSeleccionado){
 				porcentaje = mesSeleccionado.porcentaje;
 			}
-		});
+		
 		return totalFinalGO * porcentaje
 	}
 

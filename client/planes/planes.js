@@ -15,7 +15,7 @@ $reactive(this).attach($scope);
   this.action = true;  
   this.nuevo = true;
   
-  console.log($stateParams)
+  console.log($stateParams);
   
   this.helpers({
 	  planes : () => {
@@ -39,7 +39,7 @@ $reactive(this).attach($scope);
 				obrasCalcu.push({total : totalA});
 			//console.log(obrasCalculadas)
 	  	}		
-		return obrasCalculadas;
+		return obrasCalcu;
 	  },
   });
   this.plan = {};
@@ -92,7 +92,7 @@ $reactive(this).attach($scope);
 		
 		Planes.update({_id:id}, {$set : {estatus : plan.estatus}});
 		};
-		
+
 // Funciones de precio proyecto
 		this.factorRecuperacionCalc = function() {
 			this.plan.isrCalculado = 100 / (100 - this.plan.isr - this.plan.ptu)
