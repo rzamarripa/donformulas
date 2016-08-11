@@ -1,5 +1,5 @@
 <div>
-	 <div class="col-sm-4">
+	 <div class="col-sm-8">
 		<div class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-id-2" data-widget-editbutton="false" role="widget">						
 		<header role="heading"><div class="jarviswidget-ctrls" role="menu"><a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> </div>
 			<span class="widget-icon"> <i class="fa fa-table"></i> </span>
@@ -7,63 +7,43 @@
 		<span class="jarviswidget-loader" style="display: none;"><i class="fa fa-refresh fa-spin"></i></span></header>
 	<div role="content" style="display: block;">
 				<div class="widget-body no-padding">
-				{{gas.totalFinalCalculo()}}
 					<div class="table-responsive">
 				        <table class="table table-hover"> 
 							   <thead>
 							    <tr>
 							        <th><div class="text-center">OBRAS</div></th>
-							        <th><div class="text-center">INGRESOS</div></th>
+							        <th ng-show=""><div class="text-center">INGRESOS</div></th>
+							        <th ng-show=""><div class="text-center">INGRESOS%</div></th>
+							        <th ng-show=""><div class="text-center">TOTALINGRESOS</div></th>
+							        <th ><div class="text-center">%INGRESOS</div></th>
 
 							    </tr>
 							   </thead>
 								<tbody>
-								    <tr ng-repeat="obra in gas.totalAnual">
-									    <th><div class="text-center">{{obra.nombre}}</div></th>
-									    <th><div class="text-center">{{obra.total | currency}}</div></th>
-								    </tr>
+								    <tr ng-repeat="obra in gas.jaime">
+									    <th><div class="text-center">{{obra.obra}}</div></th>
+									    <th ng-show=""><div class="text-center">{{obra.total | currency}}</div></th>
+									    <th ng-show=""><div class="text-center">{{obra.totalDeFInalTodo}}</div></th>
+									    <th ng-show=""><div class="text-center">{{obra.ingresosTotales}}</div></th>
+									    <th><div class="text-center">{{obra.ingresoIndirectoFinal}}%</div></th>
 
+								    </tr>
 							    </tbody> 
-							    <thead>
-							         <th><div class="text-center">OBRAS</div></th>
-							        <th><div class="text-center">GASTOS DE CAMPO</div></th>
+							  <thead>
+							         <th colspan="8"><div class="text-center">INDIRECTOS EMPRESA ANUAL</div></th>
 							    	
 							    </thead>
-							    <tbody>
-							    	 <tr ng-repeat="obra in gas.totalGastosAnual">
-									    <th><div class="text-center">{{obra.nombre}}</div></th>
-									    <th><div class="text-center">{{obra.total | currency}}</div></th>
-								    </tr>	
-							    </tbody> 
-							    <thead>
-							        <th><div class="text-center">GASTOS OFICINA</div></th>
-							    	
-							    </thead>
-							    <tbody>
-							    	 <tr>
-									    <th><div class="text-center">{{gas.totalCantidadApagar() | currency}}</div></th>
-									    <th><div class="text-center">{{gas.TotalFinalGastos() | currency}}</div></th>
-								    </tr>	
-
-								    <tr ng-repeat="obra in gas.obras">
-								    	<th>{{gas.cobrosTotalesOF() | currency}}</th>
+							    <tbody>							    	 
+								    <tr colspan="8">
+								    	<td colspan="8" ><div class="text-center"><strong>{{gas.indirectosEmpresas[3].total | currency}}</strong></div></td>
 								    </tr>
+				
 							    </tbody> 
-							    <thead>
-							        <th><div class="text-center">Prueba</div></th>
-							    </thead>
-							    <tbody>	
-								    <tr ng-repeat="obra in gas.obras">
-								    	<th>{{gas.cobrosTotalesOF() | currency}}</th>
-								    </tr>
-							    </tbody> 
-
 						</table>
 	  				 </div>
-				}
-				}
 	   			</div>
 	  </div>
 	 </div>
 	</div>
  </div>
+

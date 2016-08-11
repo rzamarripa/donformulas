@@ -235,6 +235,7 @@ $reactive(this).attach($scope);
    
     this.accionCobro = true;
     this.accionResumen = true;
+    this.gastoPer = true;
     this.mostrarListas= function(mes_id,obra_id)
 	{
 		
@@ -242,6 +243,7 @@ $reactive(this).attach($scope);
 		this.action = false;
 		this.mes_id = mes_id;
 		this.obra_id = $stateParams.id;
+		this.gastoPer = false;
 		this.accionPeriodo = true;
 		this.accionPago = false;
 		this.panelColor = true;
@@ -461,7 +463,6 @@ $reactive(this).attach($scope);
 		this.periodo.contadoIva = 0.00;
 		this.periodo.contadoSinIva = 0.00;
    		this.gastoCosto = false;
-   		this.mostrarFormPre = false;
 	}
 
 
