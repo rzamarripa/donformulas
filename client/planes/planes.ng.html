@@ -459,7 +459,6 @@
 									<label>Si la obra se ejecuto en</label>
 						    </div>
 						    <div class="col-sm-4">
-							    
 					    		<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.meses" required>
 						    </div>
 						    <div class="col-sm-4">
@@ -705,7 +704,6 @@
 							</div>
 				    </div>
 			    </div>
-
 			    <br/>
 					<div class="row">
 						<br>
@@ -719,8 +717,8 @@
 		</div>
 	</div>
 </div>
+<!-- List
 <br/>
-<!-- List -->
 <div class="row">
 	<div class="col-sm-12">
 		<table class="table table-bordered">
@@ -744,7 +742,6 @@
 			</thead>
 			<tbody>
 		    <tr ng-repeat="plan in pl.planes">
-
 			    <td>{{plan.obra}} </td>
 			    <td>{{plan.plan}} </td>
 			    <td>{{plan.ingresos}} </td>
@@ -769,14 +766,16 @@
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="pl.editar(plan._id)"><i class="fa fa-pencil"></i> Editar</a></li>
 							   <li><a href="#" ng-click="pl.cambiarEstatus(plan._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
+							   -->
 							    <!--<li><a href="/planes" ng-click="remove(planes)"><span class="fa fa-trash"> Eliminar</span></a></li>-->
+							    <!--
 							  </ul>
 							</div>
 				    </div>				    
 			    </td>
 		    </tr>
-		    <tr><th>{{pl.plan.porcentajeObras | number : 2}}</th></tr>
 			</tbody>
 		</table>
 	</div>
 </div>
+-->

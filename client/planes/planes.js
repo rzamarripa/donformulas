@@ -4,14 +4,18 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 $reactive(this).attach($scope);
 
   this.subscribe('planes',()=>{
-	return [{estatus:true}] 
-    });
+		return [{estatus:true}] 
+  });
   this.subscribe('obra', () => {
-   return [{ _id : $stateParams.id, estatus : true}]});
-
+  	return [{ _id : $stateParams.id, estatus : true}]
+  });
   this.subscribe('GI',()=>{
-	return [{estatus:true}] 
-    });
+		return [{estatus:true}] 
+  });
+  this.subscribe('periodos',()=>{
+		return [{estatus:true}] 
+  });
+
   this.action = true;  
   this.nuevo = true;
   
@@ -27,20 +31,9 @@ $reactive(this).attach($scope);
 	  gi : ()=> {
 		  return GI.find();
 	  },
-	  totalAnual : () => {
-	  	var obrasCalcu = [];
-	  	if(this.getReactively("obras") != undefined){
-	  			console.log("entré");
-				var totalA=0;
-				var obras = Obras.find({obra_id: obra._id}).fetch();
-				_.each(obras,function(obra){
-					totalA += obra.gastosPCampo;
-				});
-				obrasCalcu.push({total : totalA});
-			//console.log(obrasCalculadas)
-	  	}		
-		return obrasCalcu;
-	  },
+	  periodos : () => {
+		  return Periodos.find();
+	  }
   });
   this.plan = {};
  
@@ -92,6 +85,14 @@ $reactive(this).attach($scope);
 		
 		Planes.update({_id:id}, {$set : {estatus : plan.estatus}});
 		};
+// Funciones de Periodos
+/*
+	this.cobroTotalFinalPeriodo = function(){
+		total = 0;
+		_.each(this.periodos,function(periodo){total += periodo.comprasIva + periodo.comprasSinIva + periodo.contadoIva + periodo.contadoSinIva});
+		return total
+	}
+*/
 
 // Funciones de precio proyecto
 		this.factorRecuperacionCalc = function() {
@@ -123,15 +124,15 @@ $reactive(this).attach($scope);
 			//gastosIndirectos 				this.gastosDirectosCalc = function() {
 			this.plan.gastosIndirectos = this.plan.totalEgresos - this.plan.costosDirectosTotal1
 			// Funciones Distribucion de Gastos
-			this.plan.gastosFijosOficina =  this.plan.gastosIndirectos - this.plan.gastosIndirectosCampo
-// 			this.plan.gastosIndirectosCampo =  GIc23
+			this.plan.gastosFijosOficina =  this.plan.gastosIndirectos - this.obra.gastosPCampo
+// 			this.obra.gastosPCampo =  GIc23
 			this.plan.gastosFijosOficina2 = this.plan.gastosFijosOficina - (this.plan.gastosFijosOficina * this.plan.gastosFijosOficina1) / 100
-			this.plan.gastosIndirectosCampo2 = this.plan.gastosIndirectosCampo - (this.plan.gastosIndirectosCampo * this.plan.gastosIndirectosCampo1) / 100
-			this.plan.dgtotal = this.plan.gastosFijosOficina + this.plan.gastosIndirectosCampo
+			this.plan.gastosIndirectosCampo2 = this.obra.gastosPCampo - (this.obra.gastosPCampo * this.plan.gastosIndirectosCampo1) / 100
+			this.plan.dgtotal = this.plan.gastosFijosOficina + this.obra.gastosPCampo
 			this.plan.dgtotal2 = this.plan.gastosFijosOficina2 + this.plan.gastosIndirectosCampo2
 			this.plan.dgtotal3 = (this.plan.dgtotal2 / this.plan.ingresos) * 100
 			// Estadisticas de Gastos Indirectos para la Obra
-			this.plan.estadisticaGastosIndirectosObraGastosFijosOficina = this.plan.estadisticaGastosIndirectosObraPresupuestoIndirectoTotal - this.plan.gastosIndirectosCampo
+			this.plan.estadisticaGastosIndirectosObraGastosFijosOficina = this.plan.estadisticaGastosIndirectosObraPresupuestoIndirectoTotal - this.obra.gastosPCampo
 			// Tabla Arriba Actual Proyectado
 			this.plan.utilidadFisica = (this.plan.ingresos - this.plan.costosDirecto) - this.plan.gastosIndirectos
 			this.plan.isr1 = (this.plan.utilidadFisica * 3) / 10
