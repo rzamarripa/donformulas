@@ -1,5 +1,5 @@
 <h2>Planes</h2>
-<div class="row">
+<div class="row">{{pl.totalIngresos[0].total | currency}}
 	<div class="col-sm-12">
 		<a class="btn btn-{{pl.nuevo == true ? 'primary' : 'danger'}}" role="button" data-toggle="collapse" 
 			href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="nuevoplan" ng-click="pl.nuevoPlan()">
@@ -112,6 +112,47 @@
 			    </div>
 		  	</div>
 <!-- Costos Directos -->
+
+			<div class="well">
+					<h2 style="text-align: center">Costos Directos</h2>
+			    <div class="row">
+			     <div class="col-sm-12">
+						<div class="row">
+							<table style="width:80%">
+							<thead>
+								  <tr>
+								    <td></td>
+								  </tr>
+								<tbody>
+								<div class="col-sm-8">
+									<tr style="height: 50px;" ng-repeat="costo in pl.costos">
+										<td>{{costo.nombre}}</td><br/>
+										<td>
+											<div class="col-sm-12">
+												<div class="form-control">{{pl.plan.costosDirectosMateriales | number : 2}}</div>
+						    				</div>
+						    			</td>
+										<td><div class="col-sm-12">
+											<div class="form-control">{{pl.plan.costosDirectosMateriales | number : 2}}</div>
+						    				</div>
+						    			</td>
+						    			<td><div class="col-sm-12">
+					    					<input type="number" style="width: 150px;" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.costosDirectosMateriales2" required>
+						  					 </div>
+						  			    </td>
+						  			    <td><div class="col-sm-12">
+											<div class="form-control">{{pl.plan.costosDirectosMateriales3 | number : 2}}</div>
+						    				</div>
+						    			</td>
+									</tr>
+									</div>
+								</tbody>
+							</thead>
+							</table>		   
+						</div>
+				    </div>
+			    </div>
+			</div>
 		  	<div class="well">
 					<h2 style="text-align: center">Costos Directos</h2>
 			    <div class="row">

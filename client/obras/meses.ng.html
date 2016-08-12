@@ -88,7 +88,7 @@
 					<div class="col-sm-4">
 						<ul class="list-group no-margin">
 							<li ng-repeat="partida in mes.partidas" class="list-group-item">
-								<a href="" ng-click="mes.mostrarPresupuestos(mes.obra_id,mes.mes_id,partida._id)" >{{partida.nombre}}</a>
+								<a href="" ng-click="mes.mostrarPresupuestos(partida.obra_id,partida.mes_id,partida.partida_id)" >{{partida.nombre}}</a>
 							</li>
 						</ul>
 					</div>
@@ -130,7 +130,6 @@
 								<th>CONCEPTO</th>
 								<th ng-repeat="costo in mes.costos">{{costo.nombre}}</th>
 								<th>TOTAL</th>
-
 								<th>ACCIONES</th>
 							</tr>
 						</thead>
@@ -139,9 +138,8 @@
 								<td>{{mes.getConcepto(presupuesto.concepto_id)}}</td>
 								<td ng-repeat="costo in presupuesto.costos">{{costo.value | currency}}</td>
 								<td>{{mes.totalPre(presupuesto.costos) | currency}}</td>
-								
 							    <td>
-								    <div class="text-center">
+								    <div>
 											 
 										    <a ng-click="mes.editarPresupuesto(presupuesto._id)" style="font-size: 13px;" class="label label-warning" ><i class="fa fa-pencil"></i></a>
 										  <a  ng-click="mes.cambiarEstatusPresupuesto(presupuesto._id)" style="font-size: 13px;" class="label label-primary">Desactivar</a>

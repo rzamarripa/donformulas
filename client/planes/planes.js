@@ -12,6 +12,12 @@ $reactive(this).attach($scope);
   this.subscribe('GI',()=>{
 	return [{estatus:true}] 
     });
+   this.subscribe('costos',()=>{
+	return [{estatus:true}] 
+    });
+    this.subscribe('cobros',()=>{
+	return [{estatus:true}] 
+    });
   this.action = true;  
   this.nuevo = true;
   
@@ -21,11 +27,31 @@ $reactive(this).attach($scope);
 	  planes : () => {
 		  return Planes.find();
 	  },
+	   cobros : () => {
+		  return Cobros.find();
+	  },
 	  obra : () => {
 		  return Obras.findOne($stateParams.id);
 	  },
+	  costos : () => {
+		  return Costos.find();
+	  },
 	  gi : ()=> {
 		  return GI.find();
+	  },
+	  totalIngresos :  () => {
+	  	var ingresos = [];
+
+ 				var totalIngresos = 0;
+ 				var cobros = Cobros.find().fetch();
+ 				_.each(cobros,function(cobro){
+ 					totalIngresos += cobro.cSinIva || cobro.cIva;
+ 					cobro.ingresos = parseInt(totalIngresos);
+ 				
+ 				});
+ 				ingresos.push({total : totalIngresos })
+ 				console.log(ingresos);
+ 				return  ingresos;
 	  },
 	  totalAnual : () => {
 	  	var obrasCalcu = [];
@@ -39,6 +65,7 @@ $reactive(this).attach($scope);
 				obrasCalcu.push({total : totalA});
 			//console.log(obrasCalculadas)
 	  	}		
+
 		return obrasCalcu;
 	  },
   });
