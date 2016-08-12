@@ -1,7 +1,7 @@
 angular.module("formulas")
 .controller("GICTRL", GICTRL);  
 function GICTRL($scope, $meteor, $reactive, $state, $stateParams, toastr){
-$reactive(this).attach($scope);
+let rc =$reactive(this).attach($scope);
 
 
 this.mes_id = '';
@@ -72,7 +72,7 @@ this.tipoPeriodo = 'gasto';
 	  	var obrasCalculadas = [];
 	  	if(this.getReactively("obras") != undefined){
 	  		_.each(this.obras,function(obra){
-	  			console.log("entré");
+	  			//console.log("entré");
 				var totalA=0;
 				var cobros = Cobros.find({obra_id: obra._id, modo:false}).fetch();
 				_.each(cobros,function(cobro){
@@ -80,7 +80,7 @@ this.tipoPeriodo = 'gasto';
 				});
 				obrasCalculadas.push({nombre : obra.nombre, total : totalA});
 			});
-			console.log(obrasCalculadas)
+			//console.log(obrasCalculadas)
 	  	}		
 		return obrasCalculadas;
 	  }
@@ -204,6 +204,13 @@ this.tipoPeriodo = 'gasto';
 		return total
 	}
 
+		this.TotalFinalGO = function(){
+		total = 0;
+		_.each(this.gastosOficinas,function(gasto){total += gasto.importeFijo + gasto.importeVar});
+		return total
+	}
+
+
 	this.ingresosTotales=function(obras){
 		var totalIngresos=0;
 		_.each(obras, function(obra){
@@ -235,11 +242,7 @@ this.tipoPeriodo = 'gasto';
 		return totalCobros
 	}
 
-	this.TotalFinal = function(){
-		total = 0;
-		_.each(this.gastosOficinas,function(gasto){total += gasto.importeFijo + gasto.importeVar});
-		return total
-	};
+
 
 	this.cobrosTotales=function(obras){
 		var totalCobros=0;
@@ -256,39 +259,13 @@ this.tipoPeriodo = 'gasto';
 		return totalCobros
 	};
 
-
-	this.TotalFinalGO = function(){
+		this.TotalFinal = function(){
 		total = 0;
 		_.each(this.gastosOficinas,function(gasto){total += gasto.importeFijo + gasto.importeVar});
 		return total
-	}
+	};
 
-	//{{(GI.TotalFinalGO()) * (GI.cobroTotalFinal(obra._id) / GI.ingresosTotales(GI.obras)) | currency}
-	this.TotalFinalCalculo = function(){
-		totalFinalGO = this.TotalFinalGO();
-		cobroTotal = this.cobroTotalFinal();
-		ingresoTotal = this.ingresosTotales();
-		porcentaje = cobroTotal / ingresoTotal;
-		var arreglo = [];
 
-		total = 0;
-			var meses = Meses.find().fetch();
-			_.each(this.meses,function(mes){
-				var gastosOficina = GastosOficina.find({ mes_id : mes._id});
-				var totalGastoOficina = 0.00;
-				_.each(gastosOficina, function(gastoOficina){
-					totalGastoOficina += gastoOficina.importeFijo + gastoOficina.importeVar;
-				})
-				console.log(totalGastoOficina);
-				arreglo.push({mes : mes.mes, totalGastosOficina : totalGastosOficina});
-			});
-			console.log("arreglo", arreglo);
-			if(mes == mesSeleccionado){
-				porcentaje = mesSeleccionado.porcentaje;
-			}
-		
-		return totalFinalGO * porcentaje
-	}
 
 
 
