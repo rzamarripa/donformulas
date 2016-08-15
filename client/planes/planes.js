@@ -10,6 +10,7 @@ $reactive(this).attach($scope);
   	return [{ _id : $stateParams.id, estatus : true}]
   });
   this.subscribe('GI',()=>{
+<<<<<<< HEAD
 		return [{estatus:true}] 
   });
   this.subscribe('periodos',()=>{
@@ -22,6 +23,16 @@ $reactive(this).attach($scope);
 	 return [{estatus:true}] 
   });
 
+=======
+	return [{estatus:true}] 
+    });
+   this.subscribe('costos',()=>{
+	return [{estatus:true}] 
+    });
+    this.subscribe('cobros',()=>{
+	return [{estatus:true}] 
+    });
+>>>>>>> f11a65d687916340f3e5a8a1f4c979e76d0102e5
   this.action = true;  
   this.nuevo = true;
   
@@ -31,12 +42,19 @@ $reactive(this).attach($scope);
 	  planes : () => {
 		  return Planes.find();
 	  },
+	   cobros : () => {
+		  return Cobros.find();
+	  },
 	  obra : () => {
 		  return Obras.findOne($stateParams.id);
+	  },
+	  costos : () => {
+		  return Costos.find();
 	  },
 	  gi : ()=> {
 		  return GI.find();
 	  },
+<<<<<<< HEAD
 	  periodos : () => {
 		  return Periodos.find();
 	  },
@@ -70,6 +88,24 @@ $reactive(this).attach($scope);
 
 	  totalGastosAnual : () => {
 	  	var obrasGastos = [];
+=======
+	  totalIngresos :  () => {
+	  	var ingresos = [];
+
+ 				var totalIngresos = 0;
+ 				var cobros = Cobros.find().fetch();
+ 				_.each(cobros,function(cobro){
+ 					totalIngresos += cobro.cSinIva || cobro.cIva;
+ 					cobro.ingresos = parseInt(totalIngresos);
+ 				
+ 				});
+ 				ingresos.push({total : totalIngresos })
+ 				console.log(ingresos);
+ 				return  ingresos;
+	  },
+	  totalAnual : () => {
+	  	var obrasCalcu = [];
+>>>>>>> f11a65d687916340f3e5a8a1f4c979e76d0102e5
 	  	if(this.getReactively("obras") != undefined){
 	  		_.each(this.obras,function(obra){
 	  			//console.log("ESTAAAAA");
@@ -82,7 +118,12 @@ $reactive(this).attach($scope);
 			});
 			//console.log(obrasGastos)
 	  	}		
+<<<<<<< HEAD
 		return obrasGastos;
+=======
+
+		return obrasCalcu;
+>>>>>>> f11a65d687916340f3e5a8a1f4c979e76d0102e5
 	  },
 	  
 	  indirectosEmpresas : () => {

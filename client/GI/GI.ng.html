@@ -139,19 +139,7 @@
 				    <th><div class="text-center">TOTAL: {{(GI.cobrosTotales(GI.obras) + GI.TotalFinal(mes_id)) / GI.ingresosTotales(GI.obras) * 100 | number : 2}}%</div></th>
 					    <th ng-show="" ng-repeat="gasto in GI.gastosOficinas"><div class="text-center">{{gasto.importeVar + gasto.importeFijo | currency}}</div></th>
 				    </tr>	   
-			    </tbody>  
-			<!--<thead>
-				    <tr>
-			          <th><div class="text-center">INDIRECTOS EMPRESA ANUAL</div></th>
-			        </tr>
-		    </thead>
-			      <tbody>
-			       	<th><div class="text-center">TOTAL: EN PROCESO</div></th>
-			       	<tr ng-repeat="obra in GI.indirectosEmpresas()">
-			       		<th>{{}}</th>
-			       	</tr>
-			      </tbody>-->
-
+			    </tbody> 
 		</table>
    </div>
    </div>
