@@ -15,6 +15,12 @@ $reactive(this).attach($scope);
   this.subscribe('periodos',()=>{
 		return [{estatus:true}] 
   });
+  this.subscribe('cobros',()=>{
+		return [{estatus:true}] 
+  });
+   this.subscribe('gastosOficina',()=>{
+	 return [{estatus:true}] 
+  });
 
   this.action = true;  
   this.nuevo = true;
@@ -33,7 +39,106 @@ $reactive(this).attach($scope);
 	  },
 	  periodos : () => {
 		  return Periodos.find();
-	  }
+	  },
+	  cobros : () => {
+		  return Cobros.find();
+	  },
+	  gastos : () => {
+		  return GastosOficina.find();
+	  },
+	  
+	  	  totalFinalCalculo :() => {
+		var arreglo = [];
+		total = 0;
+		var meses = Meses.find().fetch();
+		if(this.meses){
+			_.each(this.meses,function(mes){
+				//var gastosOficina = GastosOficina.find({ mes_id : mes._id});
+				var totalGastoOficina = 0.00;
+				_.each(rc.gastosOficinas, function(gastoOficina){
+					if(gastoOficina.mes_id == mes._id){
+						totalGastoOficina += gastoOficina.importeFijo + gastoOficina.importeVar;
+					}
+				});
+				arreglo.push({mes : mes.mes, totalGastosOficina : totalGastoOficina});
+
+			});
+			return arreglo;
+
+		}
+	},
+
+	  totalGastosAnual : () => {
+	  	var obrasGastos = [];
+	  	if(this.getReactively("obras") != undefined){
+	  		_.each(this.obras,function(obra){
+	  			//console.log("ESTAAAAA");
+				var totalAn=0;
+				var gastosCampo = Periodos.find({obra_id: obra._id}).fetch();
+				_.each(gastosCampo,function(gasto){
+					totalAn += gasto.comprasIva + gasto.contadoIva 
+				});
+				obrasGastos.push({nombre : obra.nombre, total : totalAn});
+			});
+			//console.log(obrasGastos)
+	  	}		
+		return obrasGastos;
+	  },
+	  
+	  indirectosEmpresas : () => {
+		var gastosIndirectoEmpresa = [];
+		var gastosOficinas = [];
+		var campo = [];
+		var ingresos = [];
+          
+		  	//GASTOS OFICINA;
+		  	var totalGastosOficinas = 0;
+		  	var gastosOF = GastosOficina.find().fetch();
+ 				_.each(gastosOF,function(gasto){
+ 					totalGastosOficinas += gasto.importeFijo + gasto.importeVar
+ 					gasto.gastoOficina = parseInt(totalGastosOficinas);
+ 					
+ 				});
+
+ 				gastosIndirectoEmpresa.push({total : totalGastosOficinas});
+
+ 				
+ 	            
+ 				var totalIngresos = 0;
+ 				var cobros = Cobros.find().fetch();
+ 				_.each(cobros,function(cobro){
+ 					totalIngresos += cobro.cSinIva;
+ 					cobro.ingresos = parseInt(totalIngresos);
+ 				
+ 				});
+
+ 				gastosIndirectoEmpresa.push({total : totalIngresos});
+				
+ 				
+ 	           
+ 				var totalGastosCampo = 0;
+ 				var periodos = Periodos.find().fetch();
+ 				_.each(periodos,function(campo){
+ 				  totalGastosCampo += campo.comprasIva + campo.contadoIva
+ 				  campo.gastosCampo = parseInt(totalGastosCampo);
+ 				  
+				});
+
+				gastosIndirectoEmpresa.push({total : totalGastosCampo});
+
+                
+               var cantidadesSumadas = (totalGastosOficinas  + totalGastosCampo) / (totalIngresos) * 100;
+
+              gastosIndirectoEmpresa.push({total : cantidadesSumadas })
+
+
+
+        console.log("gastos", gastosIndirectoEmpresa);
+	//	console.log("final", final);
+
+		return gastosIndirectoEmpresa;
+	},
+
   });
   this.plan = {};
  
@@ -85,14 +190,6 @@ $reactive(this).attach($scope);
 		
 		Planes.update({_id:id}, {$set : {estatus : plan.estatus}});
 		};
-// Funciones de Periodos
-/*
-	this.cobroTotalFinalPeriodo = function(){
-		total = 0;
-		_.each(this.periodos,function(periodo){total += periodo.comprasIva + periodo.comprasSinIva + periodo.contadoIva + periodo.contadoSinIva});
-		return total
-	}
-*/
 
 // Funciones de precio proyecto
 		this.factorRecuperacionCalc = function() {
