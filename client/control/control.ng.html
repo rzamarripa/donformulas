@@ -21,7 +21,7 @@
 
 <br/>
 
-<div class="row" ng-if="add.mes_id != ''">
+<div class="row" >
 <div class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-id-2" data-widget-editbutton="false" role="widget">						
 		<header role="heading"><div class="jarviswidget-ctrls" role="menu"><a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> </div>
 			<span class="widget-icon"> <i class="fa fa-table"></i> </span>
@@ -37,7 +37,7 @@
 						    <tr>
 							    <th><div class="text-center">Conceptos</div></th>
 							    <th><div class="text-center">Presupuestos</div></th>
-							    <th><div class="text-center">Acciones</div></th>
+							    <!-- <th><div class="text-center">Acciones</div></th>
 							    <th><div class="text-center">Nuevo Presupuesto</div></th>
 							    <th><div class="text-center">Medidas Potenciales(Que se va hacer)</div></th>
 							    <th><div class="text-center">Plan de Trabajo( Como se va a desarrollar)</div></th>
@@ -46,24 +46,22 @@
 							    <th><div class="text-center">Egresos</div></th>
 							    <th><div class="text-center">Resultados logrados</div></th>
 							    <th><div class="text-center">Gasto real</div></th>
-							    <th><div class="text-center">Conceptos</div></th>
+							    <th><div class="text-center">Conceptos</div></th>-->
 							  
 						    </tr>
 						   </thead>
-
-
 							<tbody>
-							<tr ng-repeat="gasto in add.gastos">
-						        <th><div class="text-center">{{gasto.importeVar | currency}}</div></th>
-						        <th><div class="text-center">{{gasto.importeFijo | currency}}</div></th>
-						        <th ng-show="">{{gasto.importeVar + gasto.importeFijo | currency}}</th>
+							<tr ng-repeat="costo in ct.costos">
+								<th><div class="text-center">{{costo.nombre}}</div></th>
+								<th><div class="text-center">{{ct.planes[0].costosDirectosMateriales3}}</div></th>
+
 						        
-			    <td>
+			   <!-- <td>
 				    <div class="text-center">
 							   <a ng-click="add.editar(gasto._id)" style="font-size: 13px;" class="label label-warning"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
 							  <a  ng-click="add.cambiarEstatus(gasto._id)" style="font-size: 13px;" class="label label-primary">Cambiar Estatus</a>
 				    </div>				    
-			    </td>
+			    </td>-->
 
 														
 							</tr>

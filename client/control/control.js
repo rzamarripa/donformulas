@@ -7,9 +7,20 @@ $reactive(this).attach($scope);
 	return [{estatus:true}] 
     });
 
-    
+	this.subscribe('control',()=>{
+	return [{estatus:true}] 
+    });
 
-	this.subscribe('empresas');
+	this.subscribe('costos',()=>{
+	return [{estatus:true}] 
+    });
+
+	this.subscribe('conceptos',()=>{
+	return [{estatus:true}] 
+    });
+    this.subscribe('planes',()=>{
+	return [{estatus:true}] 
+    });
 
   this.action = true;
   
@@ -17,34 +28,38 @@ $reactive(this).attach($scope);
 	  obras : () => {
 		  return Obras.find();
 	  },
-	  empresas : () => {
-		  return Empresas.find();
-	  }
+	  controles : () => {
+		  return Control.find();
+	  },
+	   costos : () => {
+		  return Costos.find();
+	  },
+	    planes : () => {
+		  return Planes.find();
+	  },
   });
   
 	this.nuevo = true;  	  
-  this.nuevoObra = function()
+  this.nuevoControl = function()
   {
     this.action = true;
     this.nuevo = !this.nuevo;
-    this.obra = {};		
+    this.control = {};		
   };
   
   this.guardar = function(obra)
 	{
-		this.obra.estatus = true;
-		console.log(this.obra);
-		Obras.insert(this.obra);
+		this.control.estatus = true;
+		console.log(this.control);
+		Control.insert(this.control);
 		toastr.success('Obra guardada.');
-		this.obra = {}; 
-		$('.collapse').collapse('hide');
+		this.control = {}; 
 		this.nuevo = true;
-		$state.go('root.obras')
 	};
 	
 	this.editar = function(id)
 	{
-    this.obra = Obras.findOne({_id:id});
+    this.control = Control.findOne({_id:id});
     this.action = false;
     $('.collapse').collapse('show');
     this.nuevo = false;
@@ -52,9 +67,9 @@ $reactive(this).attach($scope);
 	
 	this.actualizar = function(obra)
 	{
-		var idTemp = obra._id;
-		delete obra._id;		
-		Obras.update({_id:idTemp},{$set:obra});
+		var idTemp = control._id;
+		delete control._id;		
+		Control.update({_id:idTemp},{$set:obra});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		console.log(obra);
@@ -62,13 +77,13 @@ $reactive(this).attach($scope);
 
 	this.cambiarEstatus = function(id)
 	{
-		var obra = Obras.findOne({_id:id});
-		if(obra.estatus == true)
-			obra.estatus = false;
+		var obra = Control.findOne({_id:id});
+		if(control.estatus == true)
+			control.estatus = false;
 		else
-			obra.estatus = true;
+			control.estatus = true;
 		
-		Obras.update({_id: id},{$set :  {estatus : obra.estatus}});
+		Control.update({_id: id},{$set :  {estatus : control.estatus}});
     };
 		
 };

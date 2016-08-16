@@ -1,3 +1,16 @@
+<div class="inbox-checkbox-triggered pull-right">
+
+						<div >
+							<a   style="width: 120px; height: 60px; font-size: 30px;" ui-sref = 'root.planes({id:mes.obra_id})'  class="btn btn-success"><strong style="color: white">Planes</strong></a>
+							<a  style="width: 160px; height: 60px; font-size: 30px"  class="btn btn-success"><strong>Resumen</strong></a>
+						<!--	<a  style="width: 120px; height: 60px; font-size: 30px"  class="btn btn-success"><strong></strong></a>-->
+						</div><br/>
+				
+					</div>
+	
+
+
+
 
 	<div class="row">
 		<div class="col-sm-12">
@@ -8,13 +21,6 @@
 		  	<a class="btn btn-primary" ng-click="mes.guardar(mes.mes)" ng-show="mes.accionMes">
 				Asignar Fecha</a>
 			</div>
-			<div class="row">
-			<div class="col-sm-offset-2 col-sm-1">
-				<a ui-sref = 'root.planes({id:mes.obra_id})' style="font-size:25px;" class="btn btn-primary btn-lg" role="button">
-					Planes
-				</a>
-			</div>
-			</div><br/>
 		</div>
 	</div>
 	<div class="well">	  
@@ -88,7 +94,7 @@
 					<div class="col-sm-4">
 						<ul class="list-group no-margin">
 							<li ng-repeat="partida in mes.partidas" class="list-group-item">
-								<a href="" ng-click="mes.mostrarPresupuestos(partida.obra_id,partida.mes_id,partida.partida_id)" >{{partida.nombre}}</a>
+								<a href="" ng-click="mes.mostrarPresupuestos(partida.mes_id,partida.partida_id)" >{{partida.nombre}}</a>
 							</li>
 						</ul>
 					</div>
@@ -213,7 +219,7 @@
 	   		<label>COMPRAS DE CREDITO S/IVA</label>
 	   		<input type="number" class="form-control"   ng-model="mes.periodo.comprasSinIva">
 	   </div>
-	   <div class="col-sm-2" ng-show="mes.preIva">
+	   <div class="col-sm-2" style="margin-top: 17px;" ng-show="mes.preIva">
 	   		<label>COMPRAS DE CREDITO C/ IVA</label>
 	   		<input type="number" class="form-control"    ng-model="mes.periodo.comprasIva">
 	   </div><br/>
@@ -274,7 +280,7 @@
 								<th>{{periodo.contadoSinIva | currency}}</th>
 								<td>{{periodo.comprasIva + periodo.comprasSinIva + periodo.contadoIva + periodo.contadoSinIva  | currency}}</td>
 								<td>
-								    <div class="text-center">
+								    <div>
 											 
 										    <a ng-click="mes.editarPeriodo(periodo._id)" style="font-size: 13px;" class="label label-warning" ><i class="fa fa-pencil"></i></a>
 										  <a  ng-click="mes.cambiarEstatusPeriodo(periodo._id)" style="font-size: 13px;" class="label label-primary">Desactivar</a>
@@ -284,11 +290,11 @@
 
 							</tr>
 							<tr>
-								<th colspan="6">TOTAL FINAL: {{mes.cobroTotalFinalPeriodo() | currency}}</th>
-								<th colspan="6"></th>
+								<th colspan="8">TOTAL FINAL: {{mes.cobroTotalFinalPeriodo() | currency}}</th>
+								<th colspan="8"></th>
 							</tr>	
 							<tr>
-							    <th colspan="6">IMPORTE DESGLOSADO: {{(mes.cobroTotalFinalPeriodo()) / 1.16 | currency}} </th>
+							    <th colspan="8">IMPORTE DESGLOSADO: {{(mes.cobroTotalFinalPeriodo()) / 1.16 | currency}} </th>
 							</tr>
 						</tbody>
 						<tbody ng-show="!mes.gastoCosto">
@@ -298,6 +304,7 @@
 								<th>CONTADO C/IVA</th>
 								<th>CONTADO S/IVA</th>
 								<th>TOTAL</th>
+								<th ng-show="mes.preIva">IMPORTE DESGLOSADO</th>
 								<th>ACCIONES</th>
 							</tr>
 							<tr ng-repeat="periodo in mes.periodos" >
@@ -308,8 +315,9 @@
 								<th>{{periodo.contadoIva | currency}}</th>
 								<th>{{periodo.contadoSinIva | currency}}</th>
 								<th>{{periodo.comprasIva + periodo.comprasSinIva + periodo.contadoIva + periodo.contadoSinIva  | currency}}</th>
+								<th ng-show="mes.preIva">{{(periodo.comprasIva + periodo.contadoIva) / 1.16  | currency}}</th>
 								<td>
-								    <div class="text-center">
+								    <div>
 											 
 										    <a ng-click="mes.editarPeriodo(periodo._id)" style="font-size: 13px;" class="label label-warning" ><i class="fa fa-pencil"></i></a>
 										  <a  ng-click="mes.cambiarEstatusPeriodo(periodo._id)" style="font-size: 13px;" class="label label-primary">Desactivar</a>
@@ -319,7 +327,7 @@
 							</tr>
 
 							<tr>
-								<th colspan="4">TOTAL FINAL: {{mes.cobroTotalFinalPeriodo() | currency}}</th>
+								<th colspan="8">TOTAL FINAL: {{mes.cobroTotalFinalPeriodo() | currency}}</th>
 							</tr>
 						</tbody>
 					</table>
@@ -378,7 +386,7 @@
 	   <br/>
           <div class="col-sm-2" >
 	         <input type="submit" style="margin-top: -15px" ng-click="mes.guardarPago(mes.pagoProveedor);" value="Guardar" class="btn btn-primary" ng-show="mes.pag">
-	         <input type="submit" ng-click="mes.actualizarPago(mes.pagoProveedor)" ng-show="!mes.pag" value="Actualizar" class="btn btn-primary"><br/>
+	         <input type="submit" style="margin-top: -15px" ng-click="mes.actualizarPago(mes.pagoProveedor)" ng-show="!mes.pag" value="Actualizar" class="btn btn-primary"><br/>
 
 	       </div> 
 
@@ -408,6 +416,7 @@
 						    <th>Pagos con Iva</th>
 						    <th>Pagos con Sin Iva</th>
 						    <th>TOTAL</th>
+						    <th ng-show="mes.pagIva">IMPORTE DESGLOSADO:</th>
 						    <th>ACCIONES</th>
 						    </tr>
 						    </thead>
@@ -415,8 +424,8 @@
 							<tr ng-repeat="pagoProveedor in mes.pagosProveedores">
 						        <th>{{pagoProveedor.pIva | currency}}</th>
 						        <th>{{pagoProveedor.pSinIva | currency}}</th>
-						        <th>{{mes.totalPag(pagoProveedor) | currency}}</th>
-						        <th>IMPORTE DESGLOSADO: {{(mes.totalPag()) / 1.16 | currency}} </th>
+						        <th>{{pagoProveedor.pIva + pagoProveedor.pSinIva| currency}}</th>
+						        <th ng-show="mes.pagIva">IMPORTE DESGLOSADO: {{(pagoProveedor.pIva) / 1.16 | currency}}</th>
 						        <td>
 								    <div>
 										    <a ng-click="mes.editarPago(pagoProveedor._id)" style="font-size: 13px;" class="label label-warning" ><i class="fa fa-pencil"></i></a>
@@ -427,8 +436,7 @@
 							 
 
 														
-							</tr>	
-
+							</tr>
 						</tbody>
 
 					</table>
@@ -585,7 +593,7 @@
 
 							<tbody>
 							<tr ng-repeat="cobro in mes.cobros">
-						        <th><div class="text-center">{{cobro.cIva | currency}}</div></th>
+						        <th><div class="text-center">{{mes.plan.porcentajeObras | number : 2}}</div></th>
 						        <th><div class="text-center">{{cobro.cSinIva | currency}}</div></th>
 						        <th><div class="text-center">{{mes.totalCobro(cobro) | currency}}</div></th>
 						        <td>

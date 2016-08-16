@@ -188,6 +188,6 @@ angular.module('formulas').config(['$injector', function ($injector) {
       .state('root.control', {
       url: '/control/',
       templateUrl: 'client/control/control.ng.html',
-      controller: 'ControlCrtl as control',
+      controller: 'ControlCrtl as ct',
     });
 }]);     

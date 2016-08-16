@@ -1,7 +1,11 @@
 angular.module('formulas')
 .controller('PlanesCtrl', PlanesCtrl);
 function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
-$reactive(this).attach($scope);
+	let rc = $reactive(this).attach($scope);
+
+	this.plan = {};
+	this.plan.costos = [];
+	
 
   this.subscribe('planes',()=>{
 	return [{estatus:true}] 
@@ -21,23 +25,33 @@ $reactive(this).attach($scope);
   this.action = true;  
   this.nuevo = true;
   
-  console.log($stateParams);
+ // console.log($stateParams);
   
   this.helpers({
 	  planes : () => {
 		  return Planes.find();
 	  },
-	   cobros : () => {
+	  cobros : () => {
 		  return Cobros.find();
 	  },
 	  obra : () => {
 		  return Obras.findOne($stateParams.id);
 	  },
-	  costos : () => {
-		  return Costos.find();
-	  },
+	  
 	  gi : ()=> {
 		  return GI.find();
+	  },
+	  costos : () => {
+	  	var costosPlanes = [];
+
+  	    var costos = Costos.find().fetch();
+  	    
+  	    
+  	    
+  	    console.log("costos", costos);
+  	    console.log("plan",rc.plan);
+  	    return costos;
+		 
 	  },
 	  totalIngresos :  () => {
 	  	var ingresos = [];
@@ -50,13 +64,14 @@ $reactive(this).attach($scope);
  				
  				});
  				ingresos.push({total : totalIngresos })
- 				console.log(ingresos);
+ 				//
+ 				//console.log(ingresos);
  				return  ingresos;
 	  },
 	  totalAnual : () => {
 	  	var obrasCalcu = [];
 	  	if(this.getReactively("obras") != undefined){
-	  			console.log("entré");
+	  			//console.log("entré");
 				var totalA=0;
 				var obras = Obras.find({obra_id: obra._id}).fetch();
 				_.each(obras,function(obra){
@@ -69,16 +84,20 @@ $reactive(this).attach($scope);
 		return obrasCalcu;
 	  },
   });
-  this.plan = {};
  
   this.nuevoPlan = function()
   {
 	  this.action = true;
     this.nuevo = !this.nuevo;
     this.plan = {}; 
+    this.plan.costos = [];
+    var costos = Costos.find().fetch();
+    _.each(costos,function(costo){
+    	rc.plan.costos.push({"nombre" : costo.nombre, "valor" : 0, "factor" : 0});
+    });
   };
   
- this.guardar = function(empresa)
+ this.guardar = function(plan,empresa)
 	{
 	  plan.estatus = true;
 	  plan.obra_id = $stateParams
@@ -127,24 +146,14 @@ $reactive(this).attach($scope);
 			this.plan.totalEgresos = ((this.plan.ingresos / this.plan.factorRecuperacion) * 1)
 			// Funciones Costo Directo
 			this.plan.costosDirectosTotal1 = this.plan.costosDirectosMateriales1 + this.plan.costosDirectosMaquinarias1 + this.plan.costosDirectosManoObra1 + this.plan.costosDirectosCombustibleFleteTransporte1 + this.plan.costosDirectosRentas1 + this.plan.costosDirectosSubcontratos1 + this.plan.costosDirectosGastosVarios1
-			this.plan.costosDirectosMateriales = (this.plan.costosDirectosMateriales1 / this.plan.costosDirectosTotal1) * 100
-			this.plan.costosDirectosMaquinarias = (this.plan.costosDirectosMaquinarias1 / this.plan.costosDirectosTotal1) * 100
-			this.plan.costosDirectosManoObra = (this.plan.costosDirectosManoObra1 / this.plan.costosDirectosTotal1) * 100
-			this.plan.costosDirectosCombustibleFleteTransporte = (this.plan.costosDirectosCombustibleFleteTransporte1 / this.plan.costosDirectosTotal1) * 100
-			this.plan.costosDirectosRentas = (this.plan.costosDirectosRentas1 / this.plan.costosDirectosTotal1) * 100
-			this.plan.costosDirectosSubcontratos = (this.plan.costosDirectosSubcontratos1 / this.plan.costosDirectosTotal1) * 100
-			this.plan.costosDirectosGastosVarios = (this.plan.costosDirectosGastosVarios1 / this.plan.costosDirectosTotal1) * 100
-			this.plan.costosDirectosTotal = this.plan.costosDirectosMateriales + this.plan.costosDirectosMaquinarias + this.plan.costosDirectosManoObra + this.plan.costosDirectosCombustibleFleteTransporte + this.plan.costosDirectosRentas + this.plan.costosDirectosSubcontratos + this.plan.costosDirectosGastosVarios
+			this.plan.costosDirectosPorcentaje = (this.plan.costosDirectosMateriales1 / this.plan.costosDirectosTotal1) * 100
+		
+	        this.plan.costosDirectosGastosVarios = (this.plan.costosDirectosGastosVarios1 / this.plan.costosDirectosTotal1) * 100
+			this.plan.costosDirectosTotal = this.plan.costosDirectosPorcentaje + this.plan.costosDirectosMaquinarias + this.plan.costosDirectosManoObra + this.plan.costosDirectosCombustibleFleteTransporte + this.plan.costosDirectosRentas + this.plan.costosDirectosSubcontratos + this.plan.costosDirectosGastosVarios
 			this.plan.costosDirecto = this.plan.costosDirectosTotal1
 			// Funciones Costo Directo
-			this.plan.costosDirectosMateriales3 = this.plan.costosDirectosMateriales1 - ((this.plan.costosDirectosMateriales1 * this.plan.costosDirectosMateriales2) / 100)
-			this.plan.costosDirectosMaquinarias3 = this.plan.costosDirectosMaquinarias1 - ((this.plan.costosDirectosMaquinarias1 * this.plan.costosDirectosMaquinarias2) / 100)
-			this.plan.costosDirectosManoObra3 = this.plan.costosDirectosManoObra1 - ((this.plan.costosDirectosManoObra1 * this.plan.costosDirectosManoObra2) / 100)
-			this.plan.costosDirectosCombustibleFleteTransporte3 = this.plan.costosDirectosCombustibleFleteTransporte1 - ((this.plan.costosDirectosCombustibleFleteTransporte1 * this.plan.costosDirectosCombustibleFleteTransporte2) / 100)
-			this.plan.costosDirectosRentas3 = this.plan.costosDirectosRentas1 - ((this.plan.costosDirectosRentas1 * this.plan.costosDirectosRentas2) / 100)
-			this.plan.costosDirectosSubcontratos3 = this.plan.costosDirectosSubcontratos1 - ((this.plan.costosDirectosSubcontratos1 * this.plan.costosDirectosSubcontratos2) / 100)
-			this.plan.costosDirectosGastosVarios3 = this.plan.costosDirectosGastosVarios1 - ((this.plan.costosDirectosGastosVarios1 * this.plan.costosDirectosGastosVarios2) / 100)
-			this.plan.costosDirectosTotal3 = this.plan.costosDirectosMateriales3 + this.plan.costosDirectosMaquinarias3 + this.plan.costosDirectosManoObra3 + this.plan.costosDirectosCombustibleFleteTransporte3 + this.plan.costosDirectosRentas3 + this.plan.costosDirectosSubcontratos3 + this.plan.costosDirectosGastosVarios3
+			this.plan.costosDirectosPorcentajeRequerido = this.plan.costosDirectosMateriales1 - ((this.plan.costosDirectosMateriales1 * this.plan.costosDirectosMateriales2) / 100)
+			this.plan.costosDirectosTotal3 = this.plan.costosDirectosPorcentajeRequerido + this.plan.costosDirectosMaquinarias3 + this.plan.costosDirectosManoObra3 + this.plan.costosDirectosCombustibleFleteTransporte3 + this.plan.costosDirectosRentas3 + this.plan.costosDirectosSubcontratos3 + this.plan.costosDirectosGastosVarios3
 			//Relacion % Cd/Ingresos
 			this.plan.relacionCdIngresos = (this.plan.costosDirectosTotal1 / this.plan.ingresos) * 100
 			//gastosIndirectos 				this.gastosDirectosCalc = function() {

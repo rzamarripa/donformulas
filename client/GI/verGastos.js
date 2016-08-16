@@ -147,7 +147,7 @@ this.tipoPeriodo = 'gasto';
  				var totalIngresos = 0;
  				var cobros = Cobros.find().fetch();
  				_.each(cobros,function(cobro){
- 					totalIngresos += cobro.cSinIva;
+ 					totalIngresos += cobro.cSinIva || cobro.cIva;
  					cobro.ingresos = parseInt(totalIngresos);
  				
  				});

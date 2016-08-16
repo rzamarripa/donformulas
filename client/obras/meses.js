@@ -16,6 +16,10 @@ $reactive(this).attach($scope);
 	this.totalDelCobro = 0.00;
 	////////////PERIODO///////////////////////////////////////////////
 	//this.tipoPeriod = 'gasto';
+
+	this.subscribe('planes',()=>{
+		return [{estatus:true}]
+	});
 	this.subscribe('obra', () => {
 		return [{ _id : $stateParams.id, estatus : true}]});
 
@@ -74,7 +78,10 @@ $reactive(this).attach($scope);
 			}
 			return cost;
 	  },
-	  conceptos : () => {
+	  planes : () => {
+	  	return Planes.find();
+	  },
+	    conceptos : () => {
 	  	return Conceptos.find();
 	  },
 	  presupuestos : () => {
@@ -291,9 +298,10 @@ $reactive(this).attach($scope);
 
 	 this.mostrarPresupuestos = function(mes_id,partida_id)
 	{
-		this.obra_id = $stateParams.id;
+		
 		this.mes_id = mes_id;
 		this.partida_id = partida_id;
+		this.obra_id = $stateParams.id;
 		this.mostrarFormPre = false;
 		this.gastoCosto = false;
 		this.Resumen = true;
@@ -378,16 +386,9 @@ $reactive(this).attach($scope);
 		if(costo)
 		return costo.nombre;
 	};
-	/*this.getGasto= function(gasto_id)
-	{
-		var gasto = Gastos.findOne(gasto_id);
-		if(gasto)
-		return gasto.nombre;
-	};*/
 
 	this.periodo= function(mes)
 	{
-		//mes.mes_id = $stateParams.id;
 		mes.mes_id = $stateParams.id;	
 	};	
 	
@@ -405,13 +406,6 @@ $reactive(this).attach($scope);
 		return suma;
 	}*/
 
-	this.totalPag = function(pagoProveedor){
-		
-		var suma = this.pagoProveedor.pIva + this.pagoProveedor.pSinIva;
-
-		return suma;
-	}
-	
 	this.cobroTotalFinal = function(){
 		total = 0;
 		_.each(this.cobros,function(cobro){total += cobro.cIva + cobro.cSinIva});
