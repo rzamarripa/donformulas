@@ -186,8 +186,13 @@ angular.module('formulas').config(['$injector', function ($injector) {
       controller: 'verGastosCtrl as gas',
     })
       .state('root.control', {
-      url: '/control/',
+      url: '/control/:id',
       templateUrl: 'client/control/control.ng.html',
       controller: 'ControlCrtl as ct',
+    })
+      .state('root.costosDirectos', {
+      url: '/costosDirectos/',
+      templateUrl: 'client/costosDirectos/costosDirectos.ng.html',
+      controller: 'CostosDirectosCrtl as cd',
     });
 }]);     

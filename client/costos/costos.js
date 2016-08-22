@@ -56,6 +56,8 @@ $reactive(this).attach($scope);
 		Costos.update({_id:idTemp},{$set:obra});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		this.action = true;
+		this.costo = {};		
 	};
 
 	this.cambiarEstatus = function(id)

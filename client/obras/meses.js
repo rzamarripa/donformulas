@@ -360,6 +360,8 @@ $reactive(this).attach($scope);
 	};
 	this.accionGI = true;
 
+
+
 	this.mostrarGI = function(id)
 	{
 		
@@ -443,6 +445,10 @@ $reactive(this).attach($scope);
 	this.gastoCostos = function()
    	{
    		this.tipoPeriodo = 'costo';
+   		this.periodo.comprasIva = 0.00;
+		this.periodo.comprasSinIva = 0.00;  
+		this.periodo.contadoIva = 0.00;
+		this.periodo.contadoSinIva = 0.00;
    		this.gastoCosto = true;
 	    console.log(this.gastoCosto);
 

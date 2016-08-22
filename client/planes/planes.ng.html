@@ -8,43 +8,43 @@
 		<div class="collapse" id="collapseExample">
 			<form class="form-horizontal" role="form">
 <!-- Primera Parte -->
-		  	<div class="well">	    
+		  	 <div class="well">	    
 			    <div class="row">
-				    <div class="col-sm-6">
+				    <div class="col-sm-3">
 					    <label>Ingresos</label>
 				    	<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.ingresos" required>
 				    </div>
-				    <div class="col-sm-6">
-					    <label>TREMA(Tasa de rendimiento minima aceptable)</label>
-				    	<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.trema" required>
+				    <div class="col-sm-3">
+					    <label>Tasa de rendimiento minima aceptable</label>
+				    	<input type="number" class="form-control" placeholder="TREMA" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.trema" required>
 				    </div>
-			    	<div class="col-sm-6">
-					    <label>ISR</label>
+			    	<div class="col-sm-3">
+					    <label>ISR (calculo)</label>
 				    	<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.isr" required>
 				    </div>
-			    	<div class="col-sm-6">
-					    <label>PTU</label>
+			    	<div class="col-sm-3">
+					    <label>PTU (calculo)</label>
 				    	<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.ptu" required>
 				    </div>
-			    	<div class="col-sm-6">
+			    	<div class="col-sm-2">
 					    <label for="domicilio">Factor de Recuperación</label>
 				    	<div class="form-control">{{pl.plan.factorRecuperacion | number : 2}}</div>
 			    	</div>
-				    <div class="col-sm-6">
+				    <div class="col-sm-2">
 					    <label>Total de Egresos</label>
 				    	<div class="form-control">{{pl.plan.totalEgresos | number : 2}}</div>
 				    </div>
-			    	<div class="col-sm-6">				    	
+			    	<div class="col-sm-2">				    	
 					    <label>Relacion % Cd/Ingresos</label>
-				    	<div class="form-control">{{pl.plan.relacionCdIngresos | number : 2}}</div>
+				    	<div class="form-control">{{pl.totalCosto / pl.plan.ingresos * 100 | number : 2}}%</div>
 				    </div>
-			    	<div class="col-sm-6">				    	
+			    	<div class="col-sm-2">				    	
 					    <label>Costo Directo</label>
-				    	<div class="form-control">{{pl.plan.costosDirecto | number : 2}}</div>
+				    	<div class="form-control">{{pl.totalCosto | currency}}</div>
 				    </div>
-			    	<div class="col-sm-6">				    	
+			    	<div class="col-sm-2">				    	
 					    <label>Gastos Indirectos</label>
-				    	<div class="form-control">{{pl.plan.gastosIndirectos | number : 2}}</div>
+				    	<div class="form-control">{{pl.plan.totalEgresos - pl.totalCosto  | currency}}</div>
 				    </div>
 			    </div>
 		  	</div>
@@ -54,17 +54,17 @@
 			    <div class="row">
 				    <div class="col-sm-12">
 							<div class="row">
-						    <div class="col-sm-3">
+						    <div class="col-sm-2">
 									<label>Gastos de Oficina</label>
 						    </div>
 						    <div class="col-sm-2"	>
-					    		<div class="form-control">{{pl.plan.gastosFijosOficina | number : 2}}</div>
+					    		<div class="form-control">{{(pl.plan.totalEgresos - pl.totalCosto) - pl.obra.gastosPCampo | currency}}</div>
 						    </div>
+						    <div class="col-sm-1">
+					    		<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.gastosFijosOficina1" >%
+						    </div><!--((pl.plan.totalEgresos - pl.totalCosto) - (pl.obra.gastosPCampo)) *-->
 						    <div class="col-sm-2">
-					    		<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.gastosFijosOficina1" required>
-						    </div>
-						    <div class="col-sm-2">
-									<div class="form-control">{{pl.plan.gastosFijosOficina2 | number : 2}}</div>
+									<div class="form-control">{{((pl.plan.totalEgresos - pl.totalCosto)-(pl.obra.gastosPCampo)) - (((pl.plan.totalEgresos - pl.totalCosto)-(pl.obra.gastosPCampo)) * (pl.plan.gastosFijosOficina1)/100) | number : 2}}</div>
 						    </div>
 							</div>
 				    </div>
@@ -125,38 +125,45 @@
 								  </tr>
 								<tbody>
 								<div class="col-sm-12">
-								{{pl.plan.costos}}
-									<tr style="height: 50px;" ng-repeat="costo in pl.plan.costos">
-									{{costo}}
+								costos: {{pl.plan.costos}}
+									<tr style="height: 50px;" ng-repeat="costo in pl.plan.costos">									
 										<td>{{costo.nombre}}</td><br/>
 										<td>
 											<div class="col-sm-12">
-												<div style="width: 80px;" class="form-control">{{pl.plan.costosDirectosPorcentaje | number : 2}}</div>
-						    				</div>
+												<div style="width: 80px;" class="form-control">{{(costo.valor / pl.totalCosto)*100 | number : 2}}%</div>
+						    				</div><!-- {{pl.plan.costosDirectosPorcentaje | number : 2}}-->
+						    				<!---->
 						    			</td>
 										<td>
-
-										<!--<div ng-repeat="(key, costo) in pl.costos" style="margin-top: 2px" class="col-sm-2 ">
-										<label for="{{key}}">{{costo.nombre}}</label>
-										<input type="number" id="{{key}}" class="form-control" ng-model="costo.value">
-										</div>	-->
-
-
-										<!--/////////////////////////////-->
 										 	<div class="col-sm-12">
-					    						<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="costo.valor" >
+					    						<input type="number" style="width: 150px;" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="costo.valor">
 						    				</div>
 						    			</td>
 						    			<td>
 						    				<div class="col-sm-4">
-					    						<input type="number" style="width: 150px;" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="costo.factor" >
+					    						<input type="number" style="width: 150px;" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="costo.factor" >%
 						  					 </div>
 						  			    </td>
 						  			    <td>
 						  			    	<div class="col-sm-12">
-												<div style="width: 150px;" class="form-control">{{pl.plan.costosDirectosPorcentajeRequerido | number : 2}}</div>
+												<div style="width: 150px;" class="form-control">{{(costo.valor) - ((costo.valor * costo.factor)/100) | currency}}</div>
 						    				</div>
 						    			</td>
+									</tr>
+									<tr>
+										<th>
+											<div class="col-sm-12">
+										<label>Total</label>
+												<div style="width: 150px;" class="form-control">{{pl.totalPor | currency}}</div>
+						    				</div>	
+										</th>
+										<th>
+										<div class="col-sm-12">
+										<label>Total</label>
+												<div style="width: 150px;" class="form-control">{{pl.totalCosto | currency}}</div>
+						    				</div>										    
+											
+										</th>
 									</tr>
 									</div>
 								</tbody>
@@ -213,7 +220,7 @@
 				    </div>
 			    </div>
 		  	</div>
-<!-- Estadistica de Gastos y Productividad -->
+Estadistica de Gastos y Productividad 
 		  	<div class="well">
 			  	<div class="row">
 						<div class="col-sm-6">
@@ -221,12 +228,11 @@
 							<div class="row">
 							  <div class="col-sm-12">
 									<div class="row">
-									  <div class="col-sm-6">
+									  <div class="col-sm-6" >
 											<label>Presupuesto de Indirecto Total</label>
 									  </div>
 								    <div class="col-sm-6">
-<!-- 											<div class="form-control">{{pl.plan.estadisticaGastosIndirectosObraPresupuestoIndirectoTotal}}</div> -->
-							    		<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.estadisticaGastosIndirectosObraPresupuestoIndirectoTotal" required>
+											<div class="form-control">{{(pl.plan.ingresos)*(pl.indirectosEmpresas[3].total)/ 100 | currency}}</div>
 								    </div>
 									</div>
 						    </div>
@@ -250,10 +256,10 @@
 									<div class="row">
 								    <div class="col-sm-6">
 											<label>Gastos de Oficina Estadisticos para la Obra</label>
-								    </div>
+								    </div><!--{{(pl.plan.ingresos)*(pl.indirectosEmpresas[3].total)/ 100 | currency}}-->
 								    <div class="col-sm-6">
-											<div class="form-control">{{pl.plan.estadisticaGastosIndirectosObraGastosFijosOficina}}</div>
-								    </div>
+											<div class="form-control">{{(((pl.plan.ingresos)*(pl.indirectosEmpresas[3].total)/ 100) - pl.obra.gastosPCampo) | currency}}</div>
+								    </div><!--{{pl.plan.estadisticaGastosIndirectosObraGastosFijosOficina}}-->
 									</div>
 						    </div>
 					    </div>
@@ -381,8 +387,8 @@
 						    <div class="col-sm-4">
 									<label>Si la obra se ejecuto en</label>
 						    </div>
-						    <div class="col-sm-4">
-							    
+						    <div class="col-sm-1">
+						    <label>Meses</label>
 					    		<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.meses" required>
 						    </div>
 						    <div class="col-sm-4">
@@ -628,8 +634,7 @@
 							</div>
 				    </div>
 			    </div>
-
-			    <br/>
+			 <br/>
 					<div class="row">
 						<br>
 						<div class="col-sm-12">
@@ -637,22 +642,21 @@
 							<input type="submit" ng-click="pl.actualizar(pl.plan)" value="Actualizar" class="btn btn-primary" ng-show="!pl.action">
 						</div>
 					</div>
-		  	</div>
+		    	</div>
 		  </form>
 		</div>
 	</div>
 </div>
 <br/>
-<!-- List -->
 <div class="row">
 	<div class="col-sm-12">
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-			    <th width="30%"><div class="text-center">Obra</div></th>
-			    <th width="30%"><div class="text-center">Plan</div></th>
-			    <th width="10%"><div class="text-center">Ingresos</div></th>
-			    <th width="10%"><div class="text-center">Anticipo de Obra</div></th>
+				<th><div class="text-center">Obra</div></th>
+
+			    <th><div class="text-center">Ingresos</div></th>
+			    <th><div class="text-center">Anticipo de Obra</div></th>
 					<th width="10%">
 						<div class="text-center">
 							Estatus
@@ -667,9 +671,7 @@
 			</thead>
 			<tbody>
 		    <tr ng-repeat="plan in pl.planes">
-
-			    <td>{{plan.obra}} </td>
-			    <td>{{plan.plan}} </td>
+			    <td>{{pl.obra.nombre}} </td>
 			    <td>{{plan.ingresos}} </td>
 			    <td>{{plan.porcentajeObras | number : 2}} </td> 
 			    <td>
@@ -692,7 +694,9 @@
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="pl.editar(plan._id)"><i class="fa fa-pencil"></i> Editar</a></li>
 							   <li><a href="#" ng-click="pl.cambiarEstatus(plan._id)"><i class="fa fa-trash"></i> Desactivar</a></li>
-							    <!--<li><a href="/planes" ng-click="remove(planes)"><span class="fa fa-trash"> Eliminar</span></a></li>-->
+							   
+							    <li><a href="/planes" ng-click="remove(planes)"><span class="fa fa-trash"> Eliminar</span></a></li>
+							    
 							  </ul>
 							</div>
 				    </div>				    

@@ -1,17 +1,20 @@
+<!--///////////////////////////////////////////// MENU  ////////////////////////////////////////////////-->
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+
 <div class="inbox-checkbox-triggered pull-right">
 
 						<div >
 							<a   style="width: 120px; height: 60px; font-size: 30px;" ui-sref = 'root.planes({id:mes.obra_id})'  class="btn btn-success"><strong style="color: white">Planes</strong></a>
 							<a  style="width: 160px; height: 60px; font-size: 30px"  class="btn btn-success"><strong>Resumen</strong></a>
-						<!--	<a  style="width: 120px; height: 60px; font-size: 30px"  class="btn btn-success"><strong></strong></a>-->
+							<a  style="width: 280px; height: 60px; font-size: 30px" ui-sref = 'root.control({id:mes.obra_id})'  class="btn btn-success"><strong>Control y Mejora</strong></a>
+
+						<!--<a  style="width: 120px; height: 60px; font-size: 30px"  class="btn btn-success"><strong></strong></a>-->
 						</div><br/>
-				
 					</div>
-	
 
-
-
-
+<!--///////////////////////////////////////////// MESES /////////////////////////////////////////////////////////-->
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="col-sm-4">
@@ -21,6 +24,7 @@
 		  	<a class="btn btn-primary" ng-click="mes.guardar(mes.mes)" ng-show="mes.accionMes">
 				Asignar Fecha</a>
 			</div>
+			<br/>
 		</div>
 	</div>
 	<div class="well">	  
@@ -57,7 +61,8 @@
 	</div> 
 </div>
 <br/>
-<!--////////////////////////////////////////PRESUPUESTOS//////////////////////////////////////////////////////////////-->
+<!--/////////////////////////////////   SECCIONES   /////////////////////////////////////////////////////////-->
+<!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 <div class="well">
 	<div class="jarviswidget well jarviswidget-sortable" id="wid-id-0" role="widget">
 		<header role="heading">			
@@ -87,6 +92,8 @@
 			</div>
 		</div>
 	</div>
+<!--/////////////////////////////////////   PRESUPUESTOS   ///////////////////////////////////////////////////////-->
+<!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 	<div class="row" ng-if="!mes.accionPresupuesto">				
 		<div class="col-sm-12">
 			<h3 class="dark-grey"  ng-show="!mes.accionPresupuesto">Lista de Partidas</h3>
@@ -107,17 +114,17 @@
 								{{concepto.nombre}}
 							</option>
 						</select>
-		   </div>
-					</div>
+		   			</div>
+				</div>
 					<div ng-repeat="(key, costo) in mes.costos" style="margin-top: 2px" class="col-sm-2 ">
 						<label for="{{key}}">{{costo.nombre}}</label>
 						<input type="number" id="{{key}}" class="form-control" ng-model="costo.value">
 					</div>	
-          <div class="col-sm-4" ng-show="!mes.mostrarFormPre" style="margin-top: 28px">
-	        	<input type="submit" ng-click="mes.guardarPresupuesto(mes.costos)" value="Guardar" class="btn btn-primary"><br/>
-	       	</div>
+		            <div class="col-sm-4" ng-show="!mes.mostrarFormPre" style="margin-top: 28px">
+			        	<input type="submit" ng-click="mes.guardarPresupuesto(mes.costos)" value="Guardar" class="btn btn-primary"><br/>
+			        </div>
 	      </div>
-			</div>
+	</div>
 	<div class="col-sm-12"  ng-if="mes.mes_id != ''"  ng-show="!mes.mostrarFormPre">
 	<h3>Presupuestos</h3>	
 	<br/>
@@ -162,7 +169,8 @@
 	</div>
    </div> 
 </div>
-<!--///////////////////////////////////////////////////////////PERIODOS/////////////////////////////////////////////////////////-->
+<!--///////////////////////////////////////////////////////////PERIODOS/////////////////////////////////////////-->
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 <div class="row" ng-show="!mes.accionPeriodo">				
 
 	<div class="col-sm-12">
@@ -219,7 +227,7 @@
 	   		<label>COMPRAS DE CREDITO S/IVA</label>
 	   		<input type="number" class="form-control"   ng-model="mes.periodo.comprasSinIva">
 	   </div>
-	   <div class="col-sm-2" style="margin-top: 17px;" ng-show="mes.preIva">
+	   <div class="col-sm-2"  ng-show="mes.preIva">
 	   		<label>COMPRAS DE CREDITO C/ IVA</label>
 	   		<input type="number" class="form-control"    ng-model="mes.periodo.comprasIva">
 	   </div><br/>
@@ -338,40 +346,37 @@
    </div> 
 </div>
 <!--//////////////////////////////////////////////////PAGOS//////////////////////////////////////////////////////-->
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 <div class="row" ng-show="!mes.Pagos">				
 
 	<div class="col-sm-12">
-      <div class="row"   ng-if="mes.mes_id != ''">
+      <div class="row" ng-if="mes.mes_id != ''">
       <br/><br/>
 
 
+<div class="jarviswidget well jarviswidget-sortable" id="wid-id-0" role="widget">
+		<header role="heading">			
+		<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
+	<div role="content">
+		<div class="jarviswidget-editbox">
+			<input class="form-control" type="text">	
+		</div>
+		<div class="widget-body no-padding">
+			<div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"><div class="dt-toolbar" style="padding: 0px; "></div><table id="example" class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" cellspacing="0" width="10%" role="grid" aria-describedby="example_info" style="width: 100%;">
+		        <thead>
+		            <tr role="row">
+		               <th>
+		               	<a href="javascript:void(0);" ng-click="mes.agregarIvaPag()" class="btn btn-xs btn-default">IVA</a>
+		                <a href="javascript:void(0);" ng-click="mes.quitarIvaPag()"  class="btn btn-xs btn-default">SIN IVA</a>
+		               </th>
+		               <th></th>
+		            </tr>
 
-          <div class="jarviswidget well jarviswidget-sortable" id="wid-id-0" role="widget">
-<header role="heading">			
-<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
-<div role="content">
-<div class="jarviswidget-editbox">
-	<input class="form-control" type="text">	
+		        </thead>
+		    </table></div>
+		</div>
+	</div>						
 </div>
-<div class="widget-body no-padding">
-	<div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"><div class="dt-toolbar" style="padding: 0px; "></div><table id="example" class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" cellspacing="0" width="10%" role="grid" aria-describedby="example_info" style="width: 100%;">
-        <thead>
-            <tr role="row">
-               <th>
-               	<a href="javascript:void(0);" ng-click="mes.agregarIvaPag()" class="btn btn-xs btn-default">IVA</a>
-                <a href="javascript:void(0);" ng-click="mes.quitarIvaPag()"  class="btn btn-xs btn-default">SIN IVA</a>
-               </th>
-               <th></th>
-            </tr>
-
-        </thead>
-    </table></div>
-</div>
-</div>						
-</div>
-
-
-
 
 		
 		<div class="row col-sm-12">		
@@ -387,19 +392,14 @@
           <div class="col-sm-2" >
 	         <input type="submit" style="margin-top: -15px" ng-click="mes.guardarPago(mes.pagoProveedor);" value="Guardar" class="btn btn-primary" ng-show="mes.pag">
 	         <input type="submit" style="margin-top: -15px" ng-click="mes.actualizarPago(mes.pagoProveedor)" ng-show="!mes.pag" value="Actualizar" class="btn btn-primary"><br/>
-
 	       </div> 
-
 	    </div>
 	   </div>
 	 </div>
-	    
+
 	<div class="col-sm-12 " ng-if="mes.mes_id != ''"  >
     <br/><br/>
-
 	<h3>Pagos a Proveedores</h3>	
-	
-
 		<div class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-id-2" data-widget-editbutton="false" role="widget">						
 		<header role="heading"><div class="jarviswidget-ctrls" role="menu"><a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> </div>
 			<span class="widget-icon"> <i class="fa fa-table"></i> </span>
@@ -408,9 +408,7 @@
 		<div role="content" style="display: block;">
 			<div class="widget-body no-padding">
 				<div class="table-responsive">			
-						
 					<table class="table table-hover">
-				   
 						    <thead>
 						    <tr>
 						    <th>Pagos con Iva</th>
@@ -430,12 +428,8 @@
 								    <div>
 										    <a ng-click="mes.editarPago(pagoProveedor._id)" style="font-size: 13px;" class="label label-warning" ><i class="fa fa-pencil"></i></a>
 										  <a  ng-click="mes.cambiarEstatusPago(pagoProveedor._id)" style="font-size: 13px;" class="label label-primary">Desactivar</a>
-											 
 								    </div>				    
-							    </td>
-							 
-
-														
+							    </td>			
 							</tr>
 						</tbody>
 
@@ -448,54 +442,45 @@
 </div>
 <!--////////////////////////////////////////ESTIMACIONES/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 <div class="row" ng-show="!mes.Cobro">				
-
 	<div class="col-sm-12" >
       <div class="row"   ng-if="mes.mes_id != ''">
       <br/><br/>
-
-
-
-
       <div class="jarviswidget well jarviswidget-sortable" id="wid-id-0" role="widget">
-<header role="heading">			
-<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
-<div role="content">
-<div class="jarviswidget-editbox">
-	<input class="form-control" type="text">	
-</div>
-<div class="widget-body no-padding">
-	<div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"><div class="dt-toolbar" style="padding: 0px; "></div><table id="example" class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" cellspacing="0" width="10%" role="grid" aria-describedby="example_info" style="width: 100%;">
-        <thead>
-            <tr role="row">
-               <th>
-               	<a href="javascript:void(0);" ng-click="mes.agregarIvaCobro()" class="btn btn-xs btn-default">IVA</a>
-                <a href="javascript:void(0);" ng-click="mes.quitarIvaPreCobro()"  class="btn btn-xs btn-default">SIN IVA</a>
-               </th>
-               <th></th>
-            </tr>
+			<header role="heading">			
+				<span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
+			<div role="content">
+				<div class="jarviswidget-editbox">
+					<input class="form-control" type="text">	
+						</div>
+				<div class="widget-body no-padding">
+					<div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"><div class="dt-toolbar" style="padding: 0px; "></div><table id="example" class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" cellspacing="0" width="10%" role="grid" aria-describedby="example_info" style="width: 100%;">
+				        <thead>
+				            <tr role="row">
+				               <th>
+				               	<a href="javascript:void(0);" ng-click="mes.agregarIvaCobro()" class="btn btn-xs btn-default">IVA</a>
+				                <a href="javascript:void(0);" ng-click="mes.quitarIvaPreCobro()"  class="btn btn-xs btn-default">SIN IVA</a>
+				               </th>
+				               <th></th>
+				            </tr>
 
-        </thead>
-    </table></div>
-</div>
-</div>						
-</div>
-
-		
+				        </thead>
+				    </table></div>
+				</div>
+            </div>						
+		</div>
 		<div class="row col-sm-12">		
-	   <div class="col-sm-2 " ng-show="mes.cobIva">
-	   		<label>Cobros con Iva</label>
-	   		<input type="number" class="form-control" ng-model="mes.cobro.cIva">
-	   </div>
-	   <div class="col-sm-2" ng-show="!mes.cobIva">
-	   		<label>Cobros sin Iva</label>
-	   		<input type="number" class="form-control" ng-model="mes.cobro.cSinIva">
-	   </div><br/>
-	   <br/>
-          <div class="col-sm-2" >
-	         <input type="submit" style="margin-top: -16px;" ng-click="mes.guardarCobro(mes.cobro)" value="Guardar" class="btn btn-primary" ng-show="mes.cob">
-	         <input type="submit" ng-click="mes.actualizarCobro(mes.cobro)" ng-show="!mes.cob" value="Actualizar" class="btn btn-primary"><br/>
-	       </div> 
-
+			   <div class="col-sm-2 " ng-show="mes.cobIva">
+			   		<label>Cobros con Iva</label>
+			   		<input type="number" class="form-control" ng-model="mes.cobro.cIva">
+			   </div>
+			   <div class="col-sm-2" ng-show="!mes.cobIva">
+			   		<label>Cobros sin Iva</label>
+			   		<input type="number" class="form-control" ng-model="mes.cobro.cSinIva">
+			   </div><br/><br/>
+	          <div class="col-sm-2" >
+		         <input type="submit" style="margin-top: -16px;" ng-click="mes.guardarCobro(mes.cobro)" value="Guardar" class="btn btn-primary" ng-show="mes.cob">
+		         <input type="submit" ng-click="mes.actualizarCobro(mes.cobro)" ng-show="!mes.cob" value="Actualizar" class="btn btn-primary"><br/>
+		       </div> 
 	    </div>
 	   </div>
 	 </div>
@@ -503,8 +488,6 @@
 	<div class="col-sm-12 " ng-if="mes.mes_id != ''"  >
     <br/>
 	<h3>Cobros</h3>	
-	
-
 		<div class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-id-2" data-widget-editbutton="false" role="widget">						
 		<header role="heading"><div class="jarviswidget-ctrls" role="menu"><a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> </div>
 			<span class="widget-icon"> <i class="fa fa-table"></i> </span>
@@ -513,9 +496,7 @@
 		<div role="content" style="display: block;">
 			<div class="widget-body no-padding">
 				<div class="table-responsive">			
-						
 					<table class="table table-hover">
-				   
 						   <thead>
 						    <tr>
 							    <th width="20%"><div class="text-center">Cobros con Iva</div></th>
@@ -525,8 +506,6 @@
 							    <th width="20%"><div class="text-center">Acciones</div></th>	
 						    </tr>
 						   </thead>
-
-
 							<tbody>
 							<tr ng-repeat="cobro in mes.cobros">
 						        <th><div class="text-center">{{cobro.cIva | currency}}</div></th>
@@ -555,7 +534,6 @@
 								<th colspan="2"></th>
 							</tr>
 						</tbody>
-
 					</table>
 				</div>
 			</div>
@@ -563,13 +541,12 @@
 	</div>
    </div> 
 </div>
-<!--////////////////////////////////////////////////////////RESUMEN///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+<!--////////////////////////////////////////////////////////RESUMEN///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 <div class="row" ng-show="!mes.Resumen">				
 	    
 	<div class="col-sm-12 " ng-show="!mes.Resumen" ng-if="mes.mes_id != ''"  >
     <br/>
 	<h3>RESUMEN</h3>	
-	
 		<div class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-id-2" data-widget-editbutton="false" role="widget">						
 		<header role="heading"><div class="jarviswidget-ctrls" role="menu"><a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> </div>
 			<span class="widget-icon"> <i class="fa fa-table"></i> </span>
@@ -589,8 +566,6 @@
 							    <th width="20%"><div class="text-center">Saldo Final</div></th>	
 						    </tr>
 						   </thead>
-
-
 							<tbody>
 							<tr ng-repeat="cobro in mes.cobros">
 						        <th><div class="text-center">{{mes.plan.porcentajeObras | number : 2}}</div></th>
@@ -607,14 +582,11 @@
 								    </div>
 							    </td>
 						        <td>
-				    <div class="text-center">
-							   <a ng-click="obr.editar(obra._id)" style="font-size: 13px;" class="label label-warning"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-							  <a  ng-click="mes.cambiarEstatusCobro(cobro._id)" style="font-size: 13px;" class="label label-primary">Cambiar Estatus</a>
-
-				    </div>				    
-			    </td>
-
-														
+								    <div class="text-center">
+											   <a ng-click="obr.editar(obra._id)" style="font-size: 13px;" class="label label-warning"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
+											  <a  ng-click="mes.cambiarEstatusCobro(cobro._id)" style="font-size: 13px;" class="label label-primary">Cambiar Estatus</a>
+								    </div>				    
+							    </td>							
 							</tr>	
 						</tbody>
 
