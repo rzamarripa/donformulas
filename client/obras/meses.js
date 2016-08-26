@@ -1,7 +1,7 @@
 angular.module("formulas")
 .controller("MesesCtrl", MesesCtrl);  
 function MesesCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
-$reactive(this).attach($scope);
+let rc =$reactive(this).attach($scope);
 	this.mes_id = '';
 	this.partida = "";
 	this.action = true;
@@ -14,9 +14,11 @@ $reactive(this).attach($scope);
 	this.tipoPeriodo = 'costo';
 	this.obra_id = $stateParams.id;
 	this.totalDelCobro = 0.00;
+	this.cantidad = 0.00;
+	this.costosTotales = [];
 	////////////PERIODO///////////////////////////////////////////////
 	//this.tipoPeriod = 'gasto';
-
+		//this.presupuesto.concepto_id = $stateParams.id;
 	this.subscribe('planes',()=>{
 		return [{estatus:true}]
 	});
@@ -48,8 +50,13 @@ $reactive(this).attach($scope);
   });
 
   this.subscribe('presupuestos',()=>{
-	return [{partida_id: this.getReactively('partida_id'),mes_id: this.getReactively('mes_id'),estatus:true}] 
+	return [{ partida_id: this.getReactively('partida_id'),mes_id: this.getReactively('mes_id'),estatus:true}] 
   });
+
+   this.subscribe('presupuestosCosas',()=>{
+	return [{estatus:true}] 
+  });
+
   this.subscribe('periodos',()=>{
 	return [{obra_id : $stateParams.id, tipo: this.getReactively('tipoPeriodo'),mes_id: this.getReactively('mes_id'),estatus:true}] 
   });
@@ -61,45 +68,86 @@ $reactive(this).attach($scope);
   
   
 	this.helpers({
-	  obra : () => {
+		obra : () => {
 		  return Obras.findOne($stateParams.id);
-	  },
-	  partidas : () => {
+		},
+		partidas : () => {
 		  return Partidas.find();
-	  },
-	  meses : () => {
-	  	return Meses.find();
-	  },
-	  costos : () => {
+		},
+		meses : () => {
+			return Meses.find();
+		},
+		costos : () => {
 			var cost = Costos.find().fetch();
 			for (var i = 0; i < cost.length; i++) {
 				if(!cost[i].value)
 					cost[i].value=0;
 			}
 			return cost;
-	  },
-	  planes : () => {
-	  	return Planes.find();
-	  },
-	    conceptos : () => {
-	  	return Conceptos.find();
-	  },
-	  presupuestos : () => {
-	  	return Presupuestos.find();
-	  },
-	  periodos : () => {
-	  	return Periodos.find();
-	  },
-	  gastos : () => {
-	  	return GastosOficina.find();
-	  },
-	   pagosProveedores : () => {
-	  	return PagosProveedores.find();
-	  },
-	   cobros : () => {
-	  	return Cobros.find();
-	  },
-  });
+		},
+		planes : () => {
+			return Planes.find();
+		},
+		conceptos : () => {
+			return Conceptos.find();
+		},
+		presupuestos : () => {
+			return Presupuestos.find();
+		},
+		costosTotales : () => {
+			var costosTotales = {};
+			var partidas = Partidas.find().fetch();
+			var presupuestos = Presupuestos.find().fetch();
+			var conceptos = Conceptos.find().fetch();
+			var planes = Planes.find().fetch();
+	   		_.each(partidas, function(partida){
+	   			_.each(conceptos, function(concepto){
+	   				_.each(presupuestos, function(presupuesto){
+	   					if(presupuesto.partida_id == partida._id && presupuesto.concepto_id == concepto._id){
+	   						_.each(presupuesto.costos, function(costoPresupuesto){
+	   							if("undefined" == typeof costosTotales[costoPresupuesto.nombre]){
+	   								costosTotales[costoPresupuesto.nombre] = {};
+	   								costosTotales[costoPresupuesto.nombre].partida = partida.nombre;
+	   								costosTotales[costoPresupuesto.nombre].costo_id =  costoPresupuesto._id;
+	   								costosTotales[costoPresupuesto.nombre].costo =  costoPresupuesto.nombre;
+	   								costosTotales[costoPresupuesto.nombre].total = costoPresupuesto.value * presupuesto.cantidad;
+	   							}else{
+	   								costosTotales[costoPresupuesto.nombre].total += costoPresupuesto.value * presupuesto.cantidad;
+	   							}
+	   						})
+	   					}
+	   				})
+	   			})
+	   		});
+	   		var costosTotalesArreglos = _.toArray(costosTotales);
+	   		_.each(planes, function(plan){
+	   			_.each(plan.costos, function(costosPlan){
+	   				_.each(costosTotalesArreglos, function(costoTotal){
+	   					if(costoTotal.costo_id == costosPlan._id){
+	   						costoTotal.factor = costosPlan.factor;
+	   					}
+	   				})
+	   			})
+	   		})
+	   		console.log("arreglo",costosTotalesArreglos);
+	   		return costosTotales;
+		},
+		cosas : () => {
+			return PresupuestosCosas.find();
+		},
+		periodos : () => {
+			return Periodos.find();
+		},
+		gastos : () => {
+			return GastosOficina.find();
+		},
+		pagosProveedores : () => {
+			return PagosProveedores.find();
+		},
+		cobros : () => {
+			return Cobros.find();
+		}
+	});
 
 	this.panelColor = false;	
 	this.mostrarMes = true;
@@ -139,15 +187,18 @@ $reactive(this).attach($scope);
 		this.accionMes = false;
 		this.mes = {};		
 	};
+	this.presupuesto.cantidad = 0.00;
 
 	this.guardarPresupuesto = function(costos)
 	{
 		console.log(costos);
+				 
 		//this.presupuesto.costo.value = 0.00;
 		this.presupuesto.estatus = true;
 		this.presupuesto.obra_id = this.obra_id;
 		this.presupuesto.mes_id = this.mes_id;
 		this.presupuesto.partida_id = this.partida_id;
+		//this.presupuesto.concepto_id = $stateParams.id;
 		_.each(costos, function(costo){
 			delete costo.$$hashKey;
 		});
@@ -155,7 +206,10 @@ $reactive(this).attach($scope);
 		console.log(this.presupuesto);
 		Presupuestos.insert(this.presupuesto);
 		toastr.success('presupuesto Agregado.');
-		this.presupuesto = {}; 
+		this.presupuesto = {};
+		this.costo = {};
+		this.presupuesto.cantidad = 0.00;
+
 		
 	};
 	this.guardarPeriodo = function(periodo)
@@ -258,7 +312,7 @@ $reactive(this).attach($scope);
 		this.accionResumen = false;
 		this.accionGI = false;
         this.Resumen = true;
-        console.log(mes_id);
+      //  console.log(mes_id);
         
 	};
 
@@ -273,8 +327,8 @@ $reactive(this).attach($scope);
 		this.mostrarFormPre = true;
 		this.Pagos = true;
 		this.Cobro = true;
-		console.log(mes_id);
-		console.log(obra_id);
+		//console.log(mes_id);
+		//console.log(obra_id);
 
 	
 	};
@@ -291,8 +345,8 @@ $reactive(this).attach($scope);
 		this.accionPresupuesto = true;
 		this.Pagos = true;
 		this.mostrarFormPre = true;
-		console.log(obra_id);
-		console.log(mes_id);
+		//console.log(obra_id);
+		//console.log(mes_id);
 	
 	};
 
@@ -307,9 +361,10 @@ $reactive(this).attach($scope);
 		this.Resumen = true;
 		this.Cobro = true;
 		this.Pagos = true;
+		this.presupuesto.cantidad = 0.00;
 		
-		console.log(this.mes_id);
-		console.log(this.partida_id);
+		//console.log(this.mes_id);
+		//console.log(this.partida_id);
 
 	};
 
@@ -686,4 +741,19 @@ $reactive(this).attach($scope);
      {
      	this.cobIva = false;
      }
+
+     ///////////////////////////////////////////////////COSA DE PRESUPUESTOS////////////////////////////////////
+	 this.cosa = {};
+     this.guardarCosa = function()
+     { 
+     	this.cosa.estatus = true;
+
+     	PresupuestosCosas.insert(this.cosa);
+     	toastr.success('yeah');
+     	console.log(this.cosa);
+     	this.cosa = {};
+
+     };
+
+
 };

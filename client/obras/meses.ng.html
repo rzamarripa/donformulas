@@ -96,16 +96,44 @@
 <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 	<div class="row" ng-if="!mes.accionPresupuesto">				
 		<div class="col-sm-12">
+
 			<h3 class="dark-grey"  ng-show="!mes.accionPresupuesto">Lista de Partidas</h3>
 				<div class="row" ng-show="!mes.accionPresupuesto">
 					<div class="col-sm-4">
 						<ul class="list-group no-margin">
 							<li ng-repeat="partida in mes.partidas" class="list-group-item">
-								<a href="" ng-click="mes.mostrarPresupuestos(partida.mes_id,partida.partida_id)" >{{partida.nombre}}</a>
+								<a href="" ng-click="mes.mostrarPresupuestos(partida.mes_id,partida._id)" >{{partida.nombre}}</a>
 							</li>
 						</ul>
 					</div>
-				</div>
+				</div><br/>
+
+			<div class="row">
+					<div class="col-sm-2">
+						<label>Costo Indirecto</label><br/>	
+						<input class="form-control"  ng-model="mes.cosa.costoIndirecto" >
+				    </div>
+				    <div class="col-sm-3">
+						<label>Costo por Financiamiento</label><br/>	
+						<input class="form-control"  ng-model="mes.cosa.costoFinanciamento" >
+				    </div>
+				    <div class="col-sm-2">
+						<label>Cargo por Utilidad</label><br/>	
+						<input class="form-control"   ng-model="mes.cosa.cargoUtilidad" >
+				    </div>
+				    <div class="col-sm-2">
+						<label>Cargo por Adicional</label><br/>	
+						<input class="form-control"   ng-model="mes.cosa.cargoAdicional" >
+				    </div>
+				    <div class="col-sm-2">
+						<label>Gasto indirecto Total</label><br/>	
+						<input class="form-control"  ng-model="mes.cosa.GITotal" >
+				    </div>
+				    <div class="col-sm-3">
+				    	<input type="submit"  ng-click="mes.guardarCosa(mes.cosa);" value="Guardar" class="btn btn-primary">
+				    </div>
+				    {{mes.cosa}}
+		   </div>
 				<div class="row">
 					<div class="col-sm-4 ">
 						<label>Lista de Conceptos</label>	
@@ -119,7 +147,11 @@
 					<div ng-repeat="(key, costo) in mes.costos" style="margin-top: 2px" class="col-sm-2 ">
 						<label for="{{key}}">{{costo.nombre}}</label>
 						<input type="number" id="{{key}}" class="form-control" ng-model="costo.value">
-					</div>	
+					</div>
+					<div class="col-sm-2 ">
+						<label>Cantidad</label>
+						<input type="number"  class="form-control" ng-model="mes.presupuesto.cantidad">
+					</div>		
 		            <div class="col-sm-4" ng-show="!mes.mostrarFormPre" style="margin-top: 28px">
 			        	<input type="submit" ng-click="mes.guardarPresupuesto(mes.costos)" value="Guardar" class="btn btn-primary"><br/>
 			        </div>
@@ -142,15 +174,35 @@
 							<tr>
 								<th>CONCEPTO</th>
 								<th ng-repeat="costo in mes.costos">{{costo.nombre}}</th>
-								<th>TOTAL</th>
-								<th>ACCIONES</th>
+								<th>Cantidad</th>
+								<th>Total</th>
+								<th ng-show="">Costo directo</th>
+								<th ng-show="">Costo Indirecto</th>
+								<th ng-show="">Cargo por financiamineto</th>
+								<th ng-show="">Cargo Utilidad</th>
+								<th ng-show="">Cargo adicional</th>
+								<th ng-show="">Precio Unitario</th>
+								<th>Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="presupuesto in mes.presupuestos">
 								<td>{{mes.getConcepto(presupuesto.concepto_id)}}</td>
 								<td ng-repeat="costo in presupuesto.costos">{{costo.value | currency}}</td>
-								<td>{{mes.totalPre(presupuesto.costos) | currency}}</td>
+								<td>{{presupuesto.cantidad | currency}}</td>
+								<td>{{mes.totalPre(presupuesto.costos)  | currency}}</td>
+								<td ng-show="" ng-repeat="cosa in mes.cosas">{{mes.totalPre(presupuesto.costos) * (cosa.costoIndirecto / 100) | currency}} </td>
+								<td ng-show="" ng-repeat="cosa in mes.cosas">{{(((mes.totalPre(presupuesto.costos)) * (cosa.costoIndirecto / 100)) + (mes.totalPre(presupuesto.costos))) * (cosa.costoFinanciamento / 100)  | currency}} </td>
+						
+								<td ng-show="" ng-repeat="cosa in mes.cosas">{{
+								    mes.totalPre(presupuesto.costos)
+								 + (mes.totalPre(presupuesto.costos)) * (cosa.costoIndirecto / 100)
+
+								 + (((mes.totalPre(presupuesto.costos)) * (cosa.costoIndirecto / 100)) + (mes.totalPre(presupuesto.costos))) * (cosa.costoFinanciamento / 100)
+								 * (cosa.cargoUtilidad / 100) | currency }}</td>
+								<td ng-show="">?</td>
+								<td ng-show="">?</td>
+								<td ng-show="">?</td>
 							    <td>
 								    <div>
 											 
@@ -159,6 +211,65 @@
 											 
 								    </div>				    
 							    </td>
+							</tr>
+						</tbody>
+						</table>
+						
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Costo Indirecto</th>
+								<th>Costo por Financiamiento</th>
+								<th>Cargo por Utilidad</th>
+								<th>Cargo por Adicional</th>
+								<th>Gasto indirecto Total</th>
+							</tr>
+						</thead>
+						<tbody>
+					    <tr ng-repeat="cosa in mes.cosas">
+						    <td>{{cosa.costoIndirecto}}</td>
+						    <td>{{cosa.costoFinanciamento}}</td>
+						    <td>{{cosa.cargoUtilidad}}</td>
+						    <td>{{cosa.cargoAdicional}}</td>
+						    <td>{{cosa.GITotal}}</td>
+					    </tr>
+						</tbody>
+				</table></div>
+<!--//////////////////////////////////// TABLA INVISIBLE PARA CALCULOS //////////////////////////////////////////-->
+<!--/////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+	 <div  class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-id-2" data-widget-editbutton="false" role="widget">						
+		<header role="heading"><div class="jarviswidget-ctrls" role="menu"><a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> </div>
+			<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+			<h2>TABLA INVISIBLE</h2>
+		<span class="jarviswidget-loader" style="display: none;"><i class="fa fa-refresh fa-spin"></i></span></header>
+		<div role="content" style="display: block;">
+			<div class="widget-body no-padding">
+				<div class="table-responsive">			
+						
+					<table class="table table-hover" >
+						
+						<thead >
+							<tr>
+							
+								<th ng-repeat="presupuesto in mes.costosTotales">{{presupuesto.costo}}</th>
+								
+							</tr>
+							<tr><th ng-repeat="presupuesto in mes.costosTotales">Ajuste Presupuestal</th></tr>
+						</thead>
+						<tbody>
+							<tr >
+								<th ng-repeat="presupuesto in mes.costosTotales">{{presupuesto.total | currency}}</th>
+								<th >{{presupuesto.multi | currency}}</th>
+								<th>{{presupuesto.todo | currency}}</th>
+
+							
+							
 							</tr>
 							
 						</tbody>
@@ -541,7 +652,7 @@
 	</div>
    </div> 
 </div>
-<!--////////////////////////////////////////////////////////RESUMEN///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+<!--////////////////////////////////////////////////////////RESUMEN///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 <div class="row" ng-show="!mes.Resumen">				
 	    
 	<div class="col-sm-12 " ng-show="!mes.Resumen" ng-if="mes.mes_id != ''"  >
@@ -596,4 +707,5 @@
 		</div>
 	</div>
    </div> 
-</div>
+</div>-->
+Costos Totales : {{ mes.costosTotales }}

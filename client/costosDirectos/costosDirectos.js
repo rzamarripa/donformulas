@@ -1,7 +1,7 @@
 angular.module("formulas")
 .controller("CostosDirectosCrtl", CostosDirectosCrtl);  
 function CostosDirectosCrtl($scope, $meteor, $reactive, $state, $stateParams, toastr){
-$reactive(this).attach($scope);
+let rc = $reactive(this).attach($scope);
 
 	this.subscribe('CostosDirectos',()=>{
 	return [{estatus:true}] 
@@ -13,6 +13,13 @@ $reactive(this).attach($scope);
     this.subscribe('costos',()=>{
 	return [{estatus:true}] 
     });
+    this.subscribe('presupuestos',()=>{
+	return [{estatus:true}] 
+    });
+    this.subscribe('conceptos',()=>{
+	return [{estatus:true}] 
+    });
+
 
   this.action = true;
   
@@ -25,7 +32,39 @@ $reactive(this).attach($scope);
 	  },
 	   costos : () => {
 		  return Costos.find();
-	  }
+	  },
+	  conceptos : () => {
+		  return Conceptos.find();
+	  },
+	  presupuestos : () => {
+		  return Presupuestos.find();
+	  },
+	  costosTotales : () => {
+			var costosTotales = {};
+			var partidas = Partidas.find().fetch();
+			var presupuestos = Presupuestos.find().fetch();
+			var conceptos = Conceptos.find().fetch();
+	   		_.each(partidas, function(partida){
+	   			_.each(conceptos, function(concepto){
+	   				_.each(presupuestos, function(presupuesto){
+	   					if(presupuesto.partida_id == partida._id && presupuesto.concepto_id == concepto._id){
+	   						_.each(presupuesto.costos, function(costoPresupuesto){
+	   							if("undefined" == typeof costosTotales[costoPresupuesto.nombre]){
+	   								costosTotales[costoPresupuesto.nombre] = {};
+	   								costosTotales[costoPresupuesto.nombre].partida = partida.nombre;
+	   								costosTotales[costoPresupuesto.nombre].costo =  costoPresupuesto.nombre;
+	   								costosTotales[costoPresupuesto.nombre].total = costoPresupuesto.value * presupuesto.cantidad;
+	   							}else{
+	   								costosTotales[costoPresupuesto.nombre].total += costoPresupuesto.value * presupuesto.cantidad;
+	   							}
+	   						})
+	   					}
+	   				})
+	   			})
+	   		})
+	   		console.log(costosTotales);
+	   		return costosTotales;
+		},
   });
   
 	this.nuevo = true;  	  
