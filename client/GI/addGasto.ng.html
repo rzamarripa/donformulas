@@ -1,5 +1,5 @@
-<h2>Agregar Tiempo</h2>
-  <div class="row" ng-if="add.mes_id != ''">
+<h2>Gastos de Oficina</h2>
+<!--   <div class="row" ng-if="add.mes_id != ''">
    <div class="col-sm-12">
 		  <div class="col-sm-1">
 			<a class="btn btn-primary btn-lg"
@@ -13,7 +13,7 @@
 		      Asignar Fecha</a>
 		   </div>
     </div>
-  </div>
+  </div> -->
 
 
   <div class="well">	  
@@ -52,25 +52,25 @@
 <br/>
 
 <div class="well" ng-if="add.mes_id != ''">
-<div class="row" ng-if="!add.accionImporte">					  
-	<div class="col-sm-12">
-	<div class="col-sm-3" >
-	<label>Gasto Variable</label>
-	   		<input type="number" class="form-control" ng-model="add.gasto.importeVar"> 
-	</div> 
+	<div class="row" ng-if="!add.accionImporte">					  
+			<div class="col-sm-12">
+				<div class="col-sm-3" >
+				<label>Gasto fijo</label>
+				   		<input type="number" class="form-control" ng-model="add.gasto.importeFijo">
+				</div> 
 
-	<div class="col-sm-3" >
-	<label>Gasto fijo</label>
-	   		<input type="number" class="form-control" ng-model="add.gasto.importeFijo">
-	</div> 
+				<div class="col-sm-3" >
+					<label>Gasto Variable</label>
+				   		<input type="number" class="form-control" ng-model="add.gasto.importeVar"> 
+				</div> 
 
-	<div class="col-sm-2" style="margin-top: 26px">
-	         <input type="submit" ng-click="add.guardarImporte(add.gasto)"  ng-show="add.action" value="Guardar" class="btn btn-primary">
-	         <input type="submit" ng-click="add.actualizar(add.gasto)"  ng-show="!add.action" value="Actualizar" class="btn btn-primary"><br/>
-	       </div> 
-		
-   </div> 
-</div>
+			    <div class="col-sm-2" style="margin-top: 26px">
+			         <input type="submit" ng-click="add.guardarImporte(add.gasto)"  ng-show="add.action" value="Guardar" class="btn btn-primary">
+			         <input type="submit" ng-click="add.actualizar(add.gasto)"  ng-show="!add.action" value="Actualizar" class="btn btn-primary"><br/>
+			    </div> 
+				
+		   </div> 
+	</div>
 
 <br/>
 
@@ -88,8 +88,8 @@
 				   
 						   <thead>
 						    <tr>
+							    <th width="20%"><div class="text-center">Gasto Fijos </div></th>
 							    <th width="20%"><div class="text-center">Gasto Variables</div></th>
-							    <th width="20%"><div class="text-center">Gasto FIjos</div></th>
 							    <th width="20%"><div class="text-center">Acciones</div></th>
 							  
 						    </tr>
@@ -98,14 +98,14 @@
 
 							<tbody>
 							<tr ng-repeat="gasto in add.gastos">
-						        <th><div class="text-center">{{gasto.importeVar | currency}}</div></th>
 						        <th><div class="text-center">{{gasto.importeFijo | currency}}</div></th>
+						        <th><div class="text-center">{{gasto.importeVar | currency}}</div></th>
 						        <th ng-show="">{{gasto.importeVar + gasto.importeFijo | currency}}</th>
 						        
 			    <td>
 				    <div class="text-center">
 							   <a ng-click="add.editar(gasto._id)" style="font-size: 13px;" class="label label-warning"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-							  <a  ng-click="add.cambiarEstatus(gasto._id)" style="font-size: 13px;" class="label label-primary">Cambiar Estatus</a>
+							  <a  ng-click="add.cambiarEstatus(gasto._id)" style="font-size: 13px;" class="label label-primary">Desactivar</a>
 				    </div>				    
 			    </td>
 

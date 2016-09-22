@@ -119,11 +119,17 @@ angular.module('formulas').config(['$injector', function ($injector) {
       url: '/usuarios',
       templateUrl: 'client/usuarios/usuarios.ng.html',
       controller: 'UsuariosCtrl as usu',
+
     })
        .state('root.partidas', {
-      url: '/partidas',
+      url: '/partidas/:id',
       templateUrl: 'client/partidas/partidas.ng.html',
       controller: 'PartidasCtrl as par',
+    })
+        .state('root.conceptos', {
+      url: '/conceptos/:id/:partida_id',
+      templateUrl: 'client/partidas/conceptos.ng.html',
+      controller: 'ConceptosCtrl as con',
     })
     .state('root.planes', {
       url: '/planes/:id',
@@ -155,11 +161,7 @@ angular.module('formulas').config(['$injector', function ($injector) {
       templateUrl: 'client/presupuestos/presupuestos.ng.html',
       controller: 'PresupuestosCtrl as pres',
     })
-     .state('root.conceptos', {
-      url: '/conceptos/:id',
-      templateUrl: 'client/partidas/conceptos.ng.html',
-      controller: 'ConceptosCtrl as con',
-    })
+    
       .state('root.gastos', {
       url: '/gastos/:id',
       templateUrl: 'client/gastos/gastos.ng.html',
@@ -191,7 +193,7 @@ angular.module('formulas').config(['$injector', function ($injector) {
       controller: 'ControlCrtl as ct',
     })
       .state('root.costosDirectos', {
-      url: '/costosDirectos/',
+      url: '/costosDirectos/:id',
       templateUrl: 'client/costosDirectos/costosDirectos.ng.html',
       controller: 'CostosDirectosCrtl as cd',
     });

@@ -1,3 +1,3 @@
-Meteor.publish("usuarios", function(){
-	return Meteor.users.find({estatus:true});
+Meteor.publish("usuarios", function(params){
+	return Meteor.users.find(params);
 });

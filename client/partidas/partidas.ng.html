@@ -48,8 +48,8 @@
 			</thead>
 			<tbody>
 		    <tr ng-repeat="partida in par.partidas">
-			    <td><a href="/conceptos/{{partida._id}}">{{partida.nombre}}</a></td>
-		
+			    <td><a ui-sref = 'root.conceptos({id : partida.obra_id, partida_id : partida._id})'>{{partida.nombre}}</a></td>
+
 			    <td>
 				    <div class="text-center">
 				    	<span ng-if="partida.estatus" class="label label-success">

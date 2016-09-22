@@ -260,12 +260,9 @@ this.tipoPeriodo = 'gasto';
 
  		//console.log("obra ordenada", ingresosPorMesPorObraConPorcentaje);
  		var resultado = [];
- 		
  		var pluck = _.pluck(ingresosPorMesPorObraConPorcentaje, "obra_id");
  		var uniq = _.uniq(pluck);
  		//console.log("uniq", uniq);
-
-
  		_.each(uniq, function(u){
  			var totalSumaUniq = 0;
  			var ingresoPrueba = {};
@@ -334,7 +331,7 @@ this.tipoPeriodo = 'gasto';
 
 
 
- 		//console.log("probando", resultado);
+ 		console.log("probando", resultado);
 
 
  		//console.log("resultado", ingresosPorMesPorObraConPorcentaje);

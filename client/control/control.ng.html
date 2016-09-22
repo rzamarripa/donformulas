@@ -25,123 +25,86 @@
 							    <th><div class="text-center">Presupuestos</div></th>
 							    <th><div class="text-center">Ahorros</div></th>
 							    <th><div class="text-center">Nuevo Presupuesto</div></th>
-							    <!-- <th><div class="text-center">Medidas Potenciales(Que se va hacer)</div></th>
-							    <th><div class="text-center">Plan de Trabajo( Como se va a desarrollar)</div></th>
-							    <th><div class="text-center">Forma de Medición</div></th>
-							    <th><div class="text-center">Responsables </div></th>-->
 							    <th><div class="text-center">Egresos</div></th>
 							    <th><div class="text-center">Resultados logrados</div></th>
 							    <th><div class="text-center">Gasto real</div></th>
 							    <th><div class="text-center">Ahorro</div></th>
-							  
 						    </tr>
 						   </thead>
-							<tbody>							
+							<tbody>	
+							<tr ng-repeat="costo in ct.costosTotales">						
 							<!--{{ct.plan}}-->
-							<div class="row">
-							<div class="col-sm-12">
-							<button ng-click="ct.mostrarMedidas()" class="btn btn-link">Medidas Potenciales (Que se va hacer)</button>
-							<button ng-click="ct.mostrarPlanTrabajo()"  class="btn btn-link">Plan de Trabajo(Como se va a desarrollar)</button>
-							<button ng-click="ct.mostrarForma()"  class="btn btn-link">Forma de Medición</button>
-							<button ng-click="ct.mostrarResponsables()"  class="btn btn-link">Responsables</button>
-							</div>
+							<div class="row" ng-show="ct.panel">
+								<div class="col-sm-12">
+									<a ng-click="ct.mostrarMedidas()" class="btn btn-link">Medidas Potenciales (Que se va hacer)</a>
+									<a ng-click="ct.mostrarPlanTrabajo()"  class="btn btn-link">Plan de Trabajo(Como se va a desarrollar)</a>
+									<a ng-click="ct.mostrarForma()"  class="btn btn-link">Forma de Medición</a>
+									<a ng-click="ct.mostrarResponsables()"  class="btn btn-link">Responsables</a>
+								</div>
 							</div><br/>
-							<div class="panel panel-default">
+
+<!-- 							/////////////////////////////////////////////////////////////
+
+ -->							
+							<div class="panel panel-default"> 
 							<div class="col-sm-12">
 								<div class="panel-body status">
-
-									<div class="text"  ng-show="ct.medidas">
-									<a class="btn btn-success pull-right" ng-click="ct.ocultar()">Ocultar</a><br/>
-									<div class="col-sm-12">
-
-									<!--///////////////////////////MEDIDAS////////////////////////////////-->	
-
-									<h4 ng-repeat="control in ct.controles">{{control.medidas}}<br/> &nbsp;&nbsp;<a class="btn btn-warning btn-xs" ng-click="ct.editarMedidas(control._id)">Editar</a>
-									<a class="btn btn-danger btn-xs" ng-click="ct.borrarMedidas(control._id)">Borrar</a></h4><br/>
-									<textarea class="form-control" ng-show="ct.medidasText" ng-model="ct.control.medidas"></textarea><br/>
-										
+									<div class="text" >
+									<h2>{{ct.nada}}</h2>
+									<a class="btn btn-success pull-right" ng-show="ct.panel" ng-click="ct.ocultar()">Ocultar</a><br/>
+									
+									<!--///////////////////////////MEDIDAS////////////////////////////////-->
+									<div class="col-sm-12"   ng-show="ct.medidas" ng-if="ct.costo_id != ''">	
+									<h4 ng-repeat="control in ct.controles">{{control.descripcion}}<br/> &nbsp;&nbsp;<a class="btn btn-warning btn-xs" ng-click="ct.editar(control._id)">Editar</a>
+									<a class="btn btn-danger btn-xs" ng-click="ct.borrar(control._id)">Borrar</a></h4><br/>
+									<textarea class="form-control" ng-show="ct.medidasText" ng-model="ct.control.descripcion"></textarea><br/>
 										<a class="btn btn-primary" ng-show="ct.medidasSave" ng-click="ct.guardar(ct.control)">Guardar</a>
-										<a class="btn btn-primary" ng-show="!ct.act" ng-click="ct.actualizarMedidas(ct.control)">Actualizar</a>
+										<a class="btn btn-primary" ng-show="!ct.act" ng-click="ct.actualizar(ct.control)">Actualizar</a>
 									</div>
-									</div>
-
-									<!--///////////////////////////PLAN TRABAJO////////////////////////////////-->
-
-									<div class="text"  ng-show="ct.planTrabajo">
-									<a class="btn btn-success pull-right" ng-click="ct.ocultar()">Ocultar</a><br/>
-									<div class="col-sm-12">
-									<h4 ng-repeat="control in ct.controlesPlan">{{control.planTrabajo}}<br/> &nbsp;&nbsp;<a class="btn btn-warning btn-xs" ng-click="ct.editarPlan(control._id)">Editar</a>
+									 <!--///////////////////////////PLAN DE TRABAJO////////////////////////////////-->
+									<div class="col-sm-12"  ng-show="ct.planTrabajo">	
+									<h4 ng-repeat="control in ct.controlesPlan">{{control.descripcionTrabajo}}<br/> &nbsp;&nbsp;<a class="btn btn-warning btn-xs" ng-click="ct.editarPlan(control._id)">Editar</a>
 									<a class="btn btn-danger btn-xs" ng-click="ct.borrarPlan(control._id)">Borrar</a></h4><br/>
-									<textarea class="form-control" ng-show="ct.planTrabajoText" ng-model="ct.control.planTrabajo"></textarea><br/>
-										
+									<textarea class="form-control"  ng-model="ct.control.descripcionTrabajo"></textarea><br/>
 										<a class="btn btn-primary" ng-show="ct.planTrabajoSave" ng-click="ct.guardarPlan(ct.control)">Guardar</a>
-										<a class="btn btn-primary" ng-show="!ct.act" ng-click="ct.actualizarPlan(ct.control)">Actualizar</a>
+										<a class="btn btn-primary" ng-show="!ct.actTrabajo" ng-click="ct.actualizarPlan(ct.control)">Actualizar</a>
 									</div>
-									</div>
-
-									<!--/////////////////////////  FORMA /////////////////////////////////////-->
-
-									<div class="text"  ng-show="ct.forma">
-									<a class="btn btn-success pull-right" ng-click="ct.ocultar()">Ocultar</a><br/>
-									<div class="col-sm-12">
-									<h4 ng-repeat="control in ct.controlesForma">{{control.forma}}<br/> &nbsp;&nbsp;<a class="btn btn-warning btn-xs" ng-click="ct.editarForma(control._id)">Editar</a>
+										<!--///////////////////////////FORMA ////////////////////////////////-->
+									<div class="col-sm-12" ng-show="ct.forma">	
+									<h4 ng-repeat="control in ct.controlesForma">{{control.descripcionForma}}<br/> &nbsp;&nbsp;<a class="btn btn-warning btn-xs" ng-click="ct.editarForma(control._id)">Editar</a>
 									<a class="btn btn-danger btn-xs" ng-click="ct.borrarForma(control._id)">Borrar</a></h4><br/>
-									<textarea class="form-control" ng-show="ct.formaText" ng-model="ct.control.forma"></textarea><br/>
-										
+									<textarea class="form-control"  ng-model="ct.control.descripcionForma"></textarea><br/>
 										<a class="btn btn-primary" ng-show="ct.formaSave" ng-click="ct.guardarForma(ct.control)">Guardar</a>
-										<a class="btn btn-primary" ng-show="!ct.act" ng-click="ct.actualizarForma(ct.control)">Actualizar</a>
+										<a class="btn btn-primary" ng-show="!ct.actForma" ng-click="ct.actualizarForma(ct.control)">Actualizar</a>
 									</div>
 									</div>
-
-									<!--/////////////////////////  RESPONSABLES /////////////////////////////////-->
-
-									<div class="text"  ng-show="ct.responsables">
-									<a class="btn btn-success pull-right" ng-click="ct.ocultar()">Ocultar</a><br/>
-									<div class="col-sm-12">
-									<h4 ng-repeat="control in ct.controlesResponsables">{{control.responsables}}<br/> &nbsp;&nbsp;<a class="btn btn-warning btn-xs" ng-click="ct.editarResponsables(control._id)">Editar</a>
+										<!--///////////////////////////RESPONSABLES////////////////////////////////-->
+									<div class="col-sm-12" ng-show="ct.responsables">	
+									<h4 ng-repeat="control in ct.controlesResponsables">{{control.descripcionResponsables}}<br/> &nbsp;&nbsp;<a class="btn btn-warning btn-xs" ng-click="ct.editarResponsables(control._id)">Editar</a>
 									<a class="btn btn-danger btn-xs" ng-click="ct.borrarResponsables(control._id)">Borrar</a></h4><br/>
-									<textarea class="form-control" ng-show="ct.responsablesText" ng-model="ct.control.responsables"></textarea><br/>
-										
+									<textarea class="form-control"  ng-model="ct.control.descripcionResponsables"></textarea><br/>
 										<a class="btn btn-primary" ng-show="ct.responsablesSave" ng-click="ct.guardarResponsables(ct.control)">Guardar</a>
-										<a class="btn btn-primary" ng-show="!ct.act" ng-click="ct.actualizarResponsables(ct.control)">Actualizar</a>
+										<a class="btn btn-primary" ng-show="!ct.actResponsables" ng-click="ct.actualizarResponsables(ct.control)">Actualizar</a>
 									</div>
 									</div>
-
-									<!--///////////////////////// BOTONES COSTOS /////////////////////////////-->
-
-									<div class="text" ng-show="ct.cco">
-									<a class="btn btn-success pull-right" ng-click="ct.ocultar()">Ocultar</a><br/>
-									<div class="col-sm-12">
-									<h4>{{control.cosas}}<br/> &nbsp;&nbsp;<a class="btn btn-warning btn-xs" ng-click="ct.editarCostos(control._id)">Editar</a>
-									<a class="btn btn-danger btn-xs" ng-click="ct.borrarCostos(control._id)">Borrar</a></h4><br/>
-									<textarea class="form-control" ng-show="ct.costosText" ng-model="ct.control.cosas"></textarea><br/>
-										
-										<a class="btn btn-primary" ng-show="ct.costosSave" ng-click="ct.guardarCostos(ct.control)">Guardar</a>
-										<a class="btn btn-primary" ng-show="!ct.act" ng-click="ct.actualizarCostos(ct.control)">Actualizar</a>
-									</div>
-									</div>
-
-
-								</div>
+								
 							  </div>
 							</div>
-							<tr ng-repeat="costo in ct.plan.costos">
-							
-								<th><div class="text-center"><a ng-click="ct.mostrarModal(costo._id)">{{costo.nombre}}</a></div></th>
-								<th><div class="text-center">{{costo.valor}}</div></th>
-								<th><div class="text-center">{{(costo.valor) - ((costo.valor) - ((costo.valor * costo.factor)/100)) | currency}}</div></th>
-								<th ><div class="text-center">{{(costo.valor) - ((costo.valor * costo.factor)/100) | currency}}</div></th>
-								<th><div class="text-center">{{costo.totalDeCostos | currency}}</div></th>
-								<th><div class="text-center">{{costo.totalDeCostos | currency}}</div></th>
-								<th><div class="text-center">{{costo.totalDeCostos / ((costo.valor) - ((costo.valor * costo.factor)/100)) * 100| currency}}</div></th>
-								<th><div class="text-center">{{(costo.totalDeCostos / ((costo.valor) - ((costo.valor * costo.factor)/100)) * 100) - 100 | currency}}</div></th>
+								<th><div class="text-center"><a ng-click="ct.mostrar(costo.costo_id,costo.costo)" >{{costo.costo}}</a></div></th>
+								<th><div class="text-center">{{costo.total | currency}}</div></th>
+								<th><div class="text-center">{{(costo.total) - ((costo.total) - (costo.total * costo.factor) / 100) | currency}}</div></th>
+								<th ><div class="text-center">{{(costo.total) - (costo.total * costo.factor) / 100 | currency}}</div></th>
+								<th><div class="text-center">{{costo.real | currency}}</div></th>
+								<th><div class="text-center">{{costo.real | currency}}</div></th>
+								<th><div class="text-center">{{(costo.real) / ((costo.total) - (costo.total * costo.factor) / 100) * 100 | number: 2}}</div></th>
+								<th><div class="text-center">{{100 - ((costo.real) / ((costo.total) - (costo.total * costo.factor) / 100) * 100) | currency}}</div></th>
 							</tr>
 						</tbody>
 
 					</table>
 					 <!-- //////////// Modal content////////////////////////////////////////-->
 
-                        <div class="container">
+                       <!--  <div class="container">
 
 						  <div class="modal fade" id="myModal" role="dialog">
 						    <div class="modal-dialog">  
@@ -153,8 +116,8 @@
 						          
 						        </div>
 						        <div class="modal-header">
-						        	<h4 ng-repeat="control in ct.controlesCostos">{{control.titulo}}
-						        	<a class="btn btn-primary" ng-click="ct.guardarModal(ct.control)">Actualizar</a></h4>
+						        	<h4 ng-repeat="control in ct.controlesCostos">{{control.titulo}}</h4>
+						        	<a class="btn btn-primary" ng-click="ct.guardarModal(ct.control)">Actualizar</a>
 						        </div>
 						        <div class="modal-body" >
 						      
@@ -174,7 +137,7 @@
 						      
 						    </div>
 						  </div>
-						</div>
+						</div> -->
 							<!-- ////////////////////////////Modal////////////////////-->
 				</div>
 			</div>

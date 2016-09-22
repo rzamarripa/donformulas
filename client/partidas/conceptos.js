@@ -4,16 +4,12 @@ function ConceptosCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr)
 $reactive(this).attach($scope);
 
 	this.subscribe('conceptos',()=>{
-		return [{ partida_id : $stateParams.id, estatus:true}]
+		return [{obra_id: $stateParams.id, partida_id: $stateParams.partida_id, estatus:true}]
 	});
 
-
-
-      this.subscribe('partida', () => {
-		
+      this.subscribe('partida', () => {	
 		return [{
-			_id : $stateParams.id, estatus : true
-		}]
+		obra_id: $stateParams.id, estatus : true}]
 	});
 
 
@@ -23,7 +19,7 @@ $reactive(this).attach($scope);
   
 	this.helpers({
 	  partida : () => {
-		  return Partidas.findOne();
+		  return Partidas.findOne($stateParams.partida_id);
 	  },
 	  conceptos : () => {
 		  return Conceptos.find();
@@ -40,8 +36,9 @@ $reactive(this).attach($scope);
   
   this.guardar = function(concepto)
 	{
-		this.concepto.estatus = true;
-		concepto.partida_id = $stateParams.id;
+		this.concepto.estatus = true; 
+		concepto.obra_id = $stateParams.id;
+		concepto.partida_id = $stateParams.partida_id;
 		console.log(this.concepto);
 		Conceptos.insert(this.concepto);
 		toastr.success('concepto guardado.');

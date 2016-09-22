@@ -4,9 +4,12 @@ function PartidasCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
 $reactive(this).attach($scope);
 
 	this.subscribe('partidas',()=>{
-	return [{estatus:true}] 
+	return [{obra_id : $stateParams.id, estatus : true}] 
     });
 
+	this.subscribe('obra', () => {
+  	return [{ _id : $stateParams.id, estatus : true}]
+    });
 
 
 	this.subscribe('empresas');
@@ -19,7 +22,10 @@ $reactive(this).attach($scope);
 	  },
 	  empresas : () => {
 		  return Empresas.find();
-	  }
+	  },
+	  obra : () => {
+		  return Obras.findOne($stateParams.id);
+		},
   });
   
 	this.nuevo = true;  	  
@@ -33,6 +39,7 @@ $reactive(this).attach($scope);
   this.guardar = function(partida)
 	{
 		this.partida.estatus = true;
+		partida.obra_id = $stateParams.id; 
 		console.log(this.partida);
 		Partidas.insert(this.partida);
 		toastr.success('Obra guardada.');

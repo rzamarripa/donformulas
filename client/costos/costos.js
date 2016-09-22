@@ -4,10 +4,12 @@ function CostosCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
 $reactive(this).attach($scope);
 
 	this.subscribe('costos',()=>{
-	return [{estatus:true}] 
+	return [{ obra_id : $stateParams.id,estatus : true}] 
     });
+      this.subscribe('obra', () => {
+  	return [{ _id : $stateParams.id, estatus : true}]
+  });
 
-    
 
 	this.subscribe('empresas');
 
@@ -19,7 +21,10 @@ $reactive(this).attach($scope);
 	  },
 	  empresas : () => {
 		  return Empresas.find();
-	  }
+	  },
+	  obra : () => {
+		  return Obras.findOne($stateParams.id);
+		},
   });
   
 	this.nuevo = true;  	  
@@ -30,9 +35,10 @@ $reactive(this).attach($scope);
     this.costo = {};		
   };
   
-  this.guardar = function(obra)
+  this.guardar = function(costo)
 	{
 		this.costo.estatus = true;
+		costo.obra_id = $stateParams.id;
 		console.log(this.costo);
 		Costos.insert(this.costo);
 		toastr.success('Costo guardado.');
@@ -49,11 +55,11 @@ $reactive(this).attach($scope);
     this.nuevo = false;
 	};
 	
-	this.actualizar = function(obra)
+	this.actualizar = function(costo)
 	{
-		var idTemp = obra._id;
-		delete obra._id;		
-		Costos.update({_id:idTemp},{$set:obra});
+		var idTemp = costo._id;
+		delete costo._id;		
+		Costos.update({_id:idTemp},{$set:costo});
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
 		this.action = true;
@@ -62,13 +68,13 @@ $reactive(this).attach($scope);
 
 	this.cambiarEstatus = function(id)
 	{
-		var obra = Costos.findOne({_id:id});
-		if(obra.estatus == true)
-			obra.estatus = false;
+		var costo = Costos.findOne({_id:id});
+		if(costo.estatus == true)
+			costo.estatus = false;
 		else
-			obra.estatus = true;
+			costo.estatus = true;
 		
-		Costos.update({_id: id},{$set :  {estatus : obra.estatus}});
+		Costos.update({_id: id},{$set :  {estatus : costo.estatus}});
     };
 		
 };

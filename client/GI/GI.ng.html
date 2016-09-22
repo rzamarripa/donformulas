@@ -2,6 +2,7 @@
     <div class="row " >
     <div class="col-sm-12 pull-right">
     <a class="btn-success btn" ui-sref="root.verGastos">Ver Gastos Indirectos</a>
+    <a class="btn btn-success  " ui-sref="root.addGasto">Gastos de Oficina</a>
     </div>
      </div>
     <br/>
@@ -95,7 +96,8 @@
 				    <tr ng-show=""><th ng-repeat="periodo in GI.periodos"><div class="text-center">{{periodo.comprasIva + periodo.comprasSinIva + periodo.contadoIva + periodo.contadoSinIva  | currency}}</div></th>
 				    </tr>
 				    </tr>
-				    <tr>
+				     <tr>
+						<th colspan="8">TOTAL GASTOS DE OFICINA:&nbsp; {{GI.TotalFinalGO()  | currency}}</th>
 				    </tr>
 				    <tr>
 					    <th colspan="8">TOTAL INGRESOS MENSUAL:&nbsp; {{GI.ingresosTotales(GI.obras) | currency}}</th>
@@ -103,8 +105,11 @@
 				     <tr>
 						<th colspan="8">TOTAL GASTOS MENSUAL:&nbsp; {{GI.cobrosTotales(GI.obras) | currency}}</th>
 				    </tr>
+				    <tr>
+						<th colspan="8">TOTAL GASTOS DE OFICINA:&nbsp; {{GI.TotalFinalGO() + GI.cobrosTotales(GI.obras)  | currency}}</th>
+				    </tr>
 				     <!--<tr>
-						<th colspan="8">TOTAL MESES ANUAL: </th>
+						<th colspan="8">TOTAL MESES ANUAL: </th> GI.TotalFinalGO() 
 				    </tr>-->
 			</tbody>  
 
@@ -173,26 +178,23 @@
 						        <th><div class="text-center">{{gasto.importeVar | currency}}</div></th>
 						        <th><div class="text-center">{{gasto.importeFijo | currency}}</div></th>
 						        <th ng-show="">{{gasto.importeVar + gasto.importeFijo | currency}}</th>
-						        
-			    <td>
-				    <div class="text-center">
-							   <a ng-click="GI.editar(gasto._id)" style="font-size: 13px;" class="label label-warning"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-							  <a  ng-click="GI.cambiarEstatus(gasto._id)" style="font-size: 13px;" class="label label-primary">Cambiar Estatus</a>
-				    </div>				    
-			    </td>
-
-														
+							    <td>
+								    <div class="text-center">
+											   <a ng-click="GI.editar(gasto._id)" style="font-size: 13px;" class="label label-warning"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
+											  <a  ng-click="GI.cambiarEstatus(gasto._id)" style="font-size: 13px;" class="label label-primary">Cambiar Estatus</a>
+								    </div>				    
+							    </td>							
 							</tr>
 
-				    <tr ng-repeat="obra in GI.obras">
-					    <th ng-show="" colspan="8">TOTAL DE GASTOS: {{GI.TotalFinalGO() | currency}}</th>
-					    <th ng-show="" colspan="8">{{GI.cobroTotalFinal(obra._id) / GI.ingresosTotales(GI.obras) * 100 | number : 2}}% </th>
-					    <th colspan="8">{{(GI.TotalFinalGO()) * (GI.cobroTotalFinal(obra._id) / GI.ingresosTotales(GI.obras)) | currency}}</th>
-					    <th colspan="8">{{GI.TotalFinalCalculo(obra._id)}}</th>
-				    </tr>
-				   <!-- <tr>
-					    <th colspan="6">CANTIDAD A PAGAR POR TODAS LAS OBRAS: {{add.TotalAnual() | currency}}</th>
-				    </tr>-->		
+						    <tr ng-repeat="obra in GI.obras">
+							    <th ng-show="" colspan="8">TOTAL DE GASTOS: {{GI.TotalFinalGO() | currency}}</th>
+							    <th ng-show="" colspan="8">{{GI.cobroTotalFinal(obra._id) / GI.ingresosTotales(GI.obras) * 100 | number : 2}}% </th>
+							    <th colspan="8">{{(GI.TotalFinalGO()) * (GI.cobroTotalFinal(obra._id) / GI.ingresosTotales(GI.obras)) | currency}}</th>
+							    <th colspan="8">{{GI.TotalFinalCalculo(obra._id)}}</th>
+						    </tr>
+						   <!-- <tr>
+							    <th colspan="6">CANTIDAD A PAGAR POR TODAS LAS OBRAS: {{add.TotalAnual() | currency}}</th>
+						    </tr>-->		
 						</tbody>
 
 					</table>

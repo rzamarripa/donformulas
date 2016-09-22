@@ -5,40 +5,55 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 
 	this.plan = {};
 	this.plan.costos = [];
+
 	this.totalCosto = 0;
+	this.totalFinalCostosDirectos = 0.00;
+	this.costoTotalTotal = [];
 
 	
 
   this.subscribe('planes',()=>{
-		return [{estatus:true}] 
+		return [{obra_id : $stateParams.id,estatus:true}] 
   });
   this.subscribe('obra', () => {
   	return [{ _id : $stateParams.id, estatus : true}]
   });
   this.subscribe('GI',()=>{
-		return [{estatus:true}] 
-  });
-  this.subscribe('periodos',()=>{
-		return [{estatus:true}] 
-  });
-  this.subscribe('cobros',()=>{
-		return [{estatus:true}] 
+		return [{obra_id : $stateParams.id,estatus:true}] 
   });
    this.subscribe('gastosOficina',()=>{
 	 return [{estatus:true}] 
+     });
+  this.subscribe('periodos',()=>{
+		return [{obra_id : $stateParams.id,estatus:true}] 
+  });
+  this.subscribe('cobros',()=>{
+		return [{obra_id : $stateParams.id,estatus:true}] 
+  });
+   this.subscribe('gastosOficina',()=>{
+	 return [{obra_id : $stateParams.id,estatus:true}] 
   });
    this.subscribe('costos',()=>{
-	return [{estatus:true}] 
+	return [{obra_id : $stateParams.id,estatus:true}] 
     });
     this.subscribe('cobros',()=>{
-	return [{estatus:true,modo:false}] 
+	return [{obra_id : $stateParams.id,estatus:true,modo:false}] 
     });
     this.subscribe('meses',()=>{
 	return [{estatus:true}] 
     });
+    this.subscribe('conceptos',()=>{
+	return [{obra_id : $stateParams.id,partida_id: this.getReactively('partida_id'),estatus:true}] 
+    });
+    this.subscribe('partidas',()=>{
+	return [{obra_id : $stateParams.id,estatus:true}] 
+    });
+    this.subscribe('presupuestos',()=>{
+	return [{obra_id : $stateParams.id,estatus:true}] 
+    });
 
     this.subscribe('pagosProveedores',()=>{
-	return [{estatus:true}] 
+	return [{obra_id : $stateParams.id,estatus:true}] 
   });
 
 
@@ -51,9 +66,23 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
   this.helpers({
 	  planes : () => {
 		  return Planes.find();
+
 	  },
 	  cobros : () => {
 		  return Cobros.find();
+	  },
+
+	   gastosOficina : () => {
+		  return GastosOficina.find();
+	  },
+	  conceptos : () => {
+		  return Conceptos.find();
+	  },
+	   partidas : () => {
+		  return Partidas.find();
+	  },
+	   presupuestos : () => {
+		  return Presupuestos.find();
 	  },
 	  obra : () => {
 		  return Obras.findOne($stateParams.id);
@@ -62,26 +91,104 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	  gi : ()=> {
 		  return GI.find();
 	  },
-	  costos : () => {
-
-  	    var costos = Costos.find().fetch();
-  		  _.each(costos,function(costo){
-    		rc.plan.costos.push({_id : costo._id, nombre : costo.nombre, valor : 0, factor : 0});
-    		costo.presupuesto = costo.valor * costo.factor - costo.valor;
-   		 });
-  	    console.log("costos", costos);
-  	    console.log("plan costos",rc.plan);
-  	    return costos;
-		 
-	  },
 	  periodos : () => {
 		  return Periodos.find();
 	  },
+	  
 	  cobros : () => {
 		  return Cobros.find();
 	  },
 	  gastos : () => {
 		  return GastosOficina.find();
+	  },
+	  	    
+	 		costosTotales : () => {
+			var costosTotales = {};
+			var partidas = Partidas.find().fetch();
+			var obras = Obras.find().fetch();
+			var presupuestos = Presupuestos.find().fetch();
+			var conceptos = Conceptos.find().fetch();
+			var planes = Planes.find().fetch();
+		   		_.each(rc.getReactively("partidas"), function(partida){
+		   			_.each(rc.getReactively("conceptos"), function(concepto){
+		   				_.each(rc.getReactively("presupuestos"), function(presupuesto){
+		   					var totalFinal = 0.00;
+		   					if(presupuesto.partida_id == partida._id && presupuesto.concepto_id == concepto._id){
+		   						_.each(presupuesto.costos, function(costoPresupuesto){
+		   							if("undefined" == typeof costosTotales[costoPresupuesto.nombre]){
+		   								costosTotales[costoPresupuesto.nombre] = {};
+		   								costosTotales[costoPresupuesto.nombre].partida = partida.nombre;
+		   								costosTotales[costoPresupuesto.nombre].costo_id =  costoPresupuesto._id;
+		   								costosTotales[costoPresupuesto.nombre].costo =  costoPresupuesto.nombre;
+		   								costosTotales[costoPresupuesto.nombre].total = costoPresupuesto.value * presupuesto.cantidad;
+		   								
+		   							}else{
+		   								costosTotales[costoPresupuesto.nombre].total += costoPresupuesto.value * presupuesto.cantidad;
+		   								
+		   							};
+		   							
+		   						});
+		   					};
+
+		   				});
+		   			});
+		   		});
+	   		var costosTotalesArreglos = _.toArray(costosTotales);
+	   		var totalCosto = 0;
+	   		var factorPlan = 0;
+	   		var totalPresupuestoTotal  = 0;
+	   		this.totalFinalCostosDirectos = 0.00;
+	   		_.each(rc.getReactively("planes"), function(plan){
+	   			//console.log("entro al plan",plan);
+	   			_.each(plan.costos, function(costosPlan){
+	   				//console.log("entro papa",costosPlan);
+	   				_.each(costosTotalesArreglos, function(costoTotal){
+	   					//console.log("entro al arreglo",costoTotal);
+	   					if(costoTotal.costo_id == costosPlan._id)
+	   					{
+	   						costoTotal.factor = costosPlan.factor;
+	   						costoTotal.presupuestoTotal = (costoTotal.total) - ((costoTotal.total * costosPlan.factor)/100);
+
+	   						//console.log("entro final", costoTotal);
+	   					}
+	   				})
+	   			})
+	   		})
+	   		_.each(costosTotalesArreglos, function(costoTotal){
+	   			rc.totalFinalCostosDirectos += costoTotal.total;
+	   			costoTotal.finalesDirectos = rc.totalFinalCostosDirectos;
+	   			costoTotal.totalDePorcentaje = costoTotal.total / costoTotal.finalesDirectos * 100;
+	   			totalPresupuestoTotal += costoTotal.presupuestoTotal;
+	   			costoTotal.totalPresupuestos += totalPresupuestoTotal;
+	   		});
+	   		rc.costoTotalTotal = costosTotalesArreglos[0]
+	   		costosTotalesArreglos.push({final : totalCosto});
+	   		console.log("arreglo",costosTotalesArreglos);
+	   		return costosTotales;
+		},
+
+	  
+	  costos : () => {
+	  // 	var cost = Costos.find().fetch();
+			// for (var i = 0; i < cost.length; i++) {
+			// 	if(!cost[i].factor)
+			// 		cost[i].factor=0;
+			// }
+			// return cost;
+
+  	    var costos = Costos.find().fetch();
+  	    for (var i = 0; i < costos.length; i++) {
+				if(!costos[i].factor)
+					costos[i].factor=0;
+			}
+  		  // _.each(costos,function(costo){
+    		// rc.plan.costos.push({_id : costo._id, nombre : costo.nombre, factor : 0});
+    		// //costo.presupuesto = costo.valor * costo.factor - costo.valor;
+   		 // });
+  	   //  console.log("costos", costos);
+  	   //  console.log("plan costos",rc.plan);
+  	    return costos;
+		 
 	  },
 	  
 	  	  totalFinalCalculo :() => {
@@ -114,7 +221,6 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
  				_.each(cobros,function(cobro){
  					totalIngresos += cobro.cSinIva || cobro.cIva;
  					cobro.ingresos = parseInt(totalIngresos);
- 				
  				});
  				ingresos.push({total : totalIngresos })
  				//
@@ -142,49 +248,44 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	  
 	  indirectosEmpresas : () => {
 		var gastosIndirectoEmpresa = [];
-		var gastosOficinas = [];
-		var campo = [];
-		var ingresos = [];
-          
+
 		  	//GASTOS OFICINA;
 		  	var totalGastosOficinas = 0;
+		  	var totalIngresos = 0;
+		  	var totalGastosCampo = 0;
 		  	var gastosOF = GastosOficina.find().fetch();
- 				_.each(gastosOF,function(gasto){
+		  	var plan_ingresos = 0;
+		  	_.each(rc.planes,function(plan){
+		  		 plan_ingresos = plan.ingresos;
+ 				_.each(rc.gastosOficina,function(gasto){
  					totalGastosOficinas += gasto.importeFijo + gasto.importeVar
- 					gasto.gastoOficina = parseInt(totalGastosOficinas);
+ 					gasto.gastoOficina = totalGastosOficinas;
+
+ 					_.each(rc.cobros,function(cobro){
+ 						totalIngresos += cobro.cSinIva + cobro.cIva
+
+ 						_.each(rc.periodos,function(campo){
+ 				 			 totalGastosCampo += campo.comprasIva + campo.contadoIva
+ 								  campo.gastosCampo = parseInt(totalGastosCampo);
+ 				
+ 						});
  					
- 				});
+ 					});
 
- 				gastosIndirectoEmpresa.push({total : totalGastosOficinas});
+	  		  });
+ 		  });
+			gastosIndirectoEmpresa.push({totalGastos : totalGastosOficinas, totalCobros : totalIngresos,
+			 totalGastosCampo : totalGastosCampo, planIngresos : plan_ingresos });
+ 	  
 
- 				
- 	            
- 				var totalIngresos = 0;
- 				var cobros = Cobros.find().fetch();
- 				_.each(cobros,function(cobro){
- 					totalIngresos += cobro.cSinIva
- 					cobro.ingresos = parseInt(totalIngresos);
- 				
- 				});
+               var cantidadesSumadas = plan_ingresos * ((totalGastosOficinas  + totalGastosCampo) / (totalIngresos));
+               var oficinaMasCampo = (totalGastosOficinas  / (totalGastosOficinas + totalGastosCampo) * 100);
+               var GastoIndiCampo = totalGastosCampo / (totalGastosOficinas + totalGastosCampo ) * 100;
 
- 				gastosIndirectoEmpresa.push({total : totalIngresos});
-				
- 				
- 	           
- 				var totalGastosCampo = 0;
- 				var periodos = Periodos.find().fetch();
- 				_.each(periodos,function(campo){
- 				  totalGastosCampo += campo.comprasIva + campo.contadoIva
- 				  campo.gastosCampo = parseInt(totalGastosCampo);
- 				  
-				});
 
-				gastosIndirectoEmpresa.push({total : totalGastosCampo});
 
-                
-               var cantidadesSumadas = (totalGastosOficinas  + totalGastosCampo) / (totalIngresos) * 100;
-
-              gastosIndirectoEmpresa.push({total : cantidadesSumadas })
+              gastosIndirectoEmpresa.push({total : cantidadesSumadas, cantidades : cantidadesSumadas *  oficinaMasCampo / 100,
+              	GasIndiCampo : cantidadesSumadas * GastoIndiCampo/100, estadisticos :  cantidadesSumadas - (cantidadesSumadas * GastoIndiCampo/100) })
 
 
 
@@ -200,27 +301,53 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
   {
 	  this.action = true;
     this.nuevo = !this.nuevo;
-    
-
+    //this.plan = {};
 
 };
 
   
- this.guardar = function(plan,empresa)
+ this.guardar = function(costos)
 	{
-	  plan.estatus = true;
-	  plan.obra_id = $stateParams.id;
-	  plan.fechaCreacion = new Date();
-	  _.each(rc.plan.costos, function(costo){
-			delete costo.$$hashKey;
-		});
-		console.log(rc.plan);
-		Planes.insert(plan);
-		toastr.success('Plan guardado.');
-		plan = {};
+
+		console.log(costos);
+		   rc.plan.estatus = true;
+		   rc.plan.obra_id = $stateParams.id;
+		   rc.plan.fechaCreacion = new Date();
+	   _.each(costos, function(costo){
+		 	delete costo.$$hashKey;
+		 });
+	   rc.plan.costos = costos;
+		console.log("objeto insertado en plan", rc.plan);
+		Planes.insert(rc.plan);		
+
+		toastr.success('Plan guardado.')
+		this.costo = {};
+		this.plan = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
-		this.plan = {};
+		
+	};
+
+	this.guardarPresupuesto = function(costos)
+	{
+		console.log(costos);	 
+		//this.presupuesto.costo.value = 0.00;
+		this.presupuesto.estatus = true;
+		this.presupuesto.obra_id = this.obra_id;
+		this.presupuesto.mes_id = this.mes_id;
+		this.presupuesto.partida_id = this.partida_id;
+		//this.presupuesto.concepto_id = $stateParams.id;
+		_.each(costos, function(costo){
+			delete costo.$$hashKey;
+		});
+		this.presupuesto.costos = costos;
+		console.log(this.presupuesto);
+		Presupuestos.insert(this.presupuesto);
+		toastr.success('presupuesto Agregado.');
+		this.presupuesto = {};
+		this.costo = {};
+		this.presupuesto.costo = {};
+		this.presupuesto.cantidad = 0.00;
 	};
 	
 	
@@ -230,12 +357,11 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	    this.action = false;
 	    $('.collapse').collapse('show');
 	    this.nuevo = false;
-		rc.totalCosto = 0;
-		rc.totalPor = 0;
-		_.each(rc.plan.costos, function(costo){
-			rc.totalCosto += parseInt(costo.valor)
-			rc.totalPor = costo.valor / rc.totalCosto ;
-		});
+		
+		//_.each(rc.costosTotales, function(costo){
+			//rc.totalPor = costo.valor / rc.totalCosto ;
+		//});
+		//console.log("arreglo", rc.costosTotales)
 	};	
 	
 	this.actualizar = function(plan)
@@ -265,12 +391,7 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 // Funciones de precio proyecto                                                 
                            													
 		this.factorRecuperacionCalc = function() {
-			rc.totalCosto = 0;
-			rc.totalPor = 0;
-			_.each(rc.plan.costos, function(costo){
-				rc.totalCosto += parseInt(costo.valor)
-				rc.totalPor = parseInt(costo.valor) / rc.totalCosto;
-			});
+			
 			this.plan.isrCalculado = 100 / (100 - this.plan.isr - this.plan.ptu)
 			this.plan.factorRecuperacion = (1/(1-(1.6666*(this.plan.trema/100))));//=(1/(1-(1.6666*E5)))/100
 			this.plan.totalEgresos = ((this.plan.ingresos / this.plan.factorRecuperacion) * 1)
@@ -317,6 +438,22 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 			this.plan.rentabilidad1 = (this.plan.utilidadNetaProyectado / this.plan.ingresos) * 100
 
 		};
+
+
+			this.TotalFinalGO = function()
+			{
+				total = 0;
+				_.each(this.gastosOficinas,function(gasto){total += gasto.importeFijo + gasto.importeVar});
+				return total
+			}
+
+			$(document).ready(function(){
+  			  $('[data-toggle="popover"]').popover();
+		});
+
+		
+
+
 	   //  this.remove = function(empresa)
        // {
        //     this.empresa.estatus = false;

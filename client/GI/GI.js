@@ -80,7 +80,7 @@ this.tipoPeriodo = 'gasto';
 				});
 				obrasCalculadas.push({nombre : obra.nombre, total : totalA});
 			});
-			//console.log(obrasCalculadas)
+			console.log(obrasCalculadas)
 	  	}		
 		return obrasCalculadas;
 	  }

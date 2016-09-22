@@ -2,23 +2,30 @@ angular
 .module("formulas")
 .controller("UsuariosCtrl", UsuariosCtrl);
 function UsuariosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
-$reactive(this).attach($scope);
+let rc =$reactive(this).attach($scope);
+window.rc = rc;
 
-	this.subscribe('usuarios');
-	this.subscribe('empresas');
+this.usuario = {};
+    this.subscribe('usuarios',()=>{
+	return [{"profile.estatus":true}] 
+    });
+
+    this.subscribe('empresas',()=>{
+	return [{estatus:true}] 
+    });
 	
   this.action = true;
  
   this.helpers({
 	  usuarios : () => {
-		  return Usuarios.find();
+		  return Meteor.users.find();
 	  },
 	  empresas : () => {
 		  return Empresas.find();
 	  },
-		usuarios : () => {
-		  return Meteor.users.find();
-	  }
+		// Meteor.users : () => {
+		//   return Meteor.users.find();
+	 //  }
   });
   
   this.nuevo = true;  
@@ -26,72 +33,85 @@ $reactive(this).attach($scope);
   {
 	this.action = true;
     this.nuevo = !this.nuevo;
-    this.usuario = {}; 
+      this.usuario.profile = {};
   };
- 
-	this.guardar = function(usuario)
-	{
-		Accounts.createUser({
-			username: this.usuario.nombreUsuario,
-			password: this.usuario.contrasena,
-			profile: {
-				 nombre: this.usuario.nombre,
-				 apellidos: this.usuario.apPaterno + " " + this.usuario.apMaterno,
-				 nombreCompleto: this.usuario.nombre + " " + this.usuario.apPaterno + " " + this.usuario.apMaterno,
-				 estatus: true,
-				 tipoUsuario: "usuario"
-			},function(err) {
-				if (err)
-				   console.log(err);
-				  else
-				    console.log('success!');
-				}
-		});
-		this.usuario.estatus = true;
-		usuario.nombreCompleto = this.usuario.nombre + " " + this.usuario.apPaterno + " " + this.usuario.apMaterno;
-		console.log(this.usuario);
-		Usuarios.insert(this.usuario);
-		toastr.success('usuario guardado.');
-		this.usuario = {};
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
-		$state.go('root.Usuarios');
-		
+
+	 this.guardar = function (usuario) {
+
+
+
+	 // 	alumno.profile.estatus = true;
+		// var nombre = alumno.profile.nombre != undefined ? alumno.profile.nombre + " " : "";
+		// var apPaterno = alumno.profile.apPaterno != undefined ? alumno.profile.apPaterno + " " : "";
+		// var apMaterno = alumno.profile.apMaterno != undefined ? alumno.profile.apMaterno : "";
+		// alumno.profile.nombreCompleto = nombre + apPaterno + apMaterno;
+		// alumno.profile.fechaCreacion = new Date();
+		// alumno.profile.campus_id = Meteor.user().profile.campus_id;
+		// alumno.profile.seccion_id = Meteor.user().profile.seccion_id;
+		// alumno.profile.usuarioInserto = Meteor.userId();
+		// console.log(alumno);
+
+
+
+		usuario.profile.estatus = true;
+		var nombre = usuario.profile.nombre != undefined ? usuario.profile.nombre + " " : "";
+		var apPaterno = usuario.profile.apPaterno != undefined ? usuario.profile.apPaterno + " " : "";
+		var apMaterno = usuario.profile.apMaterno != undefined ? usuario.profile.apMaterno : ""
+		this.usuario.profile.nombreCompleto = nombre + apPaterno + apMaterno;
+			Meteor.call('crearUsuario', rc.usuario, 'usuario');
+			toastr.success('usuario guardado.');
+			$state.go('root.usuarios');			
+		 	this.usuario = {};
+		 	$('.collapse').collapse('hide');
+		 	this.nuevo = true;
+		 	console.log(rc.usuario);	
+
 	};
 	
-	this.editar = function(id)
+	this.editar = function(usuario_id)
 	{
-    this.usuario = Usuarios.findOne({_id:id});
+		console.log(usuario_id);
+    rc.usuario = Meteor.users.findOne(usuario_id);
     this.action = false;
     $('.collapse').collapse('show');
     this.nuevo = false;
 	};
 	
-	
 	this.actualizar = function(usuario)
 	{
-		var idTemp = usuario._id;
-		delete usuario._id;		
-		Usuarios.update({_id:idTemp},{$set:usuario});
+
+		Meteor.call('actualizarUsuario', rc.usuario, "usuario");
+		toastr.success('Actualizado correctamente.');
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
+		$state.go('root.usuarios');
 	};
+	
+	
+	// this.actualizar = function(usuario)
+	// {
+	// 	var idTemp = usuario._id;
+	// 	delete usuario._id;		
+	// 	Meteor.users.update({_id:idTemp},{$set:usuario});
+	// 	$('.collapse').collapse('hide');
+	// 	this.nuevo = true;
+	// };
 		
 	this.cambiarEstatus = function(id)
 	{
-		var usuario = Usuarios.findOne({_id:id});
+		var usuario = Meteor.users.findOne({_id:id});
 		if(usuario.estatus == true)
 			usuario.estatus = false;
 		else
 			usuario.estatus = true;
 		
-		Usuarios.update({_id:id}, {$set : {estatus : usuario.estatus}});
+		Meteor.users.update({_id:id}, {$set : {estatus : usuario.estatus}});
 	};
 
-	 this.tomarFoto = function(){
-		$meteor.getPicture().then(function(data){
-			this.usuario.fotografia = data;
-		});
+	 this.tomarFoto = function () {
+		$meteor.getPicture().then(function(data){			
+			rc.usuario.profile.fotografia = data;
+		})
 	};
 
 
