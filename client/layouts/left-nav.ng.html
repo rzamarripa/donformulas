@@ -1,49 +1,14 @@
-<nav>
-	<ul data-smart-menu>
-<!--
-    <li data-menu-collapse>
-	    <a href="#">
-	      <i class="fa fa-lg fa-fw fa-bar-chart-o"></i>
-	      <span class="menu-item-parent">Maestros</span>
-	    </a>
-	    <ul>
-	      <li>
-		      <a ui-sref="root.maestroGrupos" tilte="Grupos">
-		        <i class="fa fa-lg fa-fw fa-home"></i>
-		        <span class="menu-item-parent">Grupos</span>
-		      </a>
-		    </li>
-	    </ul>
-    </li>
-    <li data-menu-collapse>
-	    <a href="#">
-	      <i class="fa fa-lg fa-fw fa-bar-chart-o"></i>
-	      <span class="menu-item-parent">Alumnos</span>
-	    </a>
-	    <ul>
-	      <li>
-		      <a ui-sref="root.alumnoCalificaciones" tilte="Calificaciones">
-		        <i class="fa fa-lg fa-fw fa-home"></i>
-		        <span class="menu-item-parent">Calificaciones</span>
-		      </a>
-		    </li>
-	    </ul>
-    </li>
-	  <li data-ui-sref-active="active">
-      <a ui-sref="root.inscripciones" >
-        <i class="fa fa-lg fa-fw fa-user-plus"></i>
-        <span class="menu-item-parent">Inscripciones</span>
-      </a>
-    </li>
-    <li data-ui-sref-active="active">
-      <a ui-sref="root.pagos">
-        <i class="fa fa-lg fa-fw fa-dollar"></i>
-        <span class="menu-item-parent">Pagos</span>
-      </a>
-    </li>
--->
 
-	  <li data-menu-collapse>
+<nav>
+	<div ng-include="'client/layouts/_admin.html'" ng-if="currentUser.roles[0] == 'admin'"></div>
+    <div ng-include="'client/layouts/_empresa.html'" ng-if="currentUser.roles[0] == 'director'"></div>
+    
+</nav>
+	 <!--<nav>
+	<ul data-smart-menu>
+
+
+  <li data-menu-collapse>
 	    <a href="#">
 	      <i class="fa fa-lg fa-fw fa-bar-chart-o"></i>
 	      <span class="menu-item-parent">Catálogos</span>
@@ -118,4 +83,4 @@
 	    </ul>
 	  </li>
   </ul>
-</nav>
+</nav> -->

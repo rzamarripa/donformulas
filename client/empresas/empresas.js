@@ -3,7 +3,9 @@ angular.module('formulas')
 function EmpresasCtrl($scope, $meteor, $reactive, $state, toastr) {
 $reactive(this).attach($scope);
 
-  this.subscribe('empresas');
+    this.subscribe("empresas",()=>{
+		return [{estatus:true,empresa_id : this.getReactively("empresa_id")}]
+	});
   this.action = true;  
   this.nuevo = true;
   
@@ -21,16 +23,34 @@ $reactive(this).attach($scope);
     this.empresa = {}; 
   };
   
- this.guardar = function(empresa)
+   this.guardar = function(empresa)
 	{
-	  this.empresa.estatus = true;
-		console.log(this.empresa);
-		Empresas.insert(this.empresa);
-		toastr.success('Empresa guardado.');
-		this.empresa = {};
+		
+		empresa.estatus = true;
+		empresa_id = Empresas.insert(this.empresa);
+		var nombre = empresa.nombreDirector != undefined ? empresa.nombreDirector + " " : "";
+			var apPaterno = empresa.apPaternoDirector != undefined ? empresa.apPaternoDirector + " " : "";
+			var apMaterno = empresa.apMaternoDirector != undefined ? empresa.apMaternoDirector : ""
+			empresa.nombreCompleto = nombre + apPaterno + apMaterno;
+		var usuario = {
+			username : empresa.username,
+			password : empresa.password,
+			profile : {
+				nombre : empresa.nombreDirector,
+				apPaterno : empresa.apPaternoDirector,
+				apMaterno : empresa.apMaternoDirector,
+				nombreCompleto : nombre + apPaterno + apMaterno,
+				empresa_id : empresa_id,
+				estatus : true
+			}
+		}
+
+		Meteor.call('crearUsuario', usuario, 'director');
+		toastr.success('Guardado correctamente.');
+		this.seccion = {};
 		$('.collapse').collapse('hide');
 		this.nuevo = true;
-		$state.go('root.empresas');
+		console.log(empresa);
 	};
 	
 	
@@ -44,11 +64,32 @@ $reactive(this).attach($scope);
 	
 	this.actualizar = function(empresa)
 	{
-		var idTemp = empresa._id;
-		delete empresa._id;		
-		Empresas.update({_id:idTemp},{$set:empresa});
-		$('.collapse').collapse('hide');
-		this.nuevo = true;
+		
+			var idTemp = empresa._id;
+			delete empresa._id;		
+			Empresas.update({_id:idTemp},{$set:empresa});
+			var nombre = empresa.nombre != undefined ? empresa.nombre + " " : "";
+			var apPaterno = empresa.apPaterno != undefined ? empresa.apPaterno + " " : "";
+			var apMaterno = empresa.apMaterno != undefined ? empresa.apMaterno : ""
+			empresa.nombreCompleto = nombre + apPaterno + apMaterno;
+			var usuario = {
+				username : empresa.username,
+				password : empresa.password,
+				profile : {
+					nombre : empresa.nombre,
+					apPaterno : empresa.apPaterno,
+					apMaterno : empresa.apMaterno,
+					nombreCompleto : nombre + apPaterno + apMaterno,
+					empresa_id : idTemp,
+					estatus : true
+				}
+			}
+			Meteor.call('actualizarUsuario', usuario, 'director');
+			toastr.success('Actualizado correctamente.');
+			$('.collapse').collapse('hide');
+			this.nuevo = true;
+	
+		
 	};
 		
 	this.cambiarEstatus = function(id)

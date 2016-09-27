@@ -1,8 +1,22 @@
 Meteor.startup(function () {
   if (Meteor.users.find().count() === 0) {
-    Accounts.createUser({
-      username: 'zeus',
-      password: 'holahola',
+    var usuario_id = Accounts.createUser({
+      username: 'admin',
+      password: 'admin123',
+      profile : {
+	      nombre: 'Administrador',
+      }
     });
+    
+    Roles.addUsersToRoles(usuario_id, 'admin');
   }
 });
+
+// Meteor.startup(function () {
+//   if (Meteor.users.find().count() === 0) {
+//     Accounts.createUser({
+//       username: 'admin',
+//       password: 'admin123',
+//     });
+//   }
+// });

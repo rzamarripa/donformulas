@@ -794,16 +794,48 @@ let rc =$reactive(this).attach($scope);
 
      ///////////////////////////////////////////////////COSA DE PRESUPUESTOS////////////////////////////////////
 	 this.cosa = {};
+	 this.botonEdit = false;
+	 this.editarCosita = false;
+	 this.actualizarCosita = false;
+	 this.thing = true;
+
+	 this.editarCo = function()
+     { 
+ 
+     this.botonEdit = false;
+     };
+	
      this.guardarCosa = function()
      { 
      	this.cosa.estatus = true;
 
      	PresupuestosCosas.insert(this.cosa);
-     	toastr.success('yeah');
+     	toastr.success('Guardado');
      	console.log(this.cosa);
-     	this.cosa = {};
+  
+     	this.editarCosita = true ;
+     	this.thing = false;
 
      };
+     this.editarCosa = function(id)
+     { 
+ 
+     	this.cosa = PresupuestosCosas.findOne({_id:id});
+     	this.thing = false;
+     	this.editarCosita = true;
+     	this.actualizarCosita = true;
+     };
+ 
+	
+	this.actualizarCosa = function(cosa)
+	{
+		var idTemp = cosa._id;
+		delete cosa._id;		
+		PresupuestosCosas.update({_id:idTemp},{$set:cosa});
+		console.log(cosa); 
+		this.actualizarCosita = false;
+		this.editarCosita = false;
+	};
 
 
 };
