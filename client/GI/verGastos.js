@@ -19,7 +19,7 @@ this.tipoPeriodo = 'gasto';
 	return [{estatus:true}] 
     });
     this.subscribe('obras',()=>{
-	return [{estatus:true}] 
+	return [{empresa_id : Meteor.user().profile.empresa_id,estatus:true}] 
     });
 
     this.subscribe('meses',()=>{
@@ -33,7 +33,7 @@ this.tipoPeriodo = 'gasto';
 	return [{estatus:true,modo:false}] 
   });
 	this.subscribe('periodos',()=>{
-	return [{estatus:true}] 
+	return [{tipo: this.getReactively('tipoPeriodo'),estatus:true}] 
   });
 
   this.action = true;
@@ -159,7 +159,8 @@ this.tipoPeriodo = 'gasto';
  				var totalGastosCampo = 0;
  				var periodos = Periodos.find().fetch();
  				_.each(periodos,function(campo){
- 				  totalGastosCampo += campo.comprasIva + campo.contadoIva
+ 				  totalGastosCampo += campo.comprasSinIva + (campo.comprasIva / 1.16)
+ 				  + campo.contadoSinIva + (campo.contadoIva / 1.16)
  				  campo.gastosCampo = parseInt(totalGastosCampo);
  				  
 				});
@@ -299,7 +300,8 @@ this.tipoPeriodo = 'gasto';
  				var totalAn=0;
 				_.each(rc.periodos,function(gasto){
 					if (result.obra_id == gasto.obra_id ) {
-						totalAn += gasto.comprasIva + gasto.contadoIva
+						totalAn += gasto.comprasSinIva + (gasto.comprasIva / 1.16)
+						 + gasto.contadoSinIva + (gasto.contadoIva / 1.16)
 
 						result.gastosCampo =  parseInt(totalAn);
 						result.totalDeFinalTodo = parseFloat(result.gastosCampo) + parseFloat(result.total);
@@ -548,4 +550,4 @@ this.tipoPeriodo = 'gasto';
 
 
  	
-}
+};

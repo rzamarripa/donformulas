@@ -3,7 +3,7 @@ Meteor.publish("periodos",function(params){
 });
 
 
-Meteor.publish("periodo",function(params){
+Meteor.publish("periodosCampo",function(params){
   	return Periodos.find(params);
 });
 

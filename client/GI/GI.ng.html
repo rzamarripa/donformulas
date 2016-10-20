@@ -1,8 +1,9 @@
-{{GI.indirectosEmpresas()}}
+
     <div class="row " >
     <div class="col-sm-12 pull-right">
-    <a class="btn-success btn" ui-sref="root.verGastos">Ver Gastos Indirectos</a>
-    <a class="btn btn-success  " ui-sref="root.addGasto">Gastos de Oficina</a>
+<!--     <a class="btn-success btn" ui-sref="root.verGastos">Ver Gastos Indirectos</a>
+ -->
+    <a class="btn btn-success  " ui-sref="root.addGasto">Gastos de Oficina</a> 
     </div>
      </div>
     <br/>
@@ -29,7 +30,7 @@
 							    Ver...
 							  </div>
 							  <div class="col-xs-6 text-right">
-							    <i class="fa fa-arrow-circle-right"  ng-click="GI.cambiarEstatusMes(Mes._id)"></i>
+							    
 							  </div>
 							</div>
 						</div>
@@ -64,7 +65,7 @@
 		<div class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-id-2" data-widget-editbutton="false" role="widget">						
 		<header role="heading"><div class="jarviswidget-ctrls" role="menu"><a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> </div>
 			<span class="widget-icon"> <i class="fa fa-table"></i> </span>
-			<h2>Tabla</h2>
+			 <h2>Poner mes Aqui</h2>
 		<span class="jarviswidget-loader" style="display: none;"><i class="fa fa-refresh fa-spin"></i></span></header>
 <div role="content" style="display: block;">
 			<div class="widget-body no-padding">
@@ -97,17 +98,20 @@
 				    </tr>
 				    </tr>
 				     <tr>
-						<th colspan="8">TOTAL GASTOS DE OFICINA:&nbsp; {{GI.TotalFinalGO()  | currency}}</th>
+						<th colspan="8">GASTOS DE OFICINA DE ESTE MES:&nbsp; {{GI.TotalFinalGO()  | currency}}</th>
+				    </tr>
+				    <tr>
+						<th colspan="8">GASTOS DE OFICINA:&nbsp; {{GI.todosGastosOficinas()  | currency}}</th>
 				    </tr>
 				    <tr>
 					    <th colspan="8">TOTAL INGRESOS MENSUAL:&nbsp; {{GI.ingresosTotales(GI.obras) | currency}}</th>
 				    </tr>
 				     <tr>
-						<th colspan="8">TOTAL GASTOS MENSUAL:&nbsp; {{GI.cobrosTotales(GI.obras) | currency}}</th>
+						<th colspan="8">TOTAL GASTOS DE CAMPO:&nbsp; {{GI.cobrosTotales(GI.obras) | currency}}</th>
 				    </tr>
-				    <tr>
+				  <!--   <tr>
 						<th colspan="8">TOTAL GASTOS DE OFICINA:&nbsp; {{GI.TotalFinalGO() + GI.cobrosTotales(GI.obras)  | currency}}</th>
-				    </tr>
+				    </tr> -->
 				     <!--<tr>
 						<th colspan="8">TOTAL MESES ANUAL: </th> GI.TotalFinalGO() 
 				    </tr>-->
@@ -127,7 +131,7 @@
 		<div class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-id-2" data-widget-editbutton="false" role="widget">						
 		<header role="heading"><div class="jarviswidget-ctrls" role="menu"><a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> </div>
 			<span class="widget-icon"> <i class="fa fa-table"></i> </span>
-			<h2>Tabla</h2>
+			<!-- <h2>Tabla</h2> -->
 		<span class="jarviswidget-loader" style="display: none;"><i class="fa fa-refresh fa-spin"></i></span></header>
 <div role="content" style="display: block;">
 			<div class="widget-body no-padding">
@@ -141,7 +145,7 @@
 			   </thead>
 				<tbody>
 				    <tr>
-				    <th><div class="text-center">TOTAL: {{(GI.cobrosTotales(GI.obras) + GI.TotalFinal(mes_id)) / GI.ingresosTotales(GI.obras) * 100 | number : 2}}%</div></th>
+				    <th><div class="text-center">TOTAL: {{GI.indirectoMes[0].indirectoMensual | number : 2}}%</div></th>
 					    <th ng-show="" ng-repeat="gasto in GI.gastosOficinas"><div class="text-center">{{gasto.importeVar + gasto.importeFijo | currency}}</div></th>
 				    </tr>	   
 			    </tbody> 
@@ -203,6 +207,63 @@
 		</div>
 	</div>
 </div>
+
+<div>
+	 <div class="col-sm-8">
+		<div class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-id-2" data-widget-editbutton="false" role="widget">						
+		<header role="heading"><div class="jarviswidget-ctrls" role="menu"><a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> </div>
+			<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+			<!-- <h2>Tabla</h2> -->
+		<span class="jarviswidget-loader" style="display: none;"><i class="fa fa-refresh fa-spin"></i></span></header>
+	<div role="content" style="display: block;">
+				<div class="widget-body no-padding">
+					<div class="table-responsive">
+				        <table class="table table-hover"> 
+							   <thead>
+							    <tr>
+							        <th><div class="text-center">Obras</div></th>
+							        <th ><div class="text-center">% Indirectos</div></th>
+							        <th ng-show="" ><div class="text-center">TOTAL INGRESOS</div></th>
+							        <th ng-show="" ><div class="text-center">Oficinas</div></th>
+							        <th ng-show=""><div class="text-center">porcentaje</div></th>
+							        <th ng-show=""><div class="text-center">pago</div></th>
+							         <th ng-show=""><div class="text-center">suma</div></th>
+							         <th ng-show=""><div class="text-center">Ingresos Obra</div></th>
+							         <!-- <th ><div class="text-center">Campo Gastos</div></th> -->
+
+							    </tr>
+							   </thead>
+								<tbody>
+								    <tr ng-repeat="obra in GI.indirectoMes">
+									    <th><div class="text-center">{{obra.obra}}</div></th>
+									    <th><div class="text-center">{{obra.indirectoPorcentaje | number:2}}%</div></th>
+									    <th ng-show=""><div class="text-center">{{obra.ingresosTotales | currency}}</div></th>
+									    <th ng-show=""><div class="text-center">{{GI.indirectoMes[0].oficinas | currency}}</div></th>
+									    <th ng-show=""><div class="text-center">{{obra.ingresoPorObra | currency}}</div></th>
+									    <th ng-show=""><div class="text-center">{{obra.pagoPorObra | currency}}</div></th>
+									      <th ng-show=""><div class="text-center">{{obra.sumaDeGastos | currency}}</div></th>
+									      <th ng-show=""><div class="text-center">{{obra.ingresisa | currency}}</div></th>
+									      <!-- <th ><div class="text-center">{{GI.camposTotales()  | currency}}</div></th> -->
+
+								    </tr>
+							    </tbody> 
+							  <thead>
+							         <th colspan="8"><div class="text-center">Indirectos empresa anual</div></th>
+							    	
+							    </thead>
+							    <tbody>							    	 
+								    <tr colspan="8">
+								    	<td colspan="8" ><div class="text-center"><strong>{{GI.indirectos[3].total | number: 2 }}%</strong></div></td>
+								    </tr>
+				
+							    </tbody> 
+						</table>
+	  				 </div>
+	   			</div>
+	  </div>
+	 </div>
+	</div>
+ </div>
 
 
 </div>

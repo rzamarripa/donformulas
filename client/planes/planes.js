@@ -6,11 +6,11 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	this.plan = {};
 	this.plan.costos = [];
 
+
 	this.totalCosto = 0;
 	this.totalFinalCostosDirectos = 0.00;
 	this.costoTotalTotal = [];
-
-	
+	this.costoTotalPres = [];
 
   this.subscribe('planes',()=>{
 		return [{obra_id : $stateParams.id,estatus:true}] 
@@ -25,19 +25,16 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	 return [{estatus:true}] 
      });
   this.subscribe('periodos',()=>{
-		return [{obra_id : $stateParams.id,estatus:true}] 
-  });
-  this.subscribe('cobros',()=>{
-		return [{obra_id : $stateParams.id,estatus:true}] 
+		return [{estatus:true}] 
   });
    this.subscribe('gastosOficina',()=>{
-	 return [{obra_id : $stateParams.id,estatus:true}] 
+	 return [{estatus:true}] 
   });
    this.subscribe('costos',()=>{
 	return [{obra_id : $stateParams.id,estatus:true}] 
     });
     this.subscribe('cobros',()=>{
-	return [{obra_id : $stateParams.id,estatus:true,modo:false}] 
+	return [{estatus:true,modo:false}] 
     });
     this.subscribe('meses',()=>{
 	return [{estatus:true}] 
@@ -62,16 +59,13 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
   this.nuevo = true;
   
  // console.log($stateParams);
-  
   this.helpers({
 	  planes : () => {
 		  return Planes.find();
-
 	  },
 	  cobros : () => {
 		  return Cobros.find();
 	  },
-
 	   gastosOficina : () => {
 		  return GastosOficina.find();
 	  },
@@ -87,21 +81,90 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	  obra : () => {
 		  return Obras.findOne($stateParams.id);
 	  },
-	  
 	  gi : ()=> {
 		  return GI.find();
 	  },
 	  periodos : () => {
 		  return Periodos.find();
 	  },
-	  
-	  cobros : () => {
-		  return Cobros.find();
+
+	  periodosCampo : () => {
+	  	return Periodos.find({tipo : "gasto"});
 	  },
+	  periodosGasto : () => {
+	  	return Periodos.find({tipo : "costo",obra_id: this.getReactively('obra_id')});
+	  },
+
 	  gastos : () => {
 		  return GastosOficina.find();
 	  },
-	  	    
+	    jaime : () => {
+		var obras = Obras.find().fetch();
+		var ingresosTotalesPorObra = [];
+
+	
+		
+ 			_.each(obras, function(obra){ 				
+ 				var ingresos = 0; 
+ 				var totalCobro = 0;
+ 				var ingresosObras = Cobros.find({modo : false}).fetch(); 				
+ 				_.each(ingresosObras, function(ingresoObra){
+ 					ingresos += ingresoObra.cSinIva + ingresoObra.cIva/1.16;
+ 				});
+
+
+                 
+                 var per= Periodos.find({obra_id : obra._id, tipo : "costo"}).fetch();
+ 				_.each(per, function(cobro){
+ 					totalCobro += cobro.comprasSinIva + (cobro.comprasIva / 1.16)
+ 				  + cobro.contadoSinIva + (cobro.contadoIva / 1.16);
+ 				});
+
+ 				var totalGastoOficinaPorMes = 0; 
+ 				_.each(rc.getReactively("gastosOficina"), function(gasto){
+ 					totalGastoOficinaPorMes += gasto.importeFijo + gasto.importeVar;
+ 				});
+
+ 				var totalIngresos=0;
+					var cobros = Cobros.find().fetch();
+					_.each(cobros,function(cobro){
+						var obra_id=obra._id;
+						
+						if(obra_id == cobro.obra_id)
+							totalIngresos += cobro.cIva/1.16 + cobro.cSinIva
+					});
+
+
+						var totalCampo = 0;
+						_.each(rc.getReactively("periodosCampo"),function(periodo){
+							var obra_id=obra._id;
+							if(obra_id == periodo.obra_id)
+							totalCampo += (periodo.comprasIva / 1.16) + periodo.comprasSinIva
+						 + (periodo.contadoIva / 1.16) + periodo.contadoSinIva
+						});
+
+
+					var x = 0;
+					x= parseFloat(totalIngresos.toFixed(2)) / parseFloat(ingresos.toFixed(2));
+					var y = 0;
+					y = parseFloat(totalGastoOficinaPorMes.toFixed(2)) * parseFloat(x);
+					var z = 0;
+					z = parseFloat(totalCampo.toFixed(2)) + parseFloat(y.toFixed(2))
+
+
+ 				
+ 				ingresosTotalesPorObra.push({ obra_id : obra._id, obra_nombre : obra.nombre,oficinas:parseFloat(totalGastoOficinaPorMes.toFixed(2)), total : parseFloat(ingresos.toFixed(2))
+ 					,costo: parseFloat(totalCobro.toFixed(2)),ingresosObra:parseFloat(totalIngresos.toFixed(2)),
+ 					calculo:parseFloat(x), gasto:parseFloat(y.toFixed(2)),campo:parseFloat(totalCampo.toFixed(2)),
+ 					gastosEstado:parseFloat(z.toFixed(2)) });
+ 			});
+
+
+ 		console.log("probando", ingresosTotalesPorObra);
+ 		//console.log("resultado", ingresosPorObraConPorcentaje);
+ 		return ingresosTotalesPorObra; 
+	},
+
 	 		costosTotales : () => {
 			var costosTotales = {};
 			var partidas = Partidas.find().fetch();
@@ -161,11 +224,53 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	   			totalPresupuestoTotal += costoTotal.presupuestoTotal;
 	   			costoTotal.totalPresupuestos += totalPresupuestoTotal;
 	   		});
+
+totalPresupuestoTotal = 0.00;
+	   		_.each(costosTotalesArreglos, function(costoTotal){
+	   					//console.log("entro al arreglo",costoTotal);
+	   					//if(costoTotal.costo_id == costosPlan._id)
+	   					//{
+	   						totalPresupuestoTotal += costoTotal.presupuestoTotal
+	   						costoTotal.totalpreFinal =  totalPresupuestoTotal
+
+	   						//console.log("entro final", costoTotal);
+	   					//}
+	   				})
+
+
+
 	   		rc.costoTotalTotal = costosTotalesArreglos[0]
-	   		costosTotalesArreglos.push({final : totalCosto});
+	   		rc.costoTotalPres = costosTotalesArreglos[3]
+	   		costosTotalesArreglos.push({final : totalCosto, totalpre: totalPresupuestoTotal});
 	   		console.log("arreglo",costosTotalesArreglos);
 	   		return costosTotales;
 		},
+
+
+///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	  
 	  costos : () => {
@@ -245,35 +350,69 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 	  	}		
 		return obrasCalcu;
 	  },
+
+
+
+
+	  //////////////////////////////////////////  GASTOS DE OFICINA /////////////////////////////////////////////////
 	  
 	  indirectosEmpresas : () => {
 		var gastosIndirectoEmpresa = [];
 
 		  	//GASTOS OFICINA;
 		  	var totalGastosOficinas = 0;
-		  	var totalIngresos = 0;
-		  	var totalGastosCampo = 0;
+		  	
+		  	//var totalGastosCampo = 0;
 		  	var gastosOF = GastosOficina.find().fetch();
 		  	var plan_ingresos = 0;
-		  	_.each(rc.planes,function(plan){
+		  	_.each(rc.getReactively("planes"),function(plan){
 		  		 plan_ingresos = plan.ingresos;
  				_.each(rc.gastosOficina,function(gasto){
  					totalGastosOficinas += gasto.importeFijo + gasto.importeVar
  					gasto.gastoOficina = totalGastosOficinas;
 
- 					_.each(rc.cobros,function(cobro){
- 						totalIngresos += cobro.cSinIva + cobro.cIva
-
- 						_.each(rc.periodos,function(campo){
- 				 			 totalGastosCampo += campo.comprasIva + campo.contadoIva
- 								  campo.gastosCampo = parseInt(totalGastosCampo);
- 				
- 						});
  					
- 					});
 
 	  		  });
  		  });
+
+
+		  	var totalIngresos = 0;
+
+
+		  	_.each(rc.getReactively("cobros"),function(cobro){
+ 						totalIngresos += cobro.cSinIva + cobro.cIva
+
+ 						
+ 					
+ 					});
+
+
+		  	// _.each(rc.periodosCampo,function(campo){
+ 				//  			 totalGastosCampo += campo.comprasIva + campo.contadoIva + campo.contadoSinIva + campo.comprasSinIva
+ 				// 				  campo.gastosCampo = parseInt(totalGastosCampo);
+ 				
+ 				// 		});
+
+
+ 				var totalGastosCampo = 0;
+ 				var periodos = Periodos.find().fetch();
+ 				_.each(rc.getReactively("periodosCampo"),function(campo){
+ 				  totalGastosCampo += campo.comprasSinIva + (campo.comprasIva / 1.16)
+ 				  + campo.contadoSinIva + (campo.contadoIva / 1.16)
+ 				  campo.gastosCampo = parseInt(totalGastosCampo);
+ 				  
+				});
+
+var finalDirectos = 0;
+				_.each(rc.costosTotales, function(costoTotal){
+					finalDirectos = costoTotal.finalesDirectos;
+					console.log("eaaa",finalDirectos);
+
+	   					
+	   				})
+
+
 			gastosIndirectoEmpresa.push({totalGastos : totalGastosOficinas, totalCobros : totalIngresos,
 			 totalGastosCampo : totalGastosCampo, planIngresos : plan_ingresos });
  	  
@@ -281,11 +420,13 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
                var cantidadesSumadas = plan_ingresos * ((totalGastosOficinas  + totalGastosCampo) / (totalIngresos));
                var oficinaMasCampo = (totalGastosOficinas  / (totalGastosOficinas + totalGastosCampo) * 100);
                var GastoIndiCampo = totalGastosCampo / (totalGastosOficinas + totalGastosCampo ) * 100;
+               var oficinaCampoIngresos= ((totalGastosOficinas +  totalGastosCampo) / totalIngresos * 100);
 
 
 
-              gastosIndirectoEmpresa.push({total : cantidadesSumadas, cantidades : cantidadesSumadas *  oficinaMasCampo / 100,
-              	GasIndiCampo : cantidadesSumadas * GastoIndiCampo/100, estadisticos :  cantidadesSumadas - (cantidadesSumadas * GastoIndiCampo/100) })
+
+              gastosIndirectoEmpresa.push({total : cantidadesSumadas, cantidades : parseFloat(oficinaCampoIngresos.toFixed(2))* finalDirectos /100    ,
+              	GasIndiCampo : cantidadesSumadas * GastoIndiCampo/100, estadisticos :  cantidadesSumadas - (cantidadesSumadas * GastoIndiCampo/100)})
 
 
 
@@ -294,6 +435,11 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 
 		return gastosIndirectoEmpresa;
 	},
+
+
+
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   });
  
@@ -364,8 +510,10 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 		//console.log("arreglo", rc.costosTotales)
 	};	
 	
-	this.actualizar = function(plan)
+	this.actualizar = function(plan,costos)
 	{
+		console.log(costos);
+		rc.plan.costos = costos;
 		var idTemp = plan._id;
 		delete plan._id;
 		_.each(rc.plan.costos, function(costo){
@@ -376,6 +524,34 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 		this.nuevo = true;
 		console.log(rc.plan);
 	};
+this.actCam = true;
+	this.actualizarCambios = function(plan,costos,id)
+	{
+		console.log(costos);
+		rc.plan.costos = costos;
+		var idTemp = plan._id;
+		delete plan._id;
+		_.each(rc.plan.costos, function(costo){
+			delete costo.$$hashKey;
+		});		
+		Planes.update({_id:idTemp},{$set:plan});
+		this.plan = Planes.findOne({_id:id});
+	
+		console.log(rc.plan);
+	};
+
+	this.editarCambios = function(id)
+	{
+		this.plan = Planes.findOne({_id:id});
+		this.editCam = false;
+		this.actCam = true;
+	   
+		
+		//_.each(rc.costosTotales, function(costo){
+			//rc.totalPor = costo.valor / rc.totalCosto ;
+		//});
+		//console.log("arreglo", rc.costosTotales)
+	};	
 		
 	this.cambiarEstatus = function(id)
 	{
@@ -390,55 +566,7 @@ function PlanesCtrl($scope, $meteor, $reactive, $state, toastr, $stateParams) {
 
 // Funciones de precio proyecto                                                 
                            													
-		this.factorRecuperacionCalc = function() {
-			
-			this.plan.isrCalculado = 100 / (100 - this.plan.isr - this.plan.ptu)
-			this.plan.factorRecuperacion = (1/(1-(1.6666*(this.plan.trema/100))));//=(1/(1-(1.6666*E5)))/100
-			this.plan.totalEgresos = ((this.plan.ingresos / this.plan.factorRecuperacion) * 1)
-			// Funciones Costo Directo
-			this.plan.costosDirectosTotal1 = this.plan.costosDirectosMateriales1 + this.plan.costosDirectosMaquinarias1 + this.plan.costosDirectosManoObra1 + this.plan.costosDirectosCombustibleFleteTransporte1 + this.plan.costosDirectosRentas1 + this.plan.costosDirectosSubcontratos1 + this.plan.costosDirectosGastosVarios1
-			this.plan.costosDirectosPorcentaje = (this.plan.costosDirectosMateriales1 / this.plan.costosDirectosTotal1) * 100
-		
-	        this.plan.costosDirectosGastosVarios = (this.plan.costosDirectosGastosVarios1 / this.plan.costosDirectosTotal1) * 100
-			this.plan.costosDirectosTotal = this.plan.costosDirectosPorcentaje + this.plan.costosDirectosMaquinarias + this.plan.costosDirectosManoObra + this.plan.costosDirectosCombustibleFleteTransporte + this.plan.costosDirectosRentas + this.plan.costosDirectosSubcontratos + this.plan.costosDirectosGastosVarios
-			this.plan.costosDirecto = this.plan.costosDirectosTotal1
-			// Funciones Costo Directo
-			this.plan.costosDirectosPorcentajeRequerido = this.plan.costosDirectosMateriales1 - ((this.plan.costosDirectosMateriales1 * this.plan.costosDirectosMateriales2) / 100)
-			this.plan.costosDirectosTotal3 = this.plan.costosDirectosPorcentajeRequerido + this.plan.costosDirectosMaquinarias3 + this.plan.costosDirectosManoObra3 + this.plan.costosDirectosCombustibleFleteTransporte3 + this.plan.costosDirectosRentas3 + this.plan.costosDirectosSubcontratos3 + this.plan.costosDirectosGastosVarios3
-			//Relacion % Cd/Ingresos
-			this.plan.relacionCdIngresos = (this.plan.costosDirectosTotal1 / this.plan.ingresos) * 100
-			//gastosIndirectos 				this.gastosDirectosCalc = function() {
-			this.plan.gastosIndirectos = this.plan.totalEgresos - this.plan.costosDirectosTotal1
-			// Funciones Distribucion de Gastos
-			this.plan.gastosFijosOficina =  this.plan.gastosIndirectos - this.obra.gastosPCampo
-// 			this.obra.gastosPCampo =  GIc23
-			this.plan.gastosFijosOficina2 = this.plan.gastosFijosOficina - (this.plan.gastosFijosOficina * this.plan.gastosFijosOficina1) / 100
-			this.plan.gastosIndirectosCampo2 = this.obra.gastosPCampo - (this.obra.gastosPCampo * this.plan.gastosIndirectosCampo1) / 100
-			this.plan.dgtotal = this.plan.gastosFijosOficina + this.obra.gastosPCampo
-			this.plan.dgtotal2 = this.plan.gastosFijosOficina2 + this.plan.gastosIndirectosCampo2
-			this.plan.dgtotal3 = (this.plan.dgtotal2 / this.plan.ingresos) * 100
-			// Estadisticas de Gastos Indirectos para la Obra
-			this.plan.estadisticaGastosIndirectosObraGastosFijosOficina = this.plan.estadisticaGastosIndirectosObraPresupuestoIndirectoTotal - this.obra.gastosPCampo
-			// Tabla Arriba Actual Proyectado
-			this.plan.utilidadFisica = (this.plan.ingresos - this.plan.costosDirecto) - this.plan.gastosIndirectos
-			this.plan.isr1 = (this.plan.utilidadFisica * 3) / 10
-			this.plan.ptu1 = (this.plan.utilidadFisica * 1) / 10
-			this.plan.utilidadNeta = (this.plan.utilidadFisica - this.plan.isr1) - this.plan.ptu1
-			this.plan.rentabilidad = (this.plan.utilidadNeta / this.plan.ingresos) * 100
-			// Tabla Meses
-			this.plan.nuevoPresupuestoGastosIndirectos = this.plan.estadisticaGastosIndirectosObraGastosFijosOficina / this.plan.meses
-			this.plan.ajustePresupuestalIndirectos = this.plan.estadisticaGastosIndirectosObraPorcentajeIndirectos - this.plan.nuevoPresupuestoGastosIndirectos
-			this.plan.porcentajeObras = (this.plan.ingresos * this.plan.anticipoObras) / 100
-			// Ultima Proyectado y Actual
-			this.plan.gastosProyectado = this.plan.dgtotal2 + (this.plan.ajustePresupuestalIndirectos * this.plan.meses)
-			this.plan.utilidadFisicaProyectado = this.plan.ingresos - this.plan.costosDirectosTotal3 - this.plan.gastosProyectado
-			this.plan.isrProyectado = (this.plan.utilidadFisicaProyectado * 30) / 100
-			this.plan.ptuProyectado = (this.plan.utilidadFisicaProyectado * 10) / 100
-			this.plan.utilidadNetaProyectado = this.plan.utilidadFisicaProyectado - this.plan.isrProyectado - this.plan.ptuProyectado
-			this.plan.rentabilidad1 = (this.plan.utilidadNetaProyectado / this.plan.ingresos) * 100
-
-		};
-
+// 		
 
 			this.TotalFinalGO = function()
 			{

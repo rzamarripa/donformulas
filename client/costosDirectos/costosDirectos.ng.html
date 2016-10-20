@@ -8,8 +8,9 @@
 					<div class="table-responsive" >
 				        <table class="table table-hover table-bordered  inlineTable" style="display: inline-block;"  >
 				           <thead>
-								    <tr >
+								    <tr>
 									    <th><div class="text-center">Partida</div></th>
+									    <th><div class="text-center">Precio</div></th>
 									    <th class="text-center" colspan="4" ng-repeat="costo in cd.costos">{{costo.nombre}}</th>
 									    <th></th>
 									    <th></th>
@@ -17,48 +18,115 @@
 									    <th></th>
 									    <th></th>
 								    </tr>
-								    <tr >
+								    <tr>
 								    	<th></th>
-									    <th class="text-center">Presupuesto</th>
-									    <th class="text-center">Ajuste</th>
-									    <th class="text-center">Real</th>
-									    <th class="text-center">Diferencia</th>
-									  <th class="text-center">Presupuesto</th>
-									    <th class="text-center">Ajuste</th>
-									    <th class="text-center">Real</th>
-									    <th class="text-center">Diferencia</th>
-									    <th class="text-center">Presupuesto</th>
-									    <th class="text-center">Ajuste</th>
-									    <th class="text-center">Real</th>
-									    <th class="text-center">Diferencia</th>
-									    <th class="text-center">Presupuesto</th>
-									    <th class="text-center">Ajuste</th>
-									    <th class="text-center">Real</th>
-									    <th class="text-center">Diferencia</th>
+								    	<th></th>
+									    <th ng-repeat-start="costo in cd.costos" class="text-center">{{costo.presupuestoString}}</th>
+									    <th  class="text-center">{{costo.ajusteString}}</th>
+									    <th  class="text-center">{{costo.realString}}</th>
+									    <th ng-repeat-end class="text-center">{{costo.diferenciaString}}</th>
+									 
 									    <th class="text-center">Directo Real</th>
 									    <th class="text-center">Indirecto Real</th>
 									    <th class="text-center">Costo Unitario</th>
 									    <th class="text-center">Base Gravable</th>
 									    <th class="text-center">Utilidad Neta</th>
+
+
 								    </tr>
 								   
 							   </thead>
 								<tbody >
 								    <tr ng-repeat="partida in cd.costosTotales">
 									    <th><div class="text-center">{{partida.partida}}</div></th>
+									    <th>{{cd.total}}</th>
 									    <td ng-repeat-start="costo in partida.costos">{{costo.presupuesto | currency}}</td>
 							            <td>{{costo.ajuste | currency}}</td>
 							            <td >{{costo.realPeriodo | currency}}</td>
 							            <td ng-repeat-end>{{costo.diferencia | currency}}</td>
-							            <!--
-									    <th><div class="text-center">{{var.total | currency}}</div></th>
-									    <th><div class="text-center">{{var.total - objeto.factor | currency}}</div></th>
-									    <th><div class="text-center">{{cd.totalPeriodos[0].total}}</div></th>
+							            
+									    <td><div class="text-center">{{partida.realFinal | currency}}</div></td>
+									   <td><div class="text-center">{{cd.totalPrecioUnitario | currency}}</div></td>
+									   <!--  <th><div class="text-center">{{cd.totalPeriodos[0].total}}</div></th>
 									    <th><div class="text-center">{{cd.presupuestos[0].costoIndirecto}}</div></th> -->
 
 								    </tr>
+									      <tr>
+									     <td></td>
+									         <td >{{cd.totalPrecioUnitario | currency}}</td>
+									         <td></td>
+									         <td></td>
+									         <td></td>
+									         <td></td>
+									         <td></td>
+									         <td></td>
+									         <td></td>
+									         <td></td>
+									         <td></td>
+									         <td></td>
+									         <td></td>
+									         <td></td>
+									         <td></td>
+									         <td></td>
+									         <td></td>
+									         <td></td>
+									         <td></td>
+
+
+									      
+									    </tr>  
 							    </tbody>
 						</table>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+			<div  class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-id-2" data-widget-editbutton="false" role="widget" >						
+		<header role="heading"><div class="jarviswidget-ctrls" role="menu"><a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> </div>
+			<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+			<h2>TABLA INVISIBLE</h2>
+		<span class="jarviswidget-loader" style="display: none;"><i class="fa fa-refresh fa-spin"></i></span></header>
+		<div role="content" style="display: block;">
+			<div class="widget-body no-padding">
+				<div class="table-responsive">			
+						
+						<table class="table table-hover">
+					<thead>
+							<tr>
+								<th>CONCEPTO</th>
+								<th ng-repeat="costo in cd.costos">{{costo.nombre}}</th>
+								<th>Cantidad</th>
+								<th >Costo directo</th>
+								<th >Costo Indirecto</th>
+								<th >Cargo por financiamineto</th>
+								<th >Cargo Utilidad</th>
+								<th >Cargo adicional</th>
+								<th >Precio Unitario</th>
+							
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="presupuesto in cd.presupuestos">{{cd.cosas}}
+								<td>{{cd.getConcepto(presupuesto.concepto_id)}}</td>
+								<td ng-repeat="costo in presupuesto.costos">{{costo.direct | currency}}</td>
+								<td>{{presupuesto.cantidad | currency}}</td>
+								<td>{{presupuesto.totalOtro | currency}}</td>
+								<td>{{presupuesto.costoIndi | currency}} </td>
+								<td>{{presupuesto.financiamiento | currency}} </td>
+						
+								<td>{{presupuesto.utilidad | currency}}</td>
+								<td>{{presupuesto.adicional | currency}}</td>
+								<td>{{presupuesto.precioUnitario | currency}}</td>
+
+							    
+							</tr>
+						</tbody>
+						</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	  				 </div>
 	   			</div>
 	  </div>

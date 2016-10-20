@@ -9,7 +9,7 @@ let rc =$reactive(this).attach($scope);
 	this.presupuesto = {};
 	this.periodo = {};
 	this.cobro = {};
-	this.presupuesto.gastos = [];
+	this.presupuesto.gastos = []; 
 	this.pagoProveedor = {};
 	this.panelId = "";
 	this.tipoPeriodo = 'costo';
@@ -55,7 +55,7 @@ let rc =$reactive(this).attach($scope);
   });
 
    this.subscribe('presupuestosCosas',()=>{
-	return [{estatus:true}] 
+	return [{obra_id : $stateParams.id,estatus:true}] 
   });
 
   this.subscribe('periodos',()=>{
@@ -138,8 +138,25 @@ let rc =$reactive(this).attach($scope);
 	   					}
 	   				})
 	   			})
-	   		})
-	   		//console.log("arreglo",costosTotalesArreglos);
+	   		});
+
+          
+            _.each(partidas, function(partida){
+	   			_.each(conceptos, function(concepto){
+	   				_.each(presupuestos, function(presupuesto){
+	   					_.each(presupuesto.costos, function(costo){
+	   						 var totalCost = 0;
+	   					_.each(costosTotalesArreglos, function(costoTotal){
+	   						if(presupuesto.partida_id == partida._id && presupuesto.concepto_id == concepto._id){
+						   totalCost += costo.value;
+						    costoTotal.directo = totalCost
+	   				   }
+	   				});
+	   		      });
+	   			});
+	   		  });
+	   		});
+	   		console.log("arreglo",costosTotalesArreglos);
 	   		return costosTotales;
 		},
 		//////////////////////////////////////////////////////////////
@@ -160,8 +177,32 @@ let rc =$reactive(this).attach($scope);
 		},
 		cobros : () => {
 			return Cobros.find();
-		}
+		},
+		presupuestosTabla : () => {
+			tabla = [];
+			var presupuestos = Presupuestos.find().fetch()
+			var totalPresu = 0.00;
+			_.each(rc.partidas, function(partida){	
+				_.each(presupuestos, function(presupuesto){	
+					if (presupuesto.partida_id == partida._id) {}
+					//console.log(presupuesto);
+					_.each(presupuesto.costos, function(costo){
+					totalPresu += costo.value;
+					costo.cDirecto = totalPresu;
+					costo.costoDirecto = costo.cDirecto * presupuesto.cantidad;
+
+
+			});
+
+		});
+    });
+			// obrasCalculadas.push({nombre : obra.nombre, total : totalA});
+			tabla.push({costoD: totalPresu, });
+           // console.log("tabla",tabla)
+			return tabla;
+		},
 	});
+
 
 	this.panelColor = false;	
 	this.mostrarMes = true;
@@ -231,6 +272,7 @@ let rc =$reactive(this).attach($scope);
 	{
 
 		periodo.estatus = true;
+		this.gastoCosto = false;
 		periodo.obra_id = this.obra_id;
 		periodo.mes_id = this.mes_id;
 		periodo.partida_id = this.partida_id;
@@ -343,7 +385,12 @@ let rc =$reactive(this).attach($scope);
 		this.obra_id = $stateParams.id;
 		this.mes_id = mes_id;
 		this.partida_id = partida_id;
-		
+		this.gastoCosto = true;
+		this.tablaPeriodos = true;
+   		 this.PeriodoIva = false;
+
+   		 	 this.period = true;
+   
 		this.accionPeriodo = false;
 		this.accionPresupuesto = true;
 		this.Pagos = true;
@@ -360,7 +407,7 @@ let rc =$reactive(this).attach($scope);
 		this.partida_id = partida_id;
 		this.obra_id = $stateParams.id;
 		this.mostrarFormPre = false;
-		this.gastoCosto = false;
+		
 		this.Resumen = true;
 		this.Cobro = true;
 		this.Pagos = true;
@@ -374,6 +421,7 @@ let rc =$reactive(this).attach($scope);
 	this.mostrarArchivos= function(mes_id,obra_id)
 	{
 		this.presupuesto = {}; 
+
 		//this.presupuesto.costo = 0.00;
 		this.mes_id = mes_id;
 		this.obra_id = $stateParams.id;
@@ -493,6 +541,7 @@ let rc =$reactive(this).attach($scope);
 		_.each(costos, function(costo){
 			suma += parseFloat(costo.value);
 		});
+		//console.log("totalre" , suma)
 		return suma;
 	}
 
@@ -503,13 +552,13 @@ let rc =$reactive(this).attach($scope);
 
 	this.cobroTotalFinal = function(){
 		total = 0;
-		_.each(this.cobros,function(cobro){total += cobro.cIva + cobro.cSinIva});
+		_.each(this.cobros,function(cobro){total += cobro.cIva/1.16 + cobro.cSinIva});
 		return total
 	}
 
 	this.cobroTotalFinalPeriodo = function(){
 		total = 0;
-		_.each(this.periodos,function(periodo){total += periodo.comprasIva + periodo.comprasSinIva + periodo.contadoIva + periodo.contadoSinIva});
+		_.each(this.periodos,function(periodo){total += (periodo.comprasIva / 1.16) + periodo.comprasSinIva + (periodo.contadoIva / 1.16) + periodo.contadoSinIva});
 		return total
 	}
 
@@ -532,10 +581,12 @@ let rc =$reactive(this).attach($scope);
 	   this.mostrarFormPre = false;
 	}
 
-
-    this.gastoCosto = true;
+    this.PeriodoIva = true;
+    
+    this.accionPartidas = true;
+    this.tablaPeriodos = false;
    
-	this.gastoCostos = function(mes_id,partida_id,obra_id)
+	this.gastoCostos = function(mes_id,obra_id)
    	{
    		this.tipoPeriodo = 'costo';
    		this.periodo.comprasIva = 0.00;
@@ -543,16 +594,20 @@ let rc =$reactive(this).attach($scope);
 		this.periodo.contadoIva = 0.00;
 		this.periodo.contadoSinIva = 0.00;
 		this.mes_id = mes_id;
-		this.partida_id = partida_id;
 		this.obra_id = $stateParams.id;
-   		this.gastoCosto = true;
+   		this.accionPartidas = false;
+   			 this.period = false;
+   		 this.tablaPeriodos = false;
+   		 this.PeriodoIva = true;
+   		 
+   		 this.period = false;
    		console.log(this.mes_id);
-   		console.log(this.partida_id);
+  
 	    console.log(this.gastoCosto);
 
 	}
 
-	this.gastoCostosito = function(mes_id,partida_id,obra_id)
+	this.gastoCampos = function(mes_id,obra_id)
    	{
    		
 		this.tipoPeriodo = 'gasto'; 
@@ -561,11 +616,15 @@ let rc =$reactive(this).attach($scope);
 		this.periodo.contadoIva = 0.00;
 		this.periodo.contadoSinIva = 0.00;
 		this.mes_id = mes_id;
-		this.partida_id = partida_id;
 		this.obra_id = $stateParams.id;
+		this.gastoCampo = true
    		this.gastoCosto = false;
+   		this.PeriodoIva = false;
+   		 this.true = false;
+   		 this.period = true;
+   		 this.tablaPeriodos = true;
+   		this.accionPartidas = true;
    		console.log(this.mes_id);
-   		console.log(this.partida_id);
 	}
 
 
@@ -638,11 +697,12 @@ let rc =$reactive(this).attach($scope);
 	        mes.estatus = true;
 	    }
     };
-    this.period = true;
-
+    
+this.actPeriod = true;
     this.editarPeriodo = function(id)
 	{
     this.periodo = Periodos.findOne({_id:id});
+    this.actPeriod = false;
     this.period = false;
 	};
 
@@ -805,9 +865,11 @@ let rc =$reactive(this).attach($scope);
      this.botonEdit = false;
      };
 	
-     this.guardarCosa = function()
+     this.guardarCosa = function(cosa)
      { 
      	this.cosa.estatus = true;
+     	this.cosa.obra_id = this.obra_id;
+
 
      	PresupuestosCosas.insert(this.cosa);
      	toastr.success('Guardado');

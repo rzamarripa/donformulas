@@ -11,11 +11,11 @@
 				        <table class="table table-hover"> 
 							   <thead>
 							    <tr>
-							        <th><div class="text-center">OBRAS</div></th>
+							        <th><div class="text-center">Obras</div></th>
 							        <th ng-show=""><div class="text-center">INGRESOS</div></th>
 							        <th ng-show=""><div class="text-center">INGRESOS%</div></th>
 							        <th ng-show=""><div class="text-center">TOTALINGRESOS</div></th>
-							        <th ><div class="text-center">%INGRESOS</div></th>
+							        <th ><div class="text-center">% Indirectos</div></th>
 
 							    </tr>
 							   </thead>
@@ -30,12 +30,12 @@
 								    </tr>
 							    </tbody> 
 							  <thead>
-							         <th colspan="8"><div class="text-center">INDIRECTOS EMPRESA ANUAL</div></th>
+							         <th colspan="8"><div class="text-center">Indirectos empresa anual</div></th>
 							    	
 							    </thead>
 							    <tbody>							    	 
 								    <tr colspan="8">
-								    	<td colspan="8" ><div class="text-center"><strong>{{gas.indirectosEmpresas[3].total | currency}}</strong></div></td>
+								    	<td colspan="8" ><div class="text-center"><strong>{{gas.indirectosEmpresas[3].total | number: 2 }}%</strong></div></td>
 								    </tr>
 				
 							    </tbody> 

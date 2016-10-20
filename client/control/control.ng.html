@@ -87,8 +87,35 @@
 										<a class="btn btn-primary" ng-show="!ct.actResponsables" ng-click="ct.actualizarResponsables(ct.control)">Actualizar</a>
 									</div>
 									</div>
+									
 								
 							  </div>
+
+<!--  <div class="row">
+	<div class="col-sm-12">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th width="20%"><div class="text-center">Medidas Potenciales</div></th>
+					<th width="20%"><div class="text-center">Plan de Trabajo</div></th>
+					<th width="20%"><div class="text-center">Forma de Medicion</div></th>
+					<th width="20%"><div class="text-center">Responsables</div></th>
+				</tr>
+			</thead>
+			<tbody>
+		    <tr ng-repeat="control in ct.controles">
+			    <td>{{control.descripcion}}</td>
+			    <td>{{control.descripcionTrabajo}}</td>
+			    <td>{{control.descripcionForma}}</td>
+			    <td>{{control.descripcionResponsables}}</td>
+		    </tr>
+			</tbody>
+		</table>
+	</div>
+</div> -->
+
+
+
 							</div>
 								<th><div class="text-center"><a ng-click="ct.mostrar(costo.costo_id,costo.costo)" >{{costo.costo}}</a></div></th>
 								<th><div class="text-center">{{costo.total | currency}}</div></th>
@@ -96,8 +123,8 @@
 								<th ><div class="text-center">{{(costo.total) - (costo.total * costo.factor) / 100 | currency}}</div></th>
 								<th><div class="text-center">{{costo.real | currency}}</div></th>
 								<th><div class="text-center">{{costo.real | currency}}</div></th>
-								<th><div class="text-center">{{(costo.real) / ((costo.total) - (costo.total * costo.factor) / 100) * 100 | number: 2}}</div></th>
-								<th><div class="text-center">{{100 - ((costo.real) / ((costo.total) - (costo.total * costo.factor) / 100) * 100) | currency}}</div></th>
+								<th><div class="text-center">{{(costo.real) / ((costo.total) - (costo.total * costo.factor) / 100) * 100 | number: 2}}%</div></th>
+								<th><div class="text-center">{{100 - ((costo.real) / ((costo.total) - (costo.total * costo.factor) / 100) * 100) | number: 2 }}%</div></th>
 							</tr>
 						</tbody>
 
@@ -142,6 +169,31 @@
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
+
+ <div class="row">
+	<div class="col-sm-12">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+				<!-- <th width="20%"><div class="text-center">Conceptos</div></th> -->
+					<th width="20%"><div class="text-center">Medidas Potenciales</div></th>
+					<th width="20%"><div class="text-center">Plan de Trabajo</div></th>
+					<th width="20%"><div class="text-center">Forma de Medicion</div></th>
+					<th width="20%"><div class="text-center">Responsables</div></th>
+				</tr>
+			</thead>
+			<tbody>
+		    <tr ng-repeat="costo in ct.controles">
+		       <!-- <td>{{costo.costo}}</td> -->
+			    <td >{{costo.descripcion}}</td>
+			    <td >{{costo.descripcionTrabajo}}</td>
+			    <td >{{costo.descripcionForma}}</td>
+			    <td >{{costo.descripcionResponsables}}</td>
+		    </tr>
+			</tbody>
+		</table>
 	</div>
 </div>
 </div>

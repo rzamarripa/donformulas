@@ -8,12 +8,61 @@
 		<div class="collapse" id="collapseExample">
 			<form class="form-horizontal" role="form">
 <!-- Primera Parte -->
-		  	 <div class="well">	    
+		  	 <div class="well">
+		  	 	
 			    <div class="row">
 			    <div class="col-sm-12">
-				    <div class="col-sm-3">
-					    <label>Ingresos</label>
-				    	<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.ingresos" >
+			    <h1>Seccion para calcular precio</h1>
+			    <br/>
+			        <div class="col-sm-3">
+					    <label>Egresos</label>
+				    	<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.egresos" >
+				    </div>
+
+				    <div class="col-sm-2">
+				     <div class="form-group">
+				     	TREMA
+					    <a class="pull-left" data-toggle="popover" data-placement="top" data-content="Tasa de rendimiento minima aceptable"> <i class="fa fa-info-circle" aria-hidden="true"></i></a><br/>
+					    <div class="input-group">
+					      <div class="input-group-addon">%</div>
+					      	<input type="number" class="form-control" placeholder="TREMA" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.trema2" >
+					     <!--  <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount"> -->
+					    </div>
+					 </div>
+					</div>
+					<div class="col-sm-2">
+					    <label for="domicilio">ISR</label>
+				    	<input type="number" class="form-control" placeholder=""  ng-model="pl.plan.isr2" >
+			    	</div> 
+			    	<div class="col-sm-3">
+					    <label for="domicilio">Factor de Recuperación</label>
+				    	<div class="form-control">{{1/(1-((100/(100 -(10 + pl.plan.isr2)))*(pl.plan.trema2/100)))| number : 2}}</div>
+			    	</div>
+			    	
+			    	<div class="col-sm-2">
+					    <label>Precio de Venta</label>
+				    	<div class="form-control">{{pl.plan.egresos * (1/(1-((100/(100 -(10 + pl.plan.isr2)))*(pl.plan.trema2/100))))| number : 2}}</div>
+				    </div>
+				    <!-- <div class="col-sm-2">
+					    <label>Precio de Venta</label>
+				    	<div class="form-control">{{pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100| number : 2}}</div>
+				    </div> -->
+				    
+				
+				    </div>
+		        </div>
+		
+
+
+      <!--     //////////////////////////////PRIMER ROW//////////////////////////////// -->				    
+                 <br/>
+                 <div class="row">
+	                 <div class="col-sm-12"> 
+	                 <h1>Seccion para calcular egresos</h1>
+	                 <br/>
+	                  <div class="col-sm-3">
+					    <label>Precio de Venta</label>
+				    	<input type="number" class="form-control" placeholder=""  ng-model="pl.plan.ingresos" >
 				    </div>
 
 				    <div class="col-sm-2">
@@ -27,57 +76,95 @@
 					    </div>
 					 </div>
 					</div>
-				
-
-
-				   <!--  <div class="col-sm-3">
-					    <label>Tasa de rendimiento minima aceptable</label>
-				    	<input type="number" class="form-control" placeholder="TREMA" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.trema" >
-				    </div> -->
+					<div class="col-sm-2">
+					    <label for="domicilio">ISR</label>
+				    	<input type="number" class="form-control" placeholder=""  ng-model="pl.plan.isr" >
+			    	</div> 
 			    	<div class="col-sm-3">
 					    <label for="domicilio">Factor de Recuperación</label>
-				    	<div class="form-control">{{pl.plan.factorRecuperacion | number : 2}}</div>
+				    	<div class="form-control">{{1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))| number : 2}}</div>
 			    	</div>
 				    <div class="col-sm-2">
 					    <label>Total de Egresos</label>
-				    	<div class="form-control">{{pl.plan.totalEgresos | number : 2}}</div>
+				    	<div class="form-control">{{pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100| number : 2}}</div>
+				    </div>
+				    </div>
+				    </div>
+
+
+		
+
+
+
+				    <div class="row">
+				    <div class="col-sm-12">
+						    <div class="col-sm-2">
+						     <div class="form-group">
+							    <label>Relacion % Cd/Ingresos</label>
+							    <div class="input-group">
+							      <div class="input-group-addon">%</div>
+							      <div class="form-control" id="exampleInputAmount">{{(pl.totalFinalCostosDirectos) / (pl.plan.ingresos) * 100 | number : 2}}</div>
+							     <!--  <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount"> -->
+							    </div>
+							 </div>
+							</div>
+
+					    	<div class="col-sm-2">				    	
+							    <label>Costo Directo</label>
+
+									<div style="width: 150px;" class="form-control">{{pl.totalFinalCostosDirectos | currency}}</div>
+			
+						    </div>
+					    	<div class="col-sm-2">				    	
+							    <label>Gastos Indirectos</label>
+						    	<div class="form-control">{{(pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos)  | number : 2}}</div>
+						    </div>
+					    </div>
+					  </div>
+				   
+			    <br/><br/>
+
+			    		        <div class="row">
+			    <div class="col-sm-12">
+			    <h1>Seccion para calcular precio de venta</h1>
+			    <br/>
+			        <div class="col-sm-3">
+					    <label>Egresos</label>
+				    	<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.egresos2" >
+				    </div>
+
+				    <div class="col-sm-2">
+				     <div class="form-group">
+				     	TREMA
+					    <a class="pull-left" data-toggle="popover" data-placement="top" data-content="Tasa de rendimiento minima aceptable"> <i class="fa fa-info-circle" aria-hidden="true"></i></a><br/>
+					    <div class="input-group">
+					      <div class="input-group-addon">%</div>
+					      	<input type="number" class="form-control" placeholder="TREMA" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.trema3" >
+					     <!--  <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount"> -->
+					    </div>
+					 </div>
+					</div>
+					<div class="col-sm-2">
+					    <label for="domicilio">ISR</label>
+				    	<input type="number" class="form-control" placeholder=""  ng-model="pl.plan.isr3" >
+			    	</div> 
+			    	<div class="col-sm-3">
+					    <label for="domicilio">Factor de Recuperación</label>
+				    	<div class="form-control">{{1/(1-((100/(100 -(10 + pl.plan.is3)))*(pl.plan.trema3/100)))| number : 2}}</div>
+			    	</div>
+			    	
+			    	<div class="col-sm-2">
+					    <label>Precio de Venta</label>
+				    	<div class="form-control">{{pl.plan.egresos2 * (1/(1-((100/(100 -(10 + pl.plan.isr3)))*(pl.plan.trema3/100))))| number : 2}}</div>
+				    </div>
+				    <!-- <div class="col-sm-2">
+					    <label>Precio de Venta</label>
+				    	<div class="form-control">{{pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100| number : 2}}</div>
+				    </div> -->
+				    
+				
 				    </div>
 		        </div>
-		    </div>
-
-
-      <!--     //////////////////////////////PRIMER ROW//////////////////////////////// -->				    
-                 
-                 <div class="row">
-	                 <div class="col-sm-12">
-					    <div class="col-sm-2">
-					     <div class="form-group">
-						    <label>Relacion % Cd/Ingresos</label>
-						    <div class="input-group">
-						      <div class="input-group-addon">%</div>
-						      <div class="form-control" id="exampleInputAmount">{{(pl.totalFinalCostosDirectos) / (pl.plan.ingresos) * 100 | number : 2}}</div>
-						     <!--  <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount"> -->
-						    </div>
-						 </div>
-						</div>
-
-						<!--  	<div class="col-sm-2">				    	
-						    <label>Relacion % Cd/Ingresos</label>
-					    	<div class="form-control">%{{(pl.totalFinalCostosDirectos) / (pl.plan.ingresos) * 100 | number : 2}}</div>
-					    </div> -->
-
-				    	<div class="col-sm-2">				    	
-						    <label>Costo Directo</label>
-
-								<div style="width: 150px;" class="form-control">{{pl.totalFinalCostosDirectos | currency}}</div>
-		
-					    </div>
-				    	<div class="col-sm-2">				    	
-						    <label>Gastos Indirectos</label>
-					    	<div class="form-control">{{pl.plan.totalEgresos - pl.totalFinalCostosDirectos  | currency}}</div>
-					    </div>
-				    </div>
-			    </div><br/><br/>
 <!-- ////////////////////////////////////////////////////TABLA////////////////////////////////////////////////////////
  -->			     <div class="row">
 					<div class="col-sm-9">
@@ -93,32 +180,36 @@
 							    </tr> 
 							    <tr>
 							    <th  width="20%"><div class="text-center">Gastos</div></th>
-							    <td  width="20%">{{pl.plan.totalEgresos - pl.totalFinalCostosDirectos  | currency}}</td>
+							    <td  width="20%">{{(pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos)  | number : 2}}</td>
 							    
 							    </tr>
 							    <tr>
 							    <th  width="20%"><div class="text-center">Utilidad Fiscal</div></th>
-							    <td  width="20%">{{(pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - (pl.plan.totalEgresos - pl.totalFinalCostosDirectos) | currency }} </td> 
+							    <td  width="20%">{{(pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos)) | currency }} </td> 
 							    
 							    </tr>
 							    <tr>
 							    <th  width="20%"><div class="text-center">ISR</div></th>
-							    <td  width="20%">{{((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - (pl.plan.totalEgresos - pl.totalFinalCostosDirectos)) * 0.3 | currency }}</td>
+							    <td  width="20%">{{((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * 0.3 | number : 2 }}</td>
 							    
 							    </tr>
 							    <tr>
 							    <th  width="20%"><div class="text-center">PTU</div></th>
-							    <td  width="20%">{{((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - (pl.plan.totalEgresos - pl.totalFinalCostosDirectos)) * 0.1 | currency}}</td>
+							    <td  width="20%">{{((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * 0.1 | currency}}</td>
 							    
 							    </tr>
 							    <tr>
 							    <th  width="20%"><div class="text-center">Utilidad Neta</div></th>
-							    <td  width="20%">{{((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - (pl.plan.totalEgresos - pl.totalFinalCostosDirectos)) -  (((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - (pl.plan.totalEgresos - pl.totalFinalCostosDirectos)) * 0.3) -  (((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - (pl.plan.totalEgresos - pl.totalFinalCostosDirectos)) * 0.1) | currency}}</td>
+							    <td  width="20%">{{(((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) - 
+							    (((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * 0.3)-
+							     (((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * 0.1 ))  | currency}}</td>
 							    
 							    </tr>
 							    <tr>
 							    <th  width="20%"> <div class="text-center">Rentabilidad</div></th>
-							    <td  width="20%">{{(((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - (pl.plan.totalEgresos - pl.totalFinalCostosDirectos)) -  (((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - (pl.plan.totalEgresos - pl.totalFinalCostosDirectos)) * 0.3) -  (((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - (pl.plan.totalEgresos - pl.totalFinalCostosDirectos)) * 0.1)) / (pl.plan.ingresos) * 100 | currency}}</td>
+							    <td  width="20%">{{(((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) - 
+							    (((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * 0.3)-
+							     (((pl.plan.ingresos) - (pl.totalFinalCostosDirectos) - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * 0.1 )) / pl.plan.ingresos * 100 | number:2}}%</td>
 							    
 							    </tr>
 								</tr>
@@ -137,7 +228,7 @@
 									<label>Gastos de Oficina</label>
 						    </div>
 						    <div class="col-sm-2">
-					    		<div class="form-control">{{pl.indirectosEmpresas[1].cantidades | currency}}</div>
+					    		<div class="form-control">{{pl.indirectosEmpresas[1].cantidades  | currency}}</div>
 						    </div>
 
 						    <div class="col-sm-2">
@@ -166,7 +257,7 @@
 									<label>Gastos Indirectos de Campo</label>
 						    </div>
 						    <div class="col-sm-2" >
-								<div class="form-control">{{pl.indirectosEmpresas[1].GasIndiCampo | currency }}</div>
+								<div class="form-control">{{((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos)) - pl.indirectosEmpresas[1].cantidades  | currency }}</div>
 						    </div>
 
 
@@ -186,7 +277,8 @@
 
 
 						    <div class="col-sm-2">
-									<div class="form-control">{{(pl.indirectosEmpresas[1].GasIndiCampo) - (pl.indirectosEmpresas[1].GasIndiCampo * pl.plan.gastosIndirectosCampo1)/100 | number : 2}}</div>
+									<div class="form-control">{{
+								 (((pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * pl.plan.gastosIndirectosCampo1)/100) - (pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos)))  | number : 2}}</div>
 						    </div>
 							</div>
 				    </div>
@@ -199,34 +291,27 @@
 									<label>Total</label>
 						    </div>
 						    <div class="col-sm-2">
-									<div class="form-control">{{pl.indirectosEmpresas[1].total | currency }}</div>
+									<div class="form-control">{{pl.indirectosEmpresas[1].cantidades +  (((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos)) - pl.indirectosEmpresas[1].cantidades) | currency }}</div>
 						    </div>
 						    <div class="col-sm-2">
 									<div class="form-control">{{hola}}</div>
 						    </div>
 						    <div class="col-sm-2">
-									<div class="form-control">{{((pl.indirectosEmpresas[1].cantidades) - (pl.indirectosEmpresas[1].cantidades * pl.plan.gastosFijosOficina1 )/ 100) + ((pl.indirectosEmpresas[1].GasIndiCampo) - (pl.indirectosEmpresas[1].GasIndiCampo * pl.plan.gastosIndirectosCampo1)/100) | currency }}</div>
+									<div class="form-control">{{((pl.indirectosEmpresas[1].cantidades) - (pl.indirectosEmpresas[1].cantidades * pl.plan.gastosFijosOficina1 )/ 100)
+									+ 
+									(((pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * pl.plan.gastosIndirectosCampo1)/100) - (pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) | number:2 }}</div>
 						    </div>
-						    <div class="col-sm-2">
+						   <!--  <div class="col-sm-2">
 									<div class="form-control">{{((((pl.indirectosEmpresas[1].cantidades) - (pl.indirectosEmpresas[1].cantidades * pl.plan.gastosFijosOficina1 )/ 100) + ((pl.indirectosEmpresas[1].GasIndiCampo) - (pl.indirectosEmpresas[1].GasIndiCampo * pl.plan.gastosIndirectosCampo1)/100)) / (pl.plan.ingresos)) * 100| currency}}</div>
-						    </div>
+						    </div> -->
 							</div>
 				    </div>
 			    </div>
 		  	</div>
 <!-- Costos Directos -->
 <div class="well">
-		<h2 style="text-align: center">Costos Directos</h2><br/>
-			<div class="row">
-				<div class="col-sm-12">
-				
-						<div ng-repeat="(key, costo) in pl.costos" style="margin-top: 2px" class="col-sm-4 ">
-							<label for="{{key}}">{{costo.nombre}}</label>
-							<input type="number" id="{{key}}" class="form-control" ng-model="costo.factor">
-						</div>
-									</div>
-			</div><br/><br/>
-					<br/>
+		<h2 style="text-align: center">Plan de reduccion de costos directos</h2><br/>
+	
 					<br/>
 			
 							<table style="width:80%">
@@ -236,11 +321,13 @@
 										<td>{{costo.costo}}</td><br/>
 										<td>
 											<div class="col-sm-12">
+											<label>Porcentaje</label>
 												<div style="width: 80px;" class="form-control">{{(costo.total) / (pl.totalFinalCostosDirectos)*100 | number : 2}}%</div>
 						    				</div>
 						    			</td>
 										<td >
 										 	<div class="col-sm-12">
+										 	<label>Presupuesto Base</label>
 					    						<div style="width: 150px;" class="form-control">{{costo.total | currency}}</div>
 						    				</div>
 						    			</td>
@@ -251,8 +338,9 @@
 									    </td> -->
 						  			    <td>
 						  			    	<div class="col-sm-12">
+						  			    	<label>Presupuesto Ajustado</label>
 												<div style="width: 150px;" class="form-control">{{costo.presupuestoTotal | currency}}</div>
-						    				</div>
+						    				</div><!-- costo.presupuestoTotal -->
 						    			</td>	    			
 									</tr>
 									</thead>
@@ -285,11 +373,59 @@
 						    				</div>
 						    				</div>									    
 										</th>
+										<th>
+										<div class="col-sm-12">
+										 <div class="form-group">
+										<label>Total</label>
+										<div class="input-group">
+												<div style="width: 150px;" class="form-control">{{pl.costoTotalPres.totalpreFinal | number : 2 }}</div>
+												</div>
+						    				</div>
+						    				</div>									    
+										</th>
 									</tr>
 									</tbody>	
 							</table>
+
+
+
+
+
+
+                    <div class="row">
+							<div class="col-sm-12"><!-- (Poner %) -->
+				<div ng-repeat="(key, costo) in pl.costos" style="margin-top: 2px" class="col-sm-4 ">
+				<div class="form-group">
+						<label for="{{key}}">{{costo.nombre}}</label>
+						 <div class="input-group">
+						 <div class="input-group-addon">%</div>
+							
+							<input type="number" id="{{key}}" class="form-control" ng-model="costo.factor">
+							 </div>
 						</div>
-Estadistica de Gastos y Productividad 
+					</div>
+					</div>
+					</div>
+					<div class="row" ng-repeat="plan in pl.planes">
+						<br>
+						<div class="col-sm-12">
+
+						<input type="submit" ng-click="pl.editarCambios(plan._id)" value="Editar" class="btn btn-primary" ng-show="pl.editCam" >
+							
+							<input type="submit" ng-click="pl.actualizarCambios(pl.plan,pl.costos,plan._id)" value="Actualizar Cambios" class="btn btn-primary" >
+						</div>
+					</div>
+
+
+
+
+
+
+
+
+
+						</div>
+<!-- Estadistica de Gastos y Productividad 
 		  	<div class="well">
 			  	<div class="row">
 						<div class="col-sm-6">
@@ -314,7 +450,7 @@ Estadistica de Gastos y Productividad
 											<label>Gastos de Oficina Mensual</label>
 								    </div>
 								    <div class="col-sm-6">
-							    		<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.estadisticaGastosIndirectosObraPorcentajeIndirectos" required>
+							    		<input type="number" class="form-control"   ng-model="pl.plan.estadisticaGastosIndirectosObraPorcentajeIndirectos" >
 								    </div>
 									</div>
 						    </div>
@@ -325,16 +461,16 @@ Estadistica de Gastos y Productividad
 									<div class="row">
 								    <div class="col-sm-6">
 											<label>Gastos de Oficina Estadisticos para la Obra</label>
-								    </div><!--{{(pl.plan.ingresos)*(pl.indirectosEmpresas[3].total)/ 100 | currency}}-->
+								    </div>
 								    <div class="col-sm-6">
 											<div class="form-control">{{pl.indirectosEmpresas[1].estadisticos | currency}}</div>
-								    </div><!--{{pl.plan.estadisticaGastosIndirectosObraGastosFijosOficina}}-->
+								    </div>
 									</div>
 						    </div>
 					    </div>
 				    </div>
 			  	</div>
-		  	</div>
+		  	</div> -->
 <!-- Ultima Tabla -->
 		  	<div class="well">
 			    <div class="row">
@@ -345,11 +481,9 @@ Estadistica de Gastos y Productividad
 						    </div>
 						    <div class="col-sm-1">
 						    <label>Meses</label>
-					    		<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.meses" required>
+					    		<input type="number" class="form-control"   ng-model="pl.plan.meses" >
 						    </div>
-						    <div class="col-sm-4">
-									<label>Meses</label>
-						    </div>
+						
 							</div>
 				    </div>
 			    </div>
@@ -387,7 +521,7 @@ Estadistica de Gastos y Productividad
 									<label>Anticipo de Obra</label>
 						    </div>
 						    <div class="col-sm-4">
-					    		<input type="number" class="form-control" placeholder="" ng-model="pl.plan.anticipoObras" >
+					    		<input type="number" class="form-control"  ng-model="pl.plan.anticipoObras" >
 						    </div>
 						    <div class="col-sm-4">
 									<div class="form-control">{{pl.plan.ingresos * pl.plan.anticipoObras / 100 | currency}}</div>
@@ -401,6 +535,7 @@ Estadistica de Gastos y Productividad
             <div class="well">			 
                 <div class="row">
 					<div class="col-sm-12">
+					<h3>Estado de resultados ajustados</h3>
 						<table class="table table-bordered">
 							<thead>
 							<tr>
@@ -411,46 +546,103 @@ Estadistica de Gastos y Productividad
 								<tr>
 								<th width="20%"><div class="text-center">Ingresos</div></th>
 								<td width="20%">{{pl.plan.ingresos | currency}} </td>
-								<td width="20%"> </td>
+								<td width="20%"> {{pl.jaime[0].total | currency}}</td>
 								<tr>
 							    <th  width="20%"><div class="text-center">Costos</div></th>
-							     <td width="20%">{{pl.totalFinalCostosDirectos | currency}} </td>
-							     <td width="20%">numero </td>
+							     <td width="20%">{{pl.costoTotalPres.totalpreFinal | currency}} </td>
+							     <td width="20%">{{pl.jaime[0].costo | currency}} </td> 
 							    </tr> 
 							    <tr>
 							    <th  width="20%"><div class="text-center">Gastos</div></th>
-							    <td  width="20%">{{((pl.indirectosEmpresas[1].cantidades) - (pl.indirectosEmpresas[1].cantidades * pl.plan.gastosFijosOficina1 )/ 100) + ((pl.indirectosEmpresas[1].GasIndiCampo) - (pl.indirectosEmpresas[1].GasIndiCampo * pl.plan.gastosIndirectosCampo1)/100) | currency }}</td>
-							    <td  width="20%">numero </td>
+							    <td  width="20%">{{((pl.indirectosEmpresas[1].cantidades) - (pl.indirectosEmpresas[1].cantidades * pl.plan.gastosFijosOficina1 )/ 100)
+									+ 
+									(((pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * pl.plan.gastosIndirectosCampo1)/100) - (pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) | currency }}
+
+							    </td>
+							     <td  width="20%">{{pl.jaime[0].gastosEstado | currency}} </td> 
 							    </tr>
 							    <tr>
-							   <!--  ((pl.plan.estadisticaGastosIndirectosObraPorcentajeIndirectos) - (pl.indirectosEmpresas[1].estadisticos / pl.plan.meses)) -->
+							  
 							    <th  width="20%"><div class="text-center">Utilidad Fiscal</div></th>
-							    <td  width="20%">{{(pl.plan.ingresos)
-							     - (pl.totalFinalCostosDirectos)
-							     - ((pl.indirectosEmpresas[1].cantidades) - (pl.indirectosEmpresas[1].cantidades * pl.plan.gastosFijosOficina1 )/ 100) + ((pl.indirectosEmpresas[1].GasIndiCampo) - (pl.indirectosEmpresas[1].GasIndiCampo * pl.plan.gastosIndirectosCampo1)/100)
+							    <td  width="20%">{{(pl.plan.ingresos) - (pl.costoTotalPres.totalpreFinal) - 
+							    (((pl.indirectosEmpresas[1].cantidades) - (pl.indirectosEmpresas[1].cantidades * pl.plan.gastosFijosOficina1 )/ 100)
+									+ 
+									(((pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * pl.plan.gastosIndirectosCampo1)/100) - (pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos)))) - 
+									(pl.plan.estadisticaGastosIndirectosObraPorcentajeIndirectos) - (pl.indirectosEmpresas[1].estadisticos / pl.plan.meses) | currency}} </td> 
+							    
+							   <td  width="20%">{{pl.jaime[0].total - pl.jaime[0].costo - pl.jaime[0].gastosEstado | currency }} </td> 
 
-							     - ((pl.plan.estadisticaGastosIndirectosObraPorcentajeIndirectos) - (pl.indirectosEmpresas[1].estadisticos / pl.plan.meses)) | currency}} </td> 
-							    <td  width="20%">numero </td>
 							    </tr>
 							    <tr>
 							    <th  width="20%"><div class="text-center">ISR</div></th>
-							    <td  width="20%">numero</td>
-							    <td  width="20%">numero </td>
+							    <td  width="20%">{{((pl.plan.ingresos) - (pl.costoTotalPres.totalpreFinal) - 
+							    (((pl.indirectosEmpresas[1].cantidades) - (pl.indirectosEmpresas[1].cantidades * pl.plan.gastosFijosOficina1 )/ 100)
+									+ 
+									(((pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * pl.plan.gastosIndirectosCampo1)/100) - (pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos)))) - 
+									(pl.plan.estadisticaGastosIndirectosObraPorcentajeIndirectos) - (pl.indirectosEmpresas[1].estadisticos / pl.plan.meses)) * pl.plan.isr / 100 | currency}}</td>
+
+							     <td  width="20%">{{(pl.jaime[0].total - pl.jaime[0].costo - pl.jaime[0].gastosEstado) * (pl.plan.isr /100) | currency}} </td> 
+
 							    </tr>
 							    <tr>
 							    <th  width="20%"><div class="text-center">PTU</div></th>
-							    <td  width="20%">numero</td>
-							    <td  width="20%">numero </td>
+							    <td  width="20%">{{((pl.plan.ingresos) - (pl.costoTotalPres.totalpreFinal) - 
+							    (((pl.indirectosEmpresas[1].cantidades) - (pl.indirectosEmpresas[1].cantidades * pl.plan.gastosFijosOficina1 )/ 100)
+									+ 
+									(((pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * pl.plan.gastosIndirectosCampo1)/100) - (pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos)))) - 
+									(pl.plan.estadisticaGastosIndirectosObraPorcentajeIndirectos) - (pl.indirectosEmpresas[1].estadisticos / pl.plan.meses)) * 10/100 | currency }}</td>
+
+							     <td  width="20%">{{(pl.jaime[0].total - pl.jaime[0].costo - pl.jaime[0].gastosEstado) * (10 / 100) | currency}}  </td>
+
 							    </tr>
 							    <tr>
 							    <th  width="20%"><div class="text-center">Utilidad Neta</div></th>
-							    <td  width="20%">numero</td>
-							    <td  width="20%">numero </td>
+							    <td  width="20%">{{(pl.plan.ingresos) - (pl.costoTotalPres.totalpreFinal) - 
+							    (((pl.indirectosEmpresas[1].cantidades) - (pl.indirectosEmpresas[1].cantidades * pl.plan.gastosFijosOficina1 )/ 100)
+									+ 
+									(((pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * pl.plan.gastosIndirectosCampo1)/100) - (pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos)))) - 
+									(pl.plan.estadisticaGastosIndirectosObraPorcentajeIndirectos) - (pl.indirectosEmpresas[1].estadisticos / pl.plan.meses)
+							     
+							     - (((pl.plan.ingresos) - (pl.costoTotalPres.totalpreFinal) - 
+							    (((pl.indirectosEmpresas[1].cantidades) - (pl.indirectosEmpresas[1].cantidades * pl.plan.gastosFijosOficina1 )/ 100)
+									+ 
+									(((pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * pl.plan.gastosIndirectosCampo1)/100) - (pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos)))) - 
+									(pl.plan.estadisticaGastosIndirectosObraPorcentajeIndirectos) - (pl.indirectosEmpresas[1].estadisticos / pl.plan.meses)) * pl.plan.isr / 100)
+
+							    -(((pl.plan.ingresos) - (pl.costoTotalPres.totalpreFinal) - 
+							    (((pl.indirectosEmpresas[1].cantidades) - (pl.indirectosEmpresas[1].cantidades * pl.plan.gastosFijosOficina1 )/ 100)
+									+ 
+									(((pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * pl.plan.gastosIndirectosCampo1)/100) - (pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos)))) - 
+									(pl.plan.estadisticaGastosIndirectosObraPorcentajeIndirectos) - (pl.indirectosEmpresas[1].estadisticos / pl.plan.meses))) * 10/100 | currency}}
+							      </td>
+
+							    <td  width="20%">{{(pl.jaime[0].total - pl.jaime[0].costo - pl.jaime[0].gastosEstado) - ((pl.jaime[0].total - pl.jaime[0].costo - pl.jaime[0].gastosEstado) * (pl.plan.isr /100)) - ((pl.jaime[0].total - pl.jaime[0].costo - pl.jaime[0].gastosEstado) * (10 / 100)) | currency}} </td> 
+
 							    </tr>
 							    <tr>
 							    <th  width="20%"> <div class="text-center">Rentabilidad</div></th>
-							    <td  width="20%">numero</td>
-							    <td  width="20%">numero </td>
+							    <td  width="20%">{{(pl.plan.ingresos) / 
+							    ((pl.plan.ingresos) - (pl.costoTotalPres.totalpreFinal) - 
+							    (((pl.indirectosEmpresas[1].cantidades) - (pl.indirectosEmpresas[1].cantidades * pl.plan.gastosFijosOficina1 )/ 100)
+									+ 
+									(((pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * pl.plan.gastosIndirectosCampo1)/100) - (pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos)))) - 
+									(pl.plan.estadisticaGastosIndirectosObraPorcentajeIndirectos) - (pl.indirectosEmpresas[1].estadisticos / pl.plan.meses)
+							     
+							     - (((pl.plan.ingresos) - (pl.costoTotalPres.totalpreFinal) - 
+							    (((pl.indirectosEmpresas[1].cantidades) - (pl.indirectosEmpresas[1].cantidades * pl.plan.gastosFijosOficina1 )/ 100)
+									+ 
+									(((pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * pl.plan.gastosIndirectosCampo1)/100) - (pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos)))) - 
+									(pl.plan.estadisticaGastosIndirectosObraPorcentajeIndirectos) - (pl.indirectosEmpresas[1].estadisticos / pl.plan.meses)) * pl.plan.isr / 100)
+
+							    -(((pl.plan.ingresos) - (pl.costoTotalPres.totalpreFinal) - 
+							    (((pl.indirectosEmpresas[1].cantidades) - (pl.indirectosEmpresas[1].cantidades * pl.plan.gastosFijosOficina1 )/ 100)
+									+ 
+									(((pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos))) * pl.plan.gastosIndirectosCampo1)/100) - (pl.indirectosEmpresas[1].cantidades  - ((pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100) -  (pl.totalFinalCostosDirectos)))) - 
+									(pl.plan.estadisticaGastosIndirectosObraPorcentajeIndirectos) - (pl.indirectosEmpresas[1].estadisticos / pl.plan.meses))) * 10/100)
+							    | number: 2}}%</td>
+
+							    <td  width="20%">{{pl.jaime[0].total / ((pl.jaime[0].total - pl.jaime[0].costo - pl.jaime[0].gastosEstado) - ((pl.jaime[0].total - pl.jaime[0].costo - pl.jaime[0].gastosEstado) * (pl.plan.isr /100)) - ((pl.jaime[0].total - pl.jaime[0].costo - pl.jaime[0].gastosEstado) * (10 / 100))) | currency}} </td>
+							    
 							    </tr>
 								</tr>
 							</thead>
@@ -463,7 +655,7 @@ Estadistica de Gastos y Productividad
 						<br>
 						<div class="col-sm-12">
 							<input type="submit" ng-click="pl.guardar(pl.costos)" value="Guardar" class="btn btn-primary" ng-show="pl.action">
-							<input type="submit" ng-click="pl.actualizar(pl.costos)" value="Actualizar" class="btn btn-primary" ng-show="!pl.action">
+							<input type="submit" ng-click="pl.actualizar(pl.plan,pl.costos)" value="Actualizar" class="btn btn-primary" ng-show="!pl.action">
 						</div>
 					</div>
 		    	</div>
@@ -496,8 +688,8 @@ Estadistica de Gastos y Productividad
 			<tbody>
 		    <tr ng-repeat="plan in pl.planes">
 			    <td>{{pl.obra.nombre}} </td>
-			    <td>{{plan.ingresos}} </td>
-			    <td>{{plan.porcentajeObras | number : 2}} </td> 
+			    <td>{{plan.ingresos | currency}} </td>
+			    <td>{{plan.anticipoObras | currency}} </td> 
 			    <td>
 				    <div class="text-center">
 				    	<span ng-if="plan.estatus" class="label label-success">

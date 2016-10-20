@@ -178,7 +178,7 @@ angular.module('formulas').config(['$injector', function ($injector) {
       controller: 'GICTRL as GI',
     })
       .state('root.addGasto', {
-      url: '/addGasto/',
+      url: '/GastosDeOficina/',
       templateUrl: 'client/GI/addGasto.ng.html',
       controller: 'AddGasto as add',
     })

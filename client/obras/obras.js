@@ -4,12 +4,14 @@ function ObrasCtrl($scope, $meteor, $reactive, $state, $stateParams, toastr){
 $reactive(this).attach($scope);
 
 	this.subscribe('obras',()=>{
-	return [{estatus:true}] 
+	return [{empresa_id : Meteor.user() != undefined ? Meteor.user().profile.empresa_id : undefined,estatus:true}] 
     });
 
     
 
-	this.subscribe('empresas');
+	this.subscribe('empresas',()=>{
+	return [{_id : Meteor.user().profile.empresa_id,estatus:true}] 
+    });
 
   this.action = true;
   
@@ -70,5 +72,7 @@ $reactive(this).attach($scope);
 		
 		Obras.update({_id: id},{$set :  {estatus : obra.estatus}});
     };
+
+    
 		
 };

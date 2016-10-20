@@ -6,7 +6,8 @@ let rc = $reactive(this).attach($scope);
     this.costo_id = '';
     this.nada = undefined;
 	this.totalCosto = 0;
-	this.costo = {};	
+	this.costo = {};
+	this.costo.detalle = [];	
 
 	this.subscribe('obra', () => {
   	return [{ _id : $stateParams.id, estatus : true}]
@@ -79,7 +80,7 @@ let rc = $reactive(this).attach($scope);
 	  },
 	  plan : () => {
 	  	var plan = Planes.findOne();
-	  	var costosPeriodos = Periodos.find().fetch();
+	  	var costosPeriodos = Periodos.find({tipo:"costo"}).fetch();
   		if(plan){
   			_.each(costosPeriodos,function(costoPeriodo){
   				_.each(plan.costos,function(costo){				
@@ -99,7 +100,7 @@ let rc = $reactive(this).attach($scope);
 	    costos : () => {
 	
 
-  	    var costos = Costos.find().fetch();
+  	    var costos = Costos.find({estatus:true});
   	    for (var i = 0; i < costos.length; i++) {
 				if(!costos[i].factor)
 					costos[i].factor=0;
@@ -107,6 +108,10 @@ let rc = $reactive(this).attach($scope);
   	    return costos;
 		 
 	  },
+
+
+
+
 	    totalGastosAnual : () => {
 	  	var obrasGastos = [];
 	  	if(this.getReactively("obras") != undefined){
@@ -129,8 +134,11 @@ let rc = $reactive(this).attach($scope);
 	   periodos : () => {
 		  return Periodos.find();
 	  },
-	  	 		costosTotales : () => {
-	  	 	var costosPeriodos = Periodos.find().fetch();
+	  periodosGastos : () => {
+		  return Periodos.find({tipo:"costo"});
+	  },
+	  costosTotales : () => {
+	  	 	var costosPeriodos = Periodos.find({tipo:"costo"}).fetch();
 			var costosTotales = {};
 
 		   		_.each(rc.getReactively("partidas"), function(partida){
@@ -142,6 +150,7 @@ let rc = $reactive(this).attach($scope);
 		   							if("undefined" == typeof costosTotales[costoPresupuesto.nombre]){
 		   								costosTotales[costoPresupuesto.nombre] = {};
 		   								costosTotales[costoPresupuesto.nombre].partida = partida.nombre;
+		   								costosTotales[costoPresupuesto.nombre].partida_id = partida._id;
 		   								costosTotales[costoPresupuesto.nombre].costo_id =  costoPresupuesto._id;
 		   								costosTotales[costoPresupuesto.nombre].costo =  costoPresupuesto.nombre;
 		   								costosTotales[costoPresupuesto.nombre].total = costoPresupuesto.value * presupuesto.cantidad;
@@ -179,40 +188,137 @@ let rc = $reactive(this).attach($scope);
 
 	   			});
 	   		});
+	   		_.each(rc.getReactively("planes"), function(plan){
+		   		_.each(costosTotalesArreglos, function(costoTotal){
+		   			_.each(plan.costos, function(costosPlan){
+		   				if(costoTotal.costo_id  ==  costosPlan.costo_id){
+		   					costoTotal.factor = costosPlan.factor;
+						}
+		   			});
 
+		   		});
+		   	});
+
+
+	   		
 
 	   		_.each(rc.getReactively("planes"), function(plan){
 	   			//console.log("entro al plan",plan);
-	   			_.each(costosPeriodos,function(costoPeriodo){
-	   				console.log(costoPeriodo);
-	   			_.each(plan.costos, function(costosPlan){
+	   		_.each(costosTotalesArreglos, function(costoTotal){
+	   			var totalPer=0.00;
+	   			_.each(rc.getReactively("periodosGastos"),function(costoPeriodo){
+	   				
+	   				
+
+	   				
+	   			
+
+	   			
 	   				//console.log("entro papa",costosPlan);
 	   				
-	   				_.each(costosTotalesArreglos, function(costoTotal){
+	   				
+	   				
+	   					
 	   					//console.log("entro al arreglo",costoTotal);
-	   					var totalPer=0.00;
-	   					if(costoTotal.costo_id == costoPeriodo.costo_id)
+	   					
+	   					if(costoTotal.costo_id  ==  costoPeriodo.costo_id)
 	   					{
-	   						costoTotal.presupuestoTotal = (costoTotal.total) - ((costoTotal.total * costosPlan.factor)/100);
-	   						totalPer = costoPeriodo.comprasSinIva + costoPeriodo.comprasIva + costoPeriodo.contadoSinIva 
-	   						+ costoPeriodo.contadoIva;
+	   						console.log("hola jaime", costoTotal.costo_id, costoPeriodo.costo_id, costoTotal, costoPeriodo)
+	   						costoTotal.presupuestoTotal = (costoTotal.total) - ((costoTotal.total * costoTotal.factor)/100);
+	   						totalPer += costoPeriodo.comprasSinIva + (costoPeriodo.comprasIva / 1.16) + costoPeriodo.contadoSinIva 
+	   						+ (costoPeriodo.contadoIva / 1.16);
 	   						costoTotal.real = totalPer;
+	   						console.log("total acumulado", totalPer);
 	   						
 	   						//console.log("entro final", costoTotal);
-	   					}else{
-	   						costoTotal.real = 0.00;
+	   					// }else{
+	   					// 	costoTotal.real = 0.00;
 	   					}
+
+
 	   				});
-	   			});
+	   			
 	   		});
 	   	});
+	   		
+
+
+
+_.each(rc.getReactively("planes"), function(plan){
+	totalReal=0;
+		_.each(plan.costos, function(costosPlan){
+			
+	   		_.each(rc.getReactively("periodosGastos"),function(costoPeriodo){
+	   			
+	   			_.each(costosTotalesArreglos, function(costoTotal){
+	   				if(costoTotal.costo_id == costosPlan.costo_id)
+	   					totalReal += costoTotal.real
+	   				costoTotal.reales = totalReal
+
+
+	   			});
+	   		});
+	   		});
+
+});
+
+
+
+
 	   		_.each(costosTotalesArreglos, function(costoTotal){
 	   			rc.totalFinalCostosDirectos += costoTotal.total;
 	   			//costoTotal.finalesDirectos = rc.totalFinalCostosDirectos;
 	   			costoTotal.totalDePorcentaje = costoTotal.total / costoTotal.finalesDirectos * 100;
 	   		});
 
+
+	   		_.each(rc.getReactively("controles"), function(control){
+	   			_.each(costosTotalesArreglos, function(costoTotal){
+       
+	             if(costoTotal.costo_id == control.costo_id)
+	   					{
+	   						costoTotal.medida = control.descripcion;	
+	   						
+	   					}
+	   				
+	   		});
+	   			});
+
+
+             _.each(rc.getReactively("controlesResponsables"), function(control){
+	   		_.each(costosTotalesArreglos, function(costoTotal){
+	             if(costoTotal.costo_id == control.costo_id )
+	   					{
+	   						costoTotal.responsables = control.descripcionResponsables;
+	   					}
+	   				
+	   		});
+
+	   		});
+
+
+            _.each(rc.getReactively("controlesPlan"), function(control){
+	   		_.each(costosTotalesArreglos, function(costoTotal){
+	             if(costoTotal.costo_id == control.costo_id )
+	   					{
+	   						costoTotal.plan = control.descripcionTrabajo;
+	   					}
+	   				
+	   		});
+
+	   		});
+	   		_.each(rc.getReactively("controlesForma"), function(control){
+	   		_.each(costosTotalesArreglos, function(costoTotal){
+	             if(costoTotal.costo_id == control.costo_id )
+	   					{
+	   						costoTotal.forma = control.descripcionForma;
+	   					}
+	   				
+	   		});
+
+	   		});
 	   		costosTotalesArreglos.push({final : totalCosto});
+
 	   		console.log("arreglo",costosTotalesArreglos);
 	   		return costosTotales;
 		},
