@@ -227,5 +227,6 @@ angular.module('inoxica').config(['$injector', function ($injector) {
       url: '/unidades/',
       templateUrl: 'client/unidades/unidades.ng.html',
       controller: 'UnidadesCtrl as uni',
+
     });
 }]);     
