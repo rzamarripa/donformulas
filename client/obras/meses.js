@@ -12,16 +12,17 @@ let rc =$reactive(this).attach($scope);
 	this.presupuesto.gastos = []; 
 	this.pagoProveedor = {};
 	this.panelId = "";
-	this.tipoPeriodo = 'costo';
+	//this.tipoPeriodo = 'costo';
 	this.obra_id = $stateParams.id;
 	this.totalDelCobro = 0.00;
 	this.cantidad = 0.00;
 	this.costosTotales = [];
+	this.Resumen = true;
 	////////////PERIODO///////////////////////////////////////////////
 	//this.tipoPeriod = 'gasto';
 		//this.presupuesto.concepto_id = $stateParams.id;
 	this.subscribe('planes',()=>{
-		return [{estatus:true}]
+		return [{obra_id : $stateParams.id,estatus:true}]
 	});
 	this.subscribe('obra', () => {
 		return [{ _id : $stateParams.id, estatus : true}]});
@@ -47,7 +48,7 @@ let rc =$reactive(this).attach($scope);
   });
 
    this.subscribe('cobros',()=>{
-	return [{obra_id : $stateParams.id,mes_id: this.getReactively('mes_id'),estatus:true}] 
+	return [{obra_id : $stateParams.id,estatus:true}] 
   });
 
   this.subscribe('presupuestos',()=>{
@@ -58,12 +59,15 @@ let rc =$reactive(this).attach($scope);
 	return [{obra_id : $stateParams.id,estatus:true}] 
   });
 
+ //  this.subscribe('periodos',()=>{
+	// return [{obra_id : $stateParams.id,partida_id: this.getReactively('partida_id'),obra_id : $stateParams.id, tipo: this.getReactively('tipoPeriodo'),mes_id: this.getReactively('mes_id'),estatus:true}] 
+ //  });
   this.subscribe('periodos',()=>{
-	return [{obra_id : $stateParams.id,partida_id: this.getReactively('partida_id'),obra_id : $stateParams.id, tipo: this.getReactively('tipoPeriodo'),mes_id: this.getReactively('mes_id'),estatus:true}] 
+	return [{obra_id : $stateParams.id,estatus:true}] 
   });
 
   this.subscribe('pagosProveedores',()=>{
-	return [{obra_id : $stateParams.id,mes_id: this.getReactively('mes_id'),estatus:true}] 
+	return [{obra_id : $stateParams.id,estatus:true}] 
   });
 
   
@@ -77,6 +81,37 @@ let rc =$reactive(this).attach($scope);
 		},
 		meses : () => {
 			return Meses.find();
+		},
+		cosas : () => {
+			return PresupuestosCosas.find();
+		},
+		periodos : () => {
+			return Periodos.find({tipo: this.getReactively('tipoPeriodo'),partida_id: this.getReactively('partida_id'),mes_id: this.getReactively('mes_id')});
+		},
+		periodosCampo : () => {
+			return Periodos.find({tipo: this.getReactively('tipoPeriodo'),mes_id: this.getReactively('mes_id')});
+		},
+		periodosTodos : () => {
+			return Periodos.find();
+		},
+
+		gastos : () => {
+			return GastosOficina.find();
+		},
+		pagosProveedores : () => {
+			return PagosProveedores.find({mes_id: this.getReactively('mes_id')});
+		},
+		pagosTodos : () => {
+			return PagosProveedores.find();
+		},
+		cobros : () => {
+			return Cobros.find({mes_id: this.getReactively('mes_id')});
+		},
+		cobrosPorCobrar : () => {
+			return Cobros.find({modo:true});
+		},
+		cobrosTodos : () => {
+			return Cobros.find({modo:false});
 		},
 		costos : () => {
 			var cost = Costos.find().fetch();
@@ -163,21 +198,7 @@ let rc =$reactive(this).attach($scope);
 		/////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////
 
-		cosas : () => {
-			return PresupuestosCosas.find();
-		},
-		periodos : () => {
-			return Periodos.find();
-		},
-		gastos : () => {
-			return GastosOficina.find();
-		},
-		pagosProveedores : () => {
-			return PagosProveedores.find();
-		},
-		cobros : () => {
-			return Cobros.find();
-		},
+		
 		presupuestosTabla : () => {
 			tabla = [];
 			var presupuestos = Presupuestos.find().fetch()
@@ -370,6 +391,7 @@ let rc =$reactive(this).attach($scope);
 		this.accionResumen = false;
 		this.accionGI = false;
         this.Resumen = true;
+
       //  console.log(mes_id);
         
 	};
@@ -388,6 +410,7 @@ let rc =$reactive(this).attach($scope);
 		this.gastoCosto = true;
 		this.tablaPeriodos = true;
    		 this.PeriodoIva = false;
+   		 this.Resumen = true;
 
    		 	 this.period = true;
    
@@ -408,9 +431,10 @@ let rc =$reactive(this).attach($scope);
 		this.obra_id = $stateParams.id;
 		this.mostrarFormPre = false;
 		
-		this.Resumen = true;
+
 		this.Cobro = true;
 		this.Pagos = true;
+		this.Resumen = true;
 		this.presupuesto.cantidad = 0.00;
 		
 		console.log(this.mes_id);
@@ -430,6 +454,7 @@ let rc =$reactive(this).attach($scope);
 		this.mostrarFormPre = true;
 		this.Pagos = true;
 		this.Cobro = true;
+		this.Resumen = true;
 		console.log(mes_id);
 		console.log(obra_id);
 
@@ -448,6 +473,7 @@ let rc =$reactive(this).attach($scope);
 		this.mostrarFormPre = true;
 		this.Pagos = true;
 		this.Cobro = true;
+		this.Resumen = true;
 		console.log(mes_id);
 		console.log(obra_id);
 
@@ -487,18 +513,20 @@ let rc =$reactive(this).attach($scope);
 	
 	};
 
-	this.mostrarResumen = function(id,obra_id)
+	this.mostrarResumen = function(obra_id)
 	{
 		
-		this.mes_id = id;
-		this.obra_id = id;
+		this.obra_id = obra_id
 		this.accionPresupuesto = true;
 		this.accionPeriodo = true;
 		this.Cobro = true;
 		this.Pagos = true;
 		this.gastoCosto = false;
 		this.Resumen = false;
+		console.log(obra_id);
 	};
+
+
 	this.accionGI = true;
 
 
@@ -559,6 +587,11 @@ let rc =$reactive(this).attach($scope);
 	this.cobroTotalFinalPeriodo = function(){
 		total = 0;
 		_.each(this.periodos,function(periodo){total += (periodo.comprasIva / 1.16) + periodo.comprasSinIva + (periodo.contadoIva / 1.16) + periodo.contadoSinIva});
+		return total
+	}
+	this.cobroTotalFinalPeriodoCampo = function(){
+		total = 0;
+		_.each(rc.periodosCampo,function(periodo){total += (periodo.comprasIva / 1.16) + periodo.comprasSinIva + (periodo.contadoIva / 1.16) + periodo.contadoSinIva});
 		return total
 	}
 
@@ -625,6 +658,14 @@ let rc =$reactive(this).attach($scope);
    		 this.tablaPeriodos = true;
    		this.accionPartidas = true;
    		console.log(this.mes_id);
+	}
+
+	this.resumen = function(mes_id,obra_id)
+   {
+		this.mes_id = mes_id;
+		this.obra_id = $stateParams.id;
+   		console.log(this.mes_id);
+
 	}
 
 
@@ -897,6 +938,45 @@ this.actPeriod = true;
 		console.log(cosa); 
 		this.actualizarCosita = false;
 		this.editarCosita = false;
+	};
+
+	this.gastosMasCostos = function()
+	{
+		total = 0;
+		_.each(rc.getReactively("periodosTodos"),function(periodo)
+		  {total += periodo.contadoIva/1.16 + periodo.contadoSinIva});
+		return total
+	};
+	this.gastosMasCostosTotales = function()
+	{
+		total = 0;
+		_.each(rc.getReactively("periodosTodos"),function(periodo)
+		  {total += (periodo.comprasIva /1.16) + periodo.comprasSinIva
+		         + (periodo.contadoIva / 1.16) + periodo.contadoSinIva});
+		return total
+	};
+
+	this.cobrosTotales = function()
+	{
+		total = 0;
+		_.each(rc.getReactively("cobrosTodos"),function(cobro)
+		  {total += cobro.cIva/1.16});
+		return total
+	};
+
+	this.cobrosPorCobrarTotales = function()
+	{
+		total = 0;
+		_.each(rc.getReactively("cobrosPorCobrar"),function(cobro)
+		  {total += cobro.cIva/1.16});
+		return total
+	};
+	this.pagosProveedoresTotales = function()
+	{
+		total = 0;
+		_.each(rc.getReactively("pagosTodos"),function(pago)
+		  {total += pago.pIva/1.16 + pago.pSinIva});
+		return total
 	};
 
 

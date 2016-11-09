@@ -90,7 +90,7 @@
 				    <th><div class="text-center">{{obra.gastosPCampo}}</div></th>
 				    <th><div class="text-center">{{obra.precio}}</div></th>
 				    <th><div class="text-center">{{GI.cobroTotalFinal(obra._id) | currency}}</div></th>
-				    <th>{{GI.cobroTotalFinal(obra._id) / GI.ingresosTotales(GI.obras) * 100 | number : 2}}% </th>
+				    <th>{{GI.cobroTotalFinal(obra._id) / GI.ingresosTotalesMes(GI.obras) * 100 | number : 2}}% </th>
 				    <th><div class="text-center">{{GI.cobroTotalFinalPeriodo(obra._id) | currency}}</div></th>
 				    <th><div class="text-center"><a ng-click="GI.editarObra(obra._id)">Agregar presupuesto de campo</a></div></th>					    
 				    <tr ng-show="" ><th ng-repeat="cobro in GI.cobros"><div class="text-center">{{cobro.cIva + cobro.cSinIva | currency}}</div></th></tr>
@@ -104,7 +104,7 @@
 						<th colspan="8">GASTOS DE OFICINA:&nbsp; {{GI.todosGastosOficinas()  | currency}}</th>
 				    </tr>
 				    <tr>
-					    <th colspan="8">TOTAL INGRESOS MENSUAL:&nbsp; {{GI.ingresosTotales(GI.obras) | currency}}</th>
+					    <th colspan="8">TOTAL INGRESOS :&nbsp; {{GI.ingresosTotales(GI.obras) | currency}}</th>
 				    </tr>
 				     <tr>
 						<th colspan="8">TOTAL GASTOS DE CAMPO:&nbsp; {{GI.cobrosTotales(GI.obras) | currency}}</th>
@@ -236,11 +236,11 @@
 								<tbody>
 								    <tr ng-repeat="obra in GI.indirectoMes">
 									    <th><div class="text-center">{{obra.obra}}</div></th>
-									    <th><div class="text-center">{{obra.indirectoPorcentaje | number:2}}%</div></th>
+									    <th><div class="text-center">{{obra.indirecto | number:2}}%</div></th>
 									    <th ng-show=""><div class="text-center">{{obra.ingresosTotales | currency}}</div></th>
 									    <th ng-show=""><div class="text-center">{{GI.indirectoMes[0].oficinas | currency}}</div></th>
 									    <th ng-show=""><div class="text-center">{{obra.ingresoPorObra | currency}}</div></th>
-									    <th ng-show=""><div class="text-center">{{obra.pagoPorObra | currency}}</div></th>
+									    <th ng-show=""><div class="text-center">{{GI.indirectoMes2.pagoPorObra | currency}}</div></th>
 									      <th ng-show=""><div class="text-center">{{obra.sumaDeGastos | currency}}</div></th>
 									      <th ng-show=""><div class="text-center">{{obra.ingresisa | currency}}</div></th>
 									      <!-- <th ><div class="text-center">{{GI.camposTotales()  | currency}}</div></th> -->

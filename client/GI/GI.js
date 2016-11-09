@@ -47,6 +47,9 @@ this.tipoPeriodo = 'gasto';
 	  meses : () => {
 		  return Meses.find();
 	  },
+	   mes : () => {
+		  return Meses.findOne();
+	  },
 	  obras : () => {
 		  return Obras.find().fetch();
 	  },
@@ -65,16 +68,18 @@ this.tipoPeriodo = 'gasto';
 	  campos : () => {
 		  return PresupuestosCampo.find();
 	  },
-	  cobros : () => {
-		  return Cobros.find({mes_id: this.getReactively('mes_id')});
-	  },
+	  
 	   PeriodosObra : () => {
 		  return Periodos.find({mes_id: this.getReactively('mes_id'),obra_id: this.getReactively('obra_id')});
+	  },
+	  cobros : () => {
+		  return Cobros.find({mes_id: this.getReactively('mes_id')});
 	  },
 
 	   cobrosObra : () => {
 		  return Cobros.find({obra_id: this.getReactively('obra_id')});
 	  },
+
 	   TodosCobros : () => {
 		  return Cobros.find();
 	  },
@@ -90,42 +95,40 @@ this.tipoPeriodo = 'gasto';
 
 	  		var meses = Meses.find().fetch();
  				
- 				_.each(rc.getReactively("obras"), function(obra){ 
+ 				_.each(rc.obras, function(obra){ 
  					var totalPorObra = 0; 	
  					var totalGastosCampo = 0;
  					var gastosCampoObra = 0; 
- 				//var ingresosObras = Cobros.find({mes_id : mes._id, modo : false}).fetch(); 				
+
+ 	
  				_.each(rc.getReactively("cobros"), function(ingresos){
- 					totalPorObra += ingresos.cSinIva + ingresos.cIva/1.16;
+ 					
+ 					totalPorObra += ingresos.cSinIva + ingresos.cIva/1.16; 
  				});
+
  				//var per = Periodos.find({mes_id : mes._id,obra_id : obra_id, tipo : "gasto"}).fetch();
  				_.each(rc.getReactively("periodos"), function(campo){
  					totalGastosCampo += campo.comprasSinIva + (campo.comprasIva / 1.16)
  				  + campo.contadoSinIva + (campo.contadoIva / 1.16)
  				});
 
-	var periodisa = Periodos.find({obra_id : obra._id}).fetch();
+				var periodisa = Periodos.find({obra_id : obra._id}).fetch();
  				_.each(periodisa, function(gc){
  					if (obra._id == gc.obra_id)
  					gastosCampoObra += gc.comprasSinIva + (gc.comprasIva / 1.16)
  				  + gc.contadoSinIva + (gc.contadoIva / 1.16)
- 				});
-
-
- 				
- 			var totalGastoOficinaPorMes = 0; 
+ 				}); 				
+ 				var totalGastoOficinaPorMes = 0; 
  				_.each(rc.getReactively("gastosOficinas"), function(gasto){
  					totalGastoOficinaPorMes += gasto.importeFijo + gasto.importeVar;
  				});
 
-				var obr = Cobros.find({obra_id : obra._id,modo:false}).fetch();
+				var obr = Cobros.find({mes_id: rc.getReactively('mes_id'),obra_id : obra._id,modo:false}).fetch();
  				var ingresosMes = 0;
  				_.each(obr,function(cobro){
 				if(obra._id == cobro.obra_id)
 				ingresosMes += cobro.cIva/1.16 + cobro.cSinIva
-				})
-
-
+				});
 				var totalIngresos=0;
 					var cobros = Cobros.find().fetch();
 					_.each(cobros,function(cobro){
@@ -133,10 +136,7 @@ this.tipoPeriodo = 'gasto';
 						
 						if(obra_id == cobro.obra_id)
 							totalIngresos += cobro.cIva/1.16 + cobro.cSinIva
-					})
-
-			
-                 
+					});
                 var ingresoObras = 0;
 				ingresoObras = parseFloat(ingresosMes.toFixed(2)) / parseFloat(totalPorObra.toFixed(2)) * 100 ;
 				var importe = 0;
@@ -146,36 +146,141 @@ this.tipoPeriodo = 'gasto';
 				var indirecto=0;
 				indirecto = parseFloat(suma.toFixed(2)) / parseFloat(totalIngresos.toFixed(2));
 
-
  				arreglin.push({obra_id:obra._id, obra: obra.nombre,  ingresosMensuales : parseFloat(totalPorObra.toFixed(2)), gastosCampo: parseFloat(totalGastosCampo.toFixed(2)),
  				 gastosCampoObra: parseFloat(gastosCampoObra.toFixed(2)), oficinas: parseFloat(totalGastoOficinaPorMes.toFixed(2)),  indirectoMensual: (parseFloat(totalGastosCampo.toFixed(2))+ totalGastoOficinaPorMes) / 
  				 parseFloat(totalPorObra.toFixed(2))*100, ingresoPorObra : parseFloat(ingresoObras.toFixed(2)),pagoPorObra: parseFloat(importe.toFixed(2))/100,
- 				sumaDeGastos: parseFloat(suma.toFixed(2)), ingresisa:parseFloat(totalIngresos.toFixed(2)),indirectoPorcentaje : parseFloat(indirecto.toFixed(2))*100});
-
-           
-
+ 				sumaDeGastos: parseFloat(suma.toFixed(2)), ingresisa:parseFloat(totalIngresos.toFixed(2)),indirectoPorcentaje : parseFloat(indirecto.toFixed(2))*100
+ 				,kaka:parseFloat(ingresosMes.toFixed(2))});
  				
- 			});  var Pago=0;
-_.each(rc.getReactively("obras"), function(obra){ 
- 				
- 				_.each(arreglin, function(arreglo){ 
- 						if (obra._id == arreglo.obra_id)
- 							Pago += arreglo.pagoPorObra;
+ 			}); 
+ 				 	_.each(rc.indirectoMes2, function(indi){
+ 						 _.each(arreglin, function(arreglo){
+ 				 		if (arreglo.obra_id == indi.obra_id) {
+ 				 			arreglo.indirecto = indi.indirecto
 
-arreglo.totalPago = Pago
-			});
+ 				 		}
 
- 				
-               
- 		})
+ 				 }); 
+ 				}); 
+ 		
             
-
-				
-
- 				
  				console.log("dsd",arreglin);
  				return arreglin;
 	  },
+	  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	    indirectoMes2 : () => {
+	  	var arreglin = [];
+ 		  var pago = 0;
+ 		  _.each(rc.getReactively("obras"), function(obra){ 
+ 			 _.each(rc.getReactively("meses"), function(mes){ 
+ 			 	
+				var totalGastoOficinaPorMes = 0;
+				var totalPorObra = 0;
+				var oficinas = GastosOficina.find({mes_id: mes._id,}).fetch(); 
+ 				_.each(oficinas, function(gasto){
+ 					totalGastoOficinaPorMes += gasto.importeFijo + gasto.importeVar;
+ 				});
+
+ 				var ingresosMes = 0
+				var obr = Cobros.find({mes_id: mes._id,obra_id : obra._id,modo:false}).fetch();
+ 				_.each(obr,function(cobro){
+				if(obra._id == cobro.obra_id)
+				ingresosMes += cobro.cIva/1.16 + cobro.cSinIva
+				})
+
+                var ingresosMesTotales = 0
+ 				var cobros = Cobros.find({mes_id: mes._id,obra_id : obra._id,modo:false}).fetch();
+ 				_.each(cobros, function(ingresos){
+ 					
+ 					ingresosMesTotales += ingresos.cSinIva + ingresos.cIva/1.16; 
+ 				}); 
+
+ 				var cobrosM = Cobros.find({mes_id: mes._id}).fetch();
+ 				_.each(cobrosM, function(ingresos){
+
+ 					totalPorObra += ingresos.cSinIva + ingresos.cIva/1.16; 
+ 				});
+ 	
+ 				var gastosCampoObra = 0;
+ 				var periodisa = Periodos.find({obra_id : obra._id}).fetch();
+ 				_.each(periodisa, function(gc){
+ 					if (obra._id == gc.obra_id)
+ 					gastosCampoObra += gc.comprasSinIva + (gc.comprasIva / 1.16)
+ 				  + gc.contadoSinIva + (gc.contadoIva / 1.16)
+ 				});
+ 				var totalGastosCampo = 0;
+ 				var period = Periodos.find({mes_id : mes._id}).fetch();
+ 				_.each(period, function(campo){
+ 					totalGastosCampo += campo.comprasSinIva + (campo.comprasIva / 1.16)
+ 				  + campo.contadoSinIva + (campo.contadoIva / 1.16)
+ 				});
+
+ 				var totalIngresos=0;
+					var cobros = Cobros.find().fetch();
+					_.each(cobros,function(cobro){
+						var obra_id=obra._id;
+						
+						if(obra_id == cobro.obra_id)
+							totalIngresos += cobro.cIva/1.16 + cobro.cSinIva
+					});
+
+ 				var porcentaje = ingresosMes / totalPorObra * 100;
+ 				var pago =  totalGastoOficinaPorMes * porcentaje 
+ 				
+
+
+				arreglin.push({obra:obra.nombre,obra_id:obra._id,mes:mes.mes,gastosDeOficinaMes:totalGastoOficinaPorMes,ingresosMes:ingresosMesTotales, gastoDeCampo:gastosCampoObra,
+				gastosCampoTotales:totalGastosCampo, ingresosObraMes:ingresosMes,porcentaje:parseFloat(porcentaje.toFixed(2)),pago:parseFloat(pago.toFixed(2)),
+			    ingresisa:parseFloat(totalPorObra.toFixed(2)),ingresoTotal:parseFloat(totalIngresos.toFixed(2)) })
+					});
+				
+				});
+
+
+
+            totalPago = {};
+			_.each(arreglin, function(arreglo){
+			
+				if("undefined" == typeof totalPago[arreglo.obra_id]){
+					totalPago[arreglo.obra_id] = {};
+					if (arreglo.pago > 0) {
+						totalPago[arreglo.obra_id].pago = arreglo.pago;
+					}
+					totalPago[arreglo.obra_id].obra_id = arreglo.obra_id;
+					
+				}else{
+					if (arreglo.pago > 0) {
+						totalPago[arreglo.obra_id].pago += arreglo.pago;
+					}
+					totalPago[arreglo.obra_id].obra_id = arreglo.obra_id;
+				}
+			});
+
+ 			_.each(totalPago, function(pago){
+ 				_.each(arreglin, function(arreglo){
+ 					if (pago.obra_id == arreglo.obra_id) {
+ 						arreglo.pagoEmpresa = pago.pago
+ 						arreglo.indirecto = ((arreglo.pagoEmpresa/100 + arreglo.gastoDeCampo) / arreglo.ingresoTotal) * 100;
+ 					}
+
+ 				});
+ 			 });
+
+ 			 
+            
+ 				console.log("calculo",arreglin);
+ 				return arreglin;
+	  },
+
+	  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  
 	  jaime : () => {
 		var meses = Meses.find().fetch();
 		var obras = Obras.find().fetch();
@@ -329,7 +434,7 @@ arreglo.totalPago = Pago
 
 
 
- 		console.log("probando", resultado);
+ 		//console.log("probando", resultado);
 
 
  		//console.log("resultado", ingresosPorMesPorObraConPorcentaje);
@@ -381,7 +486,7 @@ arreglo.totalPago = Pago
 
 
 
-        console.log("gastos", gastosIndirectoEmpresa);
+        //console.log("gastos", gastosIndirectoEmpresa);
 	//	console.log("final", final);
 
 		return gastosIndirectoEmpresa;
@@ -527,20 +632,7 @@ arreglo.totalPago = Pago
 
 
 
-	this.ingresosTotales=function(obras){
-		var totalIngresos=0;
-		_.each(obras, function(obra){
-			var cobros = Cobros.find().fetch();
-			_.each(cobros,function(cobro){
-				var obra_id=obra._id;
-				
-				if(obra_id == cobro.obra_id)
-					totalIngresos += cobro.cIva/1.16 + cobro.cSinIva
-			})
-
-		});
-		return totalIngresos
-	}
+	
 
 
 	this.cobrosTotales=function(obras){
@@ -593,20 +685,7 @@ arreglo.totalPago = Pago
 		return total
 	}
 
-	this.ingresosTotales=function(obras){
-		var totalIngresos=0;
-		_.each(obras, function(obra){
-			var cobros = Cobros.find().fetch();
-			_.each(cobros,function(cobro){
-				var obra_id=obra._id;
-				
-				if(obra_id == cobro.obra_id)
-					totalIngresos += cobro.cIva/1.16 + cobro.cSinIva
-			})
-
-		});
-		return totalIngresos
-	}
+	
 
 
 	this.TotalFinal = function(){
@@ -662,6 +741,21 @@ arreglo.totalPago = Pago
 		});
 		return totalIngresos
  	};
+
+	this.ingresosTotalesMes=function(obras){
+		var totalIngresos=0;
+		_.each(obras, function(obra){
+		
+			_.each(rc.getReactively("cobros"),function(cobro){
+				var obra_id=obra._id;
+				
+				if(obra_id == cobro.obra_id)
+					totalIngresos += cobro.cIva/1.16 + cobro.cSinIva
+			})
+
+		});
+		return totalIngresos
+	};
 
 
 

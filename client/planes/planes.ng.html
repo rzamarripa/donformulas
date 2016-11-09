@@ -14,9 +14,9 @@
 			    <div class="col-sm-12">
 			    <h1>Seccion para calcular precio</h1>
 			    <br/>
-			        <div class="col-sm-3">
-					    <label>Egresos</label>
-				    	<input type="number" class="form-control" placeholder="" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.egresos" >
+			       <div class="col-sm-3">
+					    <label>Precio de Venta</label>
+				    	<div class="form-control">{{pl.totalPrecioUnitario | currency}}</div>
 				    </div>
 
 				    <div class="col-sm-2">
@@ -41,7 +41,7 @@
 			    	
 			    	<div class="col-sm-2">
 					    <label>Precio de Venta</label>
-				    	<div class="form-control">{{pl.plan.egresos * (1/(1-((100/(100 -(10 + pl.plan.isr2)))*(pl.plan.trema2/100))))| number : 2}}</div>
+				    	<div class="form-control">{{pl.totalPrecioUnitario * (1/(1-((100/(100 -(10 + pl.plan.isr2)))*(pl.plan.trema2/100))))| number : 2}}</div>
 				    </div>
 				    <!-- <div class="col-sm-2">
 					    <label>Precio de Venta</label>
@@ -124,7 +124,7 @@
 				   
 			    <br/><br/>
 
-			    		        <div class="row">
+		<!-- 	    		        <div class="row">
 			    <div class="col-sm-12">
 			    <h1>Seccion para calcular precio de venta</h1>
 			    <br/>
@@ -140,7 +140,7 @@
 					    <div class="input-group">
 					      <div class="input-group-addon">%</div>
 					      	<input type="number" class="form-control" placeholder="TREMA" ng-change="pl.factorRecuperacionCalc()" ng-model="pl.plan.trema3" >
-					     <!--  <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount"> -->
+					    
 					    </div>
 					 </div>
 					</div>
@@ -157,14 +157,11 @@
 					    <label>Precio de Venta</label>
 				    	<div class="form-control">{{pl.plan.egresos2 * (1/(1-((100/(100 -(10 + pl.plan.isr3)))*(pl.plan.trema3/100))))| number : 2}}</div>
 				    </div>
-				    <!-- <div class="col-sm-2">
-					    <label>Precio de Venta</label>
-				    	<div class="form-control">{{pl.plan.ingresos/ (1/(1-((100/(100 -(10 + pl.plan.isr)))*(pl.plan.trema/100)))) / 100 * 100| number : 2}}</div>
-				    </div> -->
+			
 				    
 				
 				    </div>
-		        </div>
+		        </div> -->
 <!-- ////////////////////////////////////////////////////TABLA////////////////////////////////////////////////////////
  -->			     <div class="row">
 					<div class="col-sm-9">
@@ -539,9 +536,9 @@
 						<table class="table table-bordered">
 							<thead>
 							<tr>
-							<th>Estados de resultados</th>
-							<th>Proyectado</th>
-							<th>Actual</th>
+							<th><div class="text-center">Estados de resultados</div></th>
+							<th><div class="text-center">Proyectado</div></th>
+							<th><div class="text-center">Actual</div></th>
 							</tr>
 								<tr>
 								<th width="20%"><div class="text-center">Ingresos</div></th>
@@ -650,6 +647,34 @@
 					</div>
 				</div>
 
+				<!-- ///////////////////////////////////////////// SEGUNDA TABLA ///////////////////////////////////////// -->
+
+				<div class="row">
+					<div class="col-sm-6">
+						<table class="table table-bordered">
+							<thead>
+							<tr>
+								<th ><div class="text-center">Saldo Disponible</div></th>
+								<td><div class="text-center"></div>{{(pl.plan.ingresos * pl.plan.anticipoObras / 100)- pl.gastosMasCostos() - pl.cobrosTotales()  | currency}}</td>
+								
+							</tr>
+								<tr>
+									<th ><div class="text-center">Cuentas por pagar</div></th>
+									<td><div class="text-center"></div>{{(pl.plan.ingresos * pl.plan.anticipoObras / 100)- pl.gastosMasCostosTotales() - pl.pagosProveedoresTotales() | currency}}</td>
+							    </tr>
+							   <!--  <tr>
+									<th><div class="text-center"></div>IVA por pagar</th>
+									<th><div class="text-center"></div>{{}}</th>
+							    </tr> -->
+							    <tr>
+									<th ><div class="text-center">Estimaciones por cobrar</div></th>
+									<td><div class="text-center"></div>{{(pl.plan.ingresos * pl.plan.anticipoObras / 100)-pl.cobrosPorCobrarTotales()-pl.cobrosTotales() | currency}}</td>
+							    </tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+
 			 <br/>
 					<div class="row">
 						<br>
@@ -725,6 +750,51 @@
 
 	</div>
 </div>
+<!-- <div  class="jarviswidget jarviswidget-color-greenDark jarviswidget-sortable" id="wid-id-2" data-widget-editbutton="false" role="widget" >						
+		<header role="heading"><div class="jarviswidget-ctrls" role="menu"><a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn" rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> </div>
+			<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+			<h2>TABLA INVISIBLE</h2>
+		<span class="jarviswidget-loader" style="display: none;"><i class="fa fa-refresh fa-spin"></i></span></header>
+		<div role="content" style="display: block;">
+			<div class="widget-body no-padding">
+				<div class="table-responsive">			
+						
+						<table class="table table-hover">
+					<thead>
+							<tr>
+								<th>CONCEPTO</th>
+								<th ng-repeat="costo in pl.costos">{{costo.nombre}}</th>
+								<th>Cantidad</th>
+								<th >Costo directo</th>
+								<th >Costo Indirecto</th>
+								<th >Cargo por financiamineto</th>
+								<th >Cargo Utilidad</th>
+								<th >Cargo adicional</th>
+								<th >Precio Unitario</th>
+							
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="presupuesto in pl.presupuestos">{{plan.cosas}}
+								<td>{{pl.getConcepto(presupuesto.concepto_id)}}</td>
+								<td ng-repeat="costo in presupuesto.costos">{{costo.direct | currency}}</td>
+								<td>{{presupuesto.cantidad | currency}}</td>
+								<td>{{presupuesto.totalOtro | currency}}</td>
+								<td>{{presupuesto.costoIndi | currency}} </td>
+								<td>{{presupuesto.financiamiento | currency}} </td>
+						
+								<td>{{presupuesto.utilidad | currency}}</td>
+								<td>{{presupuesto.adicional | currency}}</td>
+								<td>{{presupuesto.precioUnitario | currency}}</td>
+
+							    
+							</tr>
+						</tbody>
+						</table>
+				</div>
+			</div>
+		</div>
+	</div> -->
 
 
 

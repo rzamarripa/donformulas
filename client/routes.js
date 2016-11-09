@@ -161,7 +161,6 @@ angular.module('formulas').config(['$injector', function ($injector) {
       templateUrl: 'client/presupuestos/presupuestos.ng.html',
       controller: 'PresupuestosCtrl as pres',
     })
-    
       .state('root.gastos', {
       url: '/gastos/:id',
       templateUrl: 'client/gastos/gastos.ng.html',
